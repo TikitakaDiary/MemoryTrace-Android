@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import dagger.Subcomponent
 
 @Subcomponent
-internal interface MainComponent {
+internal interface ActivityComponent {
 
     @Subcomponent.Factory
     interface Factory {
-        fun create(): MainComponent
+        fun create(): ActivityComponent
     }
 
     fun inject(activity: AppCompatActivity)
