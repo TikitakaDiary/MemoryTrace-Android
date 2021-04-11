@@ -14,5 +14,6 @@ internal interface AppComponent {
         fun create(@BindsInstance context: Context): AppComponent
     }
 
-    fun mainComponent(): MainComponent.Factory
+    fun activityComponent(): ActivityComponent.Factory
+    fun fragmentComponent(): FragmentComponent.Factory
 }

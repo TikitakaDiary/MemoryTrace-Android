@@ -8,7 +8,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import com.upf.memorytrace_android.BR
 import com.upf.memorytrace_android.MemoryTraceApplication
-import com.upf.memorytrace_android.di.MainComponent
+import com.upf.memorytrace_android.di.ActivityComponent
 import kotlin.reflect.KClass
 
 internal abstract class BaseActivity<VM : BaseViewModel, VB : ViewDataBinding> :
@@ -18,7 +18,7 @@ internal abstract class BaseActivity<VM : BaseViewModel, VB : ViewDataBinding> :
 
     lateinit var binding: VB
 
-    lateinit var mainComponent: MainComponent
+    lateinit var activityComponent: ActivityComponent
     protected val viewModel by lazy(LazyThreadSafetyMode.NONE) {
         ViewModelProvider(viewModelStore, defaultViewModelProviderFactory).get(viewModelClass.java)
     }
@@ -27,9 +27,9 @@ internal abstract class BaseActivity<VM : BaseViewModel, VB : ViewDataBinding> :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mainComponent =
-            (application as MemoryTraceApplication).appComponent.mainComponent().create()
-        mainComponent.inject(this)
+        activityComponent =
+            (application as MemoryTraceApplication).appComponent.activityComponent().create()
+        activityComponent.inject(this)
 
         binding = DataBindingUtil.setContentView(this, layoutId)
         binding.lifecycleOwner = this

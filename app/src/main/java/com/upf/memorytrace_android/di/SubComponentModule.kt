@@ -2,5 +2,5 @@ package com.upf.memorytrace_android.di
 
 import dagger.Module
 
-@Module(subcomponents = [MainComponent::class])
+@Module(subcomponents = [ActivityComponent::class, FragmentComponent::class])
 internal class SubComponentModule
