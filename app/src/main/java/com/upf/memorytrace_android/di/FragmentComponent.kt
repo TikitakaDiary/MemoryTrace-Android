@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import dagger.Subcomponent
 
 @Subcomponent
-internal interface FragmentComponent {
+interface FragmentComponent {
 
     @Subcomponent.Factory
     interface Factory {

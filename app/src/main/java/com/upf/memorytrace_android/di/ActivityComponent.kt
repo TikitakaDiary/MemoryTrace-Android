@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import dagger.Subcomponent
 
 @Subcomponent
-internal interface ActivityComponent {
+interface ActivityComponent {
 
     @Subcomponent.Factory
     interface Factory {
