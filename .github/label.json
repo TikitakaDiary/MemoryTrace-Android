@@ -1,0 +1,82 @@
+[
+  {
+    "//command": "라벨 적용하기 npx github-label-sync — access-token [액세스 토큰] — labels labels.json [계정명]/[저장소 이름]",
+    "_comment": "PR과 관련된 라벨",
+    "name": "Simple",
+    "color": "cfd3d7",
+    "description": "간단한 코드수정으로 리뷰어가 빠르게 리뷰할 수 있을 경우"
+  },
+
+  {
+    "_comment": "PR과 관련된 라벨",
+    "name": "Test Needed",
+    "color": "0E7986",
+    "description": "추가로 테스트 필요한 경우"
+  },
+  {
+    "_comment": "PR과 관련된 라벨",
+    "name": "Review Needed",
+    "color": "DF4B94",
+    "description": "리뷰가 필요한 경우"
+  },
+  {
+    "_comment": "PR과 관련된 라벨",
+    "name": "Merge Needed",
+    "color": "5319e7",
+    "description": "해당 PR이 approve되어 머지 가능한 경우"
+  },
+  {
+    "_comment": "이슈와 관련된 라벨",
+    "name": "Feature",
+    "color": "9BD029",
+    "description": "기능개발"
+  },
+  {
+    "_comment": "이슈와 관련된 라벨",
+    "name": "Bug",
+    "color": "8c001a",
+    "description": "버그"
+  },
+  {
+    "_comment": "이슈와 관련된 라벨",
+    "name": "Docs",
+    "color": "0075ca",
+    "description": "문서작업"
+  },
+  {
+    "_comment": "이슈와 관련된 라벨",
+    "name": "Refactor",
+    "color": "0c5c87",
+    "description": "개선"
+  },
+  {
+    "_comment": "이슈와 관련된 라벨",
+    "name": "Test",
+    "color": "8C7D6E",
+    "description": "테스트 코드"
+  },
+  {
+    "_comment": "이슈와 관련된 라벨, 진행중인 이슈의 경우 담당자와 함께 해당 라벨을 남깁니다.",
+    "name": "In Progress",
+    "color": "a2eeef",
+    "description": "작업 중 입니다"
+  },
+  {
+    "_comment": "이슈와 관련된 라벨",
+    "name": "보류",
+    "color": "0D013A",
+    "description": "보류, 논의 필요"
+  },
+  {
+    "//assignee": "해당 이슈를 작업중인 사람, 프로젝트에 따라 추가하여 작성합니다.",
+    "name": "유진진",
+    "color": "FBCA04",
+    "description": ""
+  },
+  {
+    "name": "윤딧",
+    "color": "092D95",
+    "description": ""
+  }
+]
+

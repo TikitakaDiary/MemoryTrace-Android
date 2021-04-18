@@ -86,3 +86,4 @@ lint/tmp/
 # lint/reports/
 
 keystore.properties
+/github-label-sync
