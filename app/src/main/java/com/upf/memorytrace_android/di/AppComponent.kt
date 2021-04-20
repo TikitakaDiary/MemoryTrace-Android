@@ -1,13 +1,18 @@
 package com.upf.memorytrace_android.di
 
 import android.content.Context
+import com.upf.memorytrace_android.api.MemoryTraceService
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [ViewModelModule::class, ViewModelFactoryModule::class, SubComponentModule::class])
-internal interface AppComponent {
+@Component(modules = [
+    ViewModelModule::class, ViewModelFactoryModule::class,
+    SubComponentModule::class,
+    NetworkModule::class
+])
+interface AppComponent {
 
     @Component.Factory
     interface Factory {
@@ -16,4 +21,6 @@ internal interface AppComponent {
 
     fun activityComponent(): ActivityComponent.Factory
     fun fragmentComponent(): FragmentComponent.Factory
+
+    fun getApi():MemoryTraceService
 }
