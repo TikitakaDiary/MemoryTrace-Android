@@ -4,13 +4,13 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    compileSdkVersion rootProject.compile_sdk_version
+    buildToolsVersion rootProject.build_tools_version
 
     defaultConfig {
         applicationId "com.upf.memorytrace_android"
-        minSdkVersion 23
-        targetSdkVersion 30
+        minSdkVersion rootProject.min_sdk_version
+        targetSdkVersion rootProject.target_sdk_version
         versionCode 1
         versionName "1.0"
 
@@ -79,6 +79,9 @@ dependencies {
 
     // leakCanary
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
+
+    // Module
+    implementation project(path: ':sticker')
 
     // Test
     testImplementation 'junit:junit:4.12'
