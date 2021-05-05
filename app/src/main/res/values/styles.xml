@@ -6,6 +6,9 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">#434343</item>
+        <item name="android:windowBackground">@color/systemGray01</item>
+        <item name="android:textColor">@color/systemWhite</item>
     </style>
 
 </resources>
