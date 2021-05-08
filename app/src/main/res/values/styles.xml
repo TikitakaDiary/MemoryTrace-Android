@@ -9,11 +9,12 @@
         <item name="android:statusBarColor">#434343</item>
         <item name="android:windowBackground">@color/systemGray01</item>
         <item name="android:textColor">@color/systemWhite</item>
-        <item name="fontFamily">@font/noto_sans_kr_regular</item>
+        <item name="android:fontFamily">@font/noto_sans_kr_regular</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
 
     <style name="WriteTitleEditText" parent="Widget.AppCompat.EditText">
-        <item name="fontFamily">@font/gmarket_sans_ttf_bold</item>
+        <item name="android:fontFamily">@font/gmarket_sans_ttf_bold</item>
         <item name="android:textSize">18sp</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:background">@android:color/transparent</item>
@@ -29,15 +30,22 @@
         <item name="android:textColorHint">@color/gray05</item>
     </style>
 
+    <style name="WriteStickerListTitleTextView" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/gmarket_sans_ttf_bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">@color/gray06</item>
+    </style>
+
     <style name="DateTextView" parent="Widget.AppCompat.TextView">
-        <item name="fontFamily">@font/gmarket_sans_ttf_medium</item>
+        <item name="android:fontFamily">@font/gmarket_sans_ttf_medium</item>
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:textColor">@color/gray03</item>
     </style>
 
     <style name="NameTextView" parent="Widget.AppCompat.TextView">
-        <item name="fontFamily">@font/gmarket_sans_ttf_medium</item>
+        <item name="android:fontFamily">@font/gmarket_sans_ttf_medium</item>
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:textColor">@color/systemBlue</item>

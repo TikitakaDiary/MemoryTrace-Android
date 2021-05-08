@@ -8,6 +8,7 @@
     <string name="write_hint_title">제목을 입력하세요</string>
     <string name="write_hint_content">여기를 눌러 다이어리를 작성해보세요! (최대 500자)</string>
     <string name="write_delivery">전달</string>
+    <string name="write_my_sticker_list">내 스티커 목록</string>
 
     <string name="by">by&#160;</string>
 </resources>
