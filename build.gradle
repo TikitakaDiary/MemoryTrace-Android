@@ -11,6 +11,9 @@ buildscript {
         coroutine_version = "1.4.2"
         dagger_version = "2.28.3"
 
+        // viewpager2
+        viewpager2_version = "1.0.0"
+
         //network
         retrofit_version = "2.9.0"
         gson_converter_version = "2.9.0"
