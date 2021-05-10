@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!--    gmarket sans-->
     <dimen name="font_title_1">24sp</dimen>
     <dimen name="font_title_2">18sp</dimen>
     <dimen name="font_title_3">16sp</dimen>
