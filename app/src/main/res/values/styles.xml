@@ -13,6 +13,93 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
+    <!-- title -->
+    <style name="Content">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Title1" parent="Content">
+        <item name="android:fontFamily">@font/gmarket_sans_ttf_bold</item>
+        <item name="android:textSize">@dimen/font_title_1</item>
+    </style>
+
+    <style name="Title2" parent="Content">
+        <item name="android:fontFamily">@font/gmarket_sans_ttf_bold</item>
+        <item name="android:textSize">@dimen/font_title_2</item>
+    </style>
+
+    <style name="Title3" parent="Content">
+        <item name="android:fontFamily">@font/gmarket_sans_ttf_bold</item>
+        <item name="android:textSize">@dimen/font_title_3</item>
+    </style>
+
+    <style name="Subtitle1" parent="Content">
+        <item name="android:fontFamily">@font/gmarket_sans_ttf_medium</item>
+        <item name="android:textSize">@dimen/font_subtitle_1</item>
+    </style>
+
+    <style name="Subtitle2" parent="Content">
+        <item name="android:fontFamily">@font/gmarket_sans_ttf_medium</item>
+        <item name="android:textSize">@dimen/font_subtitle_2</item>
+    </style>
+
+    <style name="Title" parent="Content">
+        <item name="android:fontFamily">@font/noto_sans_kr_bold</item>
+        <item name="android:textSize">@dimen/font_title_3</item>
+    </style>
+
+    <style name="Subtitle" parent="Content">
+        <item name="android:fontFamily">@font/noto_sans_kr_bold</item>
+        <item name="android:textSize">@dimen/font_subtitle_2</item>
+    </style>
+
+    <style name="Eyebrow" parent="Content">
+        <item name="android:fontFamily">@font/noto_sans_kr_regular</item>
+        <item name="android:textSize">@dimen/font_subtitle_2</item>
+    </style>
+
+    <style name="Body1" parent="Content">
+        <item name="android:fontFamily">@font/noto_sans_kr_regular</item>
+        <item name="android:textSize">@dimen/font_title_3</item>
+    </style>
+
+    <style name="Body2" parent="Content">
+        <item name="android:fontFamily">@font/noto_sans_kr_regular</item>
+        <item name="android:textSize">@dimen/font_body</item>
+    </style>
+
+    <!-- 일기 작성-->
+    <style name="Title2.WriteTitleEditText">
+        <item name="android:letterSpacing">0</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@color/gray01</item>
+        <item name="android:textColorHint">@color/gray01</item>
+    </style>
+
+    <style name="Body1.WriteContentEditText">
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">@color/gray05</item>
+        <item name="android:textColorHint">@color/gray05</item>
+    </style>
+
+    <style name="Subtitle2.WriteStickerListTitleTextView">
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">@color/gray06</item>
+    </style>
+
+    <style name="Subtitle2.DateTextView">
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">@color/gray03</item>
+    </style>
+
+    <style name="Subtitle2.NameTextView">
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">@color/systemBlue</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
     <style name="WriteTitleEditText" parent="Widget.AppCompat.EditText">
         <item name="android:fontFamily">@font/gmarket_sans_ttf_bold</item>
         <item name="android:textSize">18sp</item>
