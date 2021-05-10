@@ -121,6 +121,7 @@ public class StickerView extends FrameLayout {
           a.getBoolean(R.styleable.StickerView_bringToFrontCurrentSticker, false);
 
       borderPaint.setAntiAlias(true);
+      borderPaint.setStrokeWidth(3f);
       borderPaint.setColor(a.getColor(R.styleable.StickerView_borderColor, Color.BLACK));
       borderPaint.setAlpha(a.getInteger(R.styleable.StickerView_borderAlpha, 128));
 
@@ -195,7 +196,9 @@ public class StickerView extends FrameLayout {
     for (int i = 0; i < stickers.size(); i++) {
       Sticker sticker = stickers.get(i);
       if (sticker != null) {
+        setLocked(true);
         sticker.draw(canvas);
+        setLocked(false);
       }
     }
 
@@ -668,6 +671,10 @@ public class StickerView extends FrameLayout {
     }
   }
 
+  public void removeStickerHandler() {
+    handlingSticker = null;
+  }
+
   public boolean remove(@Nullable Sticker sticker) {
     if (stickers.contains(sticker)) {
       stickers.remove(sticker);
@@ -675,7 +682,7 @@ public class StickerView extends FrameLayout {
         onStickerOperationListener.onStickerDeleted(sticker);
       }
       if (handlingSticker == sticker) {
-        handlingSticker = null;
+        removeStickerHandler();
       }
       invalidate();
 
@@ -695,7 +702,7 @@ public class StickerView extends FrameLayout {
     stickers.clear();
     if (handlingSticker != null) {
       handlingSticker.release();
-      handlingSticker = null;
+      removeStickerHandler();
     }
     invalidate();
   }
@@ -767,6 +774,15 @@ public class StickerView extends FrameLayout {
     return points;
   }
 
+  public void setStickers(List<Sticker> stickerList) {
+    stickers.clear();
+    stickers.addAll(stickerList);
+  }
+
+  public List<Sticker> getStickers() {
+    return stickers;
+  }
+
   public void getStickerPoints(@Nullable Sticker sticker, @NonNull float[] dst) {
     if (sticker == null) {
       Arrays.fill(dst, 0);
@@ -786,7 +802,7 @@ public class StickerView extends FrameLayout {
   }
 
   @NonNull public Bitmap createBitmap() throws OutOfMemoryError {
-    handlingSticker = null;
+    removeStickerHandler();
     Bitmap bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
     Canvas canvas = new Canvas(bitmap);
     this.draw(canvas);

@@ -2,4 +2,13 @@
     <string name="app_name">MemoryTrace-Android</string>
 
     <string name="close_back_pressed">뒤로가기를 한번 더 누르면 앱이 종료됩니다</string>
+
+    <string name="write_create_diary">다이어리 생성</string>
+    <string name="write_add_sticker">스티커 추가</string>
+    <string name="write_hint_title">제목을 입력하세요</string>
+    <string name="write_hint_content">여기를 눌러 다이어리를 작성해보세요! (최대 500자)</string>
+    <string name="write_delivery">전달</string>
+    <string name="write_my_sticker_list">내 스티커 목록</string>
+
+    <string name="by">by&#160;</string>
 </resources>

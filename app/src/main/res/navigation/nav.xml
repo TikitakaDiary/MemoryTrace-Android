@@ -17,5 +17,13 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.upf.memorytrace_android.ui.LoginFragment"
-        android:label="LoginFragment" />
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_writeFragment"
+            app:destination="@id/writeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/writeFragment"
+        android:name="com.upf.memorytrace_android.ui.WriteFragment"
+        android:label="WriteFragment" />
 </navigation>
