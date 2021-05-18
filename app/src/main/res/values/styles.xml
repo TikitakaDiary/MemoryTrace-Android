@@ -10,6 +10,7 @@
         <item name="android:windowBackground">@color/systemGray01</item>
         <item name="android:textColor">@color/systemWhite</item>
         <item name="android:fontFamily">@font/noto_sans_kr_regular</item>
+        <item name="android:colorControlHighlight">@color/colorPrimaryDark</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
@@ -19,54 +20,54 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="Title1" parent="Content">
+    <style name="GmarketBold24" parent="Content">
         <item name="android:fontFamily">@font/gmarket_sans_ttf_bold</item>
-        <item name="android:textSize">@dimen/font_title_1</item>
+        <item name="android:textSize">@dimen/font_24</item>
     </style>
 
-    <style name="Title2" parent="Content">
+    <style name="GmarketBold18" parent="Content">
         <item name="android:fontFamily">@font/gmarket_sans_ttf_bold</item>
-        <item name="android:textSize">@dimen/font_title_2</item>
+        <item name="android:textSize">@dimen/font_18</item>
     </style>
 
-    <style name="Title3" parent="Content">
+    <style name="GmarketBold16" parent="Content">
         <item name="android:fontFamily">@font/gmarket_sans_ttf_bold</item>
-        <item name="android:textSize">@dimen/font_title_3</item>
+        <item name="android:textSize">@dimen/font_16</item>
     </style>
 
-    <style name="Subtitle1" parent="Content">
+    <style name="GmarketMedium18" parent="Content">
         <item name="android:fontFamily">@font/gmarket_sans_ttf_medium</item>
-        <item name="android:textSize">@dimen/font_subtitle_1</item>
+        <item name="android:textSize">@dimen/font_18</item>
     </style>
 
-    <style name="Subtitle2" parent="Content">
+    <style name="GmarketMedium14" parent="Content">
         <item name="android:fontFamily">@font/gmarket_sans_ttf_medium</item>
-        <item name="android:textSize">@dimen/font_subtitle_2</item>
+        <item name="android:textSize">@dimen/font_14</item>
     </style>
 
-    <style name="Title" parent="Content">
+    <style name="NotoBold16" parent="Content">
         <item name="android:fontFamily">@font/noto_sans_kr_bold</item>
-        <item name="android:textSize">@dimen/font_title_3</item>
+        <item name="android:textSize">@dimen/font_16</item>
     </style>
 
-    <style name="Subtitle" parent="Content">
+    <style name="NotoBold14" parent="Content">
         <item name="android:fontFamily">@font/noto_sans_kr_bold</item>
-        <item name="android:textSize">@dimen/font_subtitle_2</item>
+        <item name="android:textSize">@dimen/font_14</item>
     </style>
 
-    <style name="Eyebrow" parent="Content">
+    <style name="NotoRegular16" parent="Content">
         <item name="android:fontFamily">@font/noto_sans_kr_regular</item>
-        <item name="android:textSize">@dimen/font_subtitle_2</item>
+        <item name="android:textSize">@dimen/font_16</item>
     </style>
 
-    <style name="Body1" parent="Content">
+    <style name="NotoRegular14" parent="Content">
         <item name="android:fontFamily">@font/noto_sans_kr_regular</item>
-        <item name="android:textSize">@dimen/font_title_3</item>
+        <item name="android:textSize">@dimen/font_14</item>
     </style>
 
-    <style name="Body2" parent="Content">
+    <style name="NotoRegular12" parent="Content">
         <item name="android:fontFamily">@font/noto_sans_kr_regular</item>
-        <item name="android:textSize">@dimen/font_body</item>
+        <item name="android:textSize">@dimen/font_12</item>
     </style>
 
     <!-- 일기 작성-->

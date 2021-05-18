@@ -54,10 +54,10 @@
             android:id="@+id/polaroid_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/default_padding"
-            android:layout_marginTop="@dimen/default_spacing"
+            android:layout_marginHorizontal="@dimen/default_padding_24"
+            android:layout_marginTop="@dimen/default_spacing_8"
             android:background="@drawable/bg_polaroid"
-            android:padding="@dimen/default_padding"
+            android:padding="@dimen/default_padding_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/top_layout">
@@ -80,14 +80,14 @@
                 style="@style/WriteTitleEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_padding"
+                android:layout_marginTop="@dimen/default_padding_24"
                 android:hint="@string/write_hint_title"
                 app:layout_constraintTop_toBottomOf="@id/sticker_view" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/content_spacing"
+                android:layout_marginTop="@dimen/content_spacing_4"
                 app:layout_constraintTop_toBottomOf="@id/title_et">
 
                 <TextView
@@ -103,7 +103,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/default_spacing"
+                    android:layout_marginStart="@dimen/default_spacing_8"
                     android:gravity="end"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -132,9 +132,9 @@
             style="@style/WriteContentEditText"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="@dimen/default_padding"
-            android:layout_marginTop="@dimen/title_spacing"
-            android:layout_marginBottom="@dimen/section_spacing"
+            android:layout_marginHorizontal="@dimen/default_padding_24"
+            android:layout_marginTop="@dimen/title_spacing_16"
+            android:layout_marginBottom="@dimen/section_spacing_40"
             android:gravity="start|top"
             android:hint="@string/write_hint_content"
             android:maxLength="500"
@@ -146,8 +146,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/systemGray02"
-            android:paddingHorizontal="@dimen/default_padding"
-            android:paddingVertical="@dimen/default_spacing"
+            android:paddingHorizontal="@dimen/default_padding_24"
+            android:paddingVertical="@dimen/default_spacing_8"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <ImageView
@@ -182,7 +182,7 @@
                 android:id="@+id/sticker_top_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/default_padding"
+                android:padding="@dimen/default_padding_24"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
