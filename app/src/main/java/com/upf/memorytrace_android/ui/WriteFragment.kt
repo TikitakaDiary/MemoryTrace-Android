@@ -23,7 +23,9 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         super.onActivityCreated(savedInstanceState)
 
         setProperties()
+        observe(viewModel.isShowSelectImgDialog) { showSelectImageDialog() }
         observe(viewModel.isLoadGallery) { if (checkReadPermission()) accessGallery() }
+        observe(viewModel.isLoadCamera) { }
         observe(viewModel.isAttachSticker) { attachSticker() }
     }
 
@@ -32,6 +34,10 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
             dateTv.text = TimeUtil.getTodayDate(TimeUtil.YYYY_M_D_KR)
             nameTv.text = "유진진"
         }
+    }
+
+    private fun showSelectImageDialog() {
+        WriteImageBottomSheetFragment(viewModel).show(parentFragmentManager, SELECT_IMG_DIALOG_TAG)
     }
 
     private fun checkReadPermission(): Boolean {
@@ -67,5 +73,6 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
     companion object {
         private const val REQUEST_CODE_READ_EXTERNAL_STORAGE = 100
         private const val NOTICE_DO_NOT_LOAD_GALLERY = "이미지를 로드하려면 권한이 필요합니다."
+        private const val SELECT_IMG_DIALOG_TAG = "SelectImageDialog"
     }
 }
