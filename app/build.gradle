@@ -85,6 +85,7 @@ dependencies {
 
     // Module
     implementation project(path: ':sticker')
+    implementation project(path: ':cropper')
 
     // Test
     testImplementation 'junit:junit:4.12'
