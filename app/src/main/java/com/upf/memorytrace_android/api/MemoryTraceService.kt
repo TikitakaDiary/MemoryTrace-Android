@@ -11,8 +11,13 @@ interface MemoryTraceService {
     /**
      * 다이어리 생성
      */
+    @Multipart
     @POST("book")
-    suspend fun createBook(@Body createBookModel: CreateBookModel): BaseResponse
+    suspend fun createBook(
+        @Part("title") title: String,
+        @Part("bgColor") bgColor: Int,
+        @Part stickerImg: MultipartBody.Part? = null
+    ): BaseResponse
 
     /**
      * 다이어리 목록 조회
