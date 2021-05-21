@@ -1,9 +1,7 @@
 package com.upf.memorytrace_android.api
 
-import com.upf.memorytrace_android.api.model.BookModel
-import com.upf.memorytrace_android.api.model.CreateBookModel
-import com.upf.memorytrace_android.api.model.InviteModel
-import com.upf.memorytrace_android.api.model.UserModel
+import com.upf.memorytrace_android.api.model.*
+import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -19,8 +17,11 @@ interface MemoryTraceService {
     /**
      * 다이어리 목록 조회
      */
-    @GET("book/list/{uid}")
-    suspend fun fetchBooks(@Path("uid") uid: Int): List<BookModel>
+    @GET("book/list")
+    suspend fun fetchBooks(
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): BookResponse
 
     /**
      * 초대코드 생성

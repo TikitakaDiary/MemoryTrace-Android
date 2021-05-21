@@ -16,16 +16,23 @@ object BookRepository {
         } catch (e: Exception) {
             NetworkState.Failure(e.message ?: "Internet Error")
         }
+
+    private val PAGE_SIZE = 20
     }
 
-    suspend fun fetchBookList(uid: Int): NetworkState<List<BookModel>> {
+    //TODO: error 객체 관리
+    suspend fun fetchBookList(page: Int): BookResponse {
         return try {
-            val response = MemoryTraceUtils.apiService().fetchBooks(uid)
+            val response = MemoryTraceUtils.apiService().fetchBooks(page, PAGE_SIZE)
             response.let {
-                NetworkState.Success(it)
+                if (it.isSuccess)
+                    it
+                else
+                    throw Exception("internal error")
             }
         } catch (e: Exception) {
-            NetworkState.Failure(e.message ?: "Internet Error")
+            throw Exception(e.message ?: "Internet Error")
         }
     }
+
 }
