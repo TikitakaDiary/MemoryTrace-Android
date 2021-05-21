@@ -21,6 +21,8 @@ buildscript {
 
         //others
         leakcanary_version = "2.7"
+        flipper_version = "0.91.1"
+        soloader_version = "0.10.1"
     }
 
     repositories {

@@ -2,8 +2,10 @@ package com.upf.memorytrace_android.di
 
 import android.content.Context
 import android.util.Log
+import com.facebook.flipper.plugins.network.FlipperOkhttpInterceptor
 import com.upf.memorytrace_android.BuildConfig
 import com.upf.memorytrace_android.BuildConfig.DEBUG
+import com.upf.memorytrace_android.MemoryTraceApplication
 import com.upf.memorytrace_android.api.MemoryTraceService
 import com.upf.memorytrace_android.api.util.AuthHeaderInterceptor
 import dagger.Module
@@ -40,6 +42,11 @@ class NetworkModule {
                     Log.d("OkHttp:KakaoHost", message)
                 }
             }).setLevel(HttpLoggingInterceptor.Level.BODY))
+            okHttpClientBuilder.addNetworkInterceptor(
+                FlipperOkhttpInterceptor(
+                    MemoryTraceApplication.networkFlipperPlugin
+                )
+            )
         }
         okHttpClientBuilder.addInterceptor(AuthHeaderInterceptor())
 
