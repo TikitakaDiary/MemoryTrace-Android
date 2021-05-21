@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="font_24">24sp</dimen>
+    <dimen name="font_18">18sp</dimen>
+    <dimen name="font_16">16sp</dimen>
+    <dimen name="font_14">14sp</dimen>
+    <dimen name="font_12">12sp</dimen>
+
+    <dimen name="default_padding_24">24dp</dimen>
+    <dimen name="default_spacing_8">8dp</dimen>
+    <dimen name="item_spacing_12">12dp</dimen>
+    <dimen name="title_spacing_16">16dp</dimen>
+    <dimen name="section_spacing_40">40dp</dimen>
+    <dimen name="content_spacing_4">4dp</dimen>
+
+    <dimen name="book_title_width">155dp</dimen>
+    <dimen name="book_height">164dp</dimen>
+    <dimen name="book_radius">8dp</dimen>
+</resources>

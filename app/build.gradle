@@ -17,8 +17,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
 
-        def addConstant = {constantName, constantValue ->
-            manifestPlaceholders += [ (constantName):constantValue]
+        def addConstant = { constantName, constantValue ->
+            manifestPlaceholders += [(constantName): constantValue]
             buildConfigField "String", "${constantName}", "\"${constantValue}\""
         }
         addConstant("BASE_URL", "${getProperty("local.properties", "BASE_URL")}")
@@ -91,4 +91,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    //flipper
+    debugImplementation "com.facebook.flipper:flipper:$flipper_version"
+    debugImplementation "com.facebook.flipper:flipper-network-plugin:$flipper_version"
+    debugImplementation "com.facebook.soloader:soloader:$soloader_version"
+
+    releaseImplementation "com.facebook.flipper:flipper-noop:$flipper_version"
 }
