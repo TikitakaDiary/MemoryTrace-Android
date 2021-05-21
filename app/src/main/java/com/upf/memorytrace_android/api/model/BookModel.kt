@@ -6,10 +6,11 @@ data class CreateBookModel(
     var bgColor: Int = -1
 )
 
-data class BookModel(
-    var bid: Int = -1,
+data class Book(
+    @SerializedName("bid") var id: Int = -1,
     var nickname: String = "",
     var title: String = "",
     var bgColor: Int = -1,
-    var date: String = ""
+    @SerializedName("stickerImg") var image: String = "",
+    @SerializedName("modifiedDate") var date: String = ""
 )
