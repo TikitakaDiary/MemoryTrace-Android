@@ -35,9 +35,15 @@ interface MemoryTraceService {
     suspend fun createInviteLink(@Body inviteModel: InviteModel): BaseResponse
 
     /**
-     * 회원가입
+     * 회원가입 및 로그인
+     * 200 : 이미 가입된 유저
+     * 201 : 가입 성공
      */
+    @Multipart
     @POST("user")
-    suspend fun createUser(@Body userModel: UserModel): BaseResponse
-
+    suspend fun createUser(
+        @Part("nickname") nickname: String,
+        @Part("snsKey") snsKey: String,
+        @Part("snsType") snsType: String
+    ): UserResponse
 }

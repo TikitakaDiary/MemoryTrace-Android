@@ -1,25 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
-    
+
     <data>
+
         <variable
             name="viewModel"
             type="com.upf.memorytrace_android.viewmodel.LoginViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="@dimen/default_padding_24">
 
-        <Button
+        <TextView
+            style="@style/GmarketBold24"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.name}"
-            android:onClick="@{()->viewModel.onClickWrite()}"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/duck_z"
+            app:layout_constraintBottom_toTopOf="@id/btn_kakao_login"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/btn_kakao_login"
+            style="@style/LoginButton"
+            android:layout_marginBottom="@dimen/default_spacing_8"
+            app:layout_constraintBottom_toTopOf="@id/btn_google_login"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                style="@style/ImageView"
+                android:src="@drawable/ic_add_diary" />
+
+            <TextView
+                style="@style/NotoRegular16"
+                android:layout_marginStart="@dimen/default_padding_24"
+                android:text="@string/kakao_login"
+                android:textColor="@color/systemBlack" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_google_login"
+            style="@style/LoginButton"
+            android:layout_marginBottom="@dimen/title_spacing_16"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                style="@style/ImageView"
+                android:src="@drawable/ic_add_diary" />
+
+            <TextView
+                style="@style/NotoRegular16"
+                android:layout_marginStart="@dimen/default_padding_24"
+                android:text="@string/google_login"
+                android:textColor="@color/systemBlack" />
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

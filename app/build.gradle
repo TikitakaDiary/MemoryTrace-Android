@@ -34,6 +34,16 @@ android {
     buildFeatures {
         dataBinding true
     }
+
+    //java 8 for kakao login
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 def getProperty(String fileName, String key) {
@@ -87,6 +97,9 @@ dependencies {
     implementation project(path: ':sticker')
     implementation project(path: ':cropper')
 
+
+    // kakao login
+    implementation "com.kakao.sdk:v2-user:$kakao_version"
     // Test
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

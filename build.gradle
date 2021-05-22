@@ -19,6 +19,8 @@ buildscript {
         gson_converter_version = "2.9.0"
         http_logging_version = "4.9.1"
 
+        //login
+        kakao_version = "2.5.0"
         //others
         leakcanary_version = "2.7"
         flipper_version = "0.91.1"
@@ -47,6 +49,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
     }
 }
 

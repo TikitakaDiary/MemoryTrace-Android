@@ -33,6 +33,8 @@ class MemoryTraceApplication : Application() {
             client.addPlugin(networkFlipperPlugin)
             client.start()
         }
+
+        KakaoSdk.init(this, getString(R.string.kakao_app_key))
     }
 
     companion object {
