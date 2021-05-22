@@ -22,4 +22,6 @@ object MemoryTraceConfig {
     var token: String?
         get() = pref.getString(USER_TOKEN, "")
         set(value) = pref.edit { putString(USER_TOKEN, value) }
+
+    var isLoggedIn: Boolean = !nickname.isNullOrBlank() && !token.isNullOrBlank()
 }

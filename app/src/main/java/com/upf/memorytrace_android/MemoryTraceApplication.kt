@@ -11,6 +11,7 @@ import com.facebook.flipper.plugins.navigation.NavigationFlipperPlugin
 import com.facebook.flipper.plugins.network.NetworkFlipperPlugin
 import com.facebook.flipper.plugins.sharedpreferences.SharedPreferencesFlipperPlugin
 import com.facebook.soloader.SoLoader
+import com.kakao.sdk.common.KakaoSdk
 import com.upf.memorytrace_android.di.DaggerAppComponent
 
 
