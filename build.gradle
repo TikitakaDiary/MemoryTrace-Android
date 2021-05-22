@@ -21,6 +21,10 @@ buildscript {
 
         //login
         kakao_version = "2.5.0"
+
+        firebase_version = "27.1.0"
+        firebase_auth_version = "19.0.0"
+
         //others
         leakcanary_version = "2.7"
         flipper_version = "0.91.1"
@@ -39,7 +43,8 @@ buildscript {
         classpath "com.android.tools.build:gradle:4.0.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
-
+        classpath 'com.google.gms:google-services:4.3.8'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.6.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
