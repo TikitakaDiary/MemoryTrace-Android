@@ -2,7 +2,6 @@ package com.upf.memorytrace_android.api
 
 import com.upf.memorytrace_android.api.model.*
 import okhttp3.MultipartBody
-import retrofit2.Response
 import retrofit2.http.*
 
 
@@ -39,11 +38,6 @@ interface MemoryTraceService {
      * 200 : 이미 가입된 유저
      * 201 : 가입 성공
      */
-    @Multipart
     @POST("user")
-    suspend fun createUser(
-        @Part("nickname") nickname: String,
-        @Part("snsKey") snsKey: String,
-        @Part("snsType") snsType: String
-    ): UserResponse
+    suspend fun createUser(@Body user: User): UserResponse
 }

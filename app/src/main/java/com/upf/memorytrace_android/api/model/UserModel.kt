@@ -5,5 +5,7 @@ data class User(
     var uid: Int = -1,
     var nickname: String = "",
     var profilemg: String? = null,
-    var jwt: String = ""
+    var jwt: String = "",
+    var snsKey:String = "",
+    var snsType:String = ""
 )
