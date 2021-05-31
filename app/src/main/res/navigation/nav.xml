@@ -42,4 +42,12 @@
         android:id="@+id/createBookFragment"
         android:name="com.upf.memorytrace_android.ui.book.CreateBookFragment"
         android:label="CreateBookFragment" />
+    <fragment
+        android:id="@+id/cropFragment"
+        android:name="com.upf.memorytrace_android.ui.CropFragment"
+        android:label="CropFragment" >
+        <argument
+            android:name="imageUri"
+            app:argType="android.net.Uri" />
+    </fragment>
 </navigation>
