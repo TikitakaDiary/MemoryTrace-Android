@@ -1,15 +1,18 @@
 package com.upf.memorytrace_android.api.model
 
-data class CreateBookModel(
-    var whoseTurn: Int = -1,
-    var title: String = "",
-    var bgColor: Int = -1
+import com.google.gson.annotations.SerializedName
+
+data class BookList(
+    var curPage: Int = 1,
+    var hasNext: Boolean = false,
+    var bookList: List<Book>? = null
 )
 
-data class BookModel(
-    var bid: Int = -1,
+data class Book(
+    @SerializedName("bid") var id: Int = -1,
     var nickname: String = "",
     var title: String = "",
     var bgColor: Int = -1,
-    var date: String = ""
+    @SerializedName("stickerImg") var image: String = "",
+    @SerializedName("modifiedDate") var date: String = ""
 )

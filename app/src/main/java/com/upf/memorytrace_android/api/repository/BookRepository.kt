@@ -1,31 +1,30 @@
 package com.upf.memorytrace_android.api.repository
 
 import com.upf.memorytrace_android.api.BaseResponse
+import com.upf.memorytrace_android.api.BookResponse
 import com.upf.memorytrace_android.api.util.MemoryTraceUtils
-import com.upf.memorytrace_android.api.model.BookModel
-import com.upf.memorytrace_android.api.model.CreateBookModel
-import com.upf.memorytrace_android.api.util.NetworkState
 
 object BookRepository {
-    suspend fun createBook(createBookModel: CreateBookModel): NetworkState<BaseResponse> {
+
+    private val PAGE_SIZE = 20
+
+    suspend fun createBook(title: String, bgColor: Int, image: String?) {
+        val response = MemoryTraceUtils.apiService().createBook(title, bgColor)
+    }
+
+    //TODO: error 객체 관리
+    suspend fun fetchBookList(page: Int): BookResponse {
         return try {
-            val response = MemoryTraceUtils.apiService().createBook(createBookModel)
+            val response = MemoryTraceUtils.apiService().fetchBooks(page, PAGE_SIZE)
             response.let {
-                NetworkState.Success(it)
+                if (it.isSuccess)
+                    it
+                else
+                    throw Exception("internal error")
             }
         } catch (e: Exception) {
-            NetworkState.Failure(e.message ?: "Internet Error")
+            throw Exception(e.message ?: "Internet Error")
         }
     }
 
-    suspend fun fetchBookList(uid: Int): NetworkState<List<BookModel>> {
-        return try {
-            val response = MemoryTraceUtils.apiService().fetchBooks(uid)
-            response.let {
-                NetworkState.Success(it)
-            }
-        } catch (e: Exception) {
-            NetworkState.Failure(e.message ?: "Internet Error")
-        }
-    }
 }

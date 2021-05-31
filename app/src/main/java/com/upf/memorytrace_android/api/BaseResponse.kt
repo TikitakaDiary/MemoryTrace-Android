@@ -1,11 +1,16 @@
 package com.upf.memorytrace_android.api
 
+import com.upf.memorytrace_android.api.model.BookList
+
 open class BaseResponse {
     val statusCode: String = ""
-    val statusCodeValue: Int = 0
-    val message:String = ""
-    val body:Object? = null
+    val responseMessage: String = ""
 
     open val isSuccess: Boolean
-        get() = statusCode == "100"
+        get() = statusCode == "201"
+}
+
+
+class BookResponse : BaseResponse() {
+    val data: BookList? = null
 }
