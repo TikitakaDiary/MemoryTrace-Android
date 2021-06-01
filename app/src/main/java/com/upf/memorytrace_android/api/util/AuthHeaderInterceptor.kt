@@ -10,13 +10,14 @@ class AuthHeaderInterceptor : Interceptor {
 
         // TODO: preference로 관리하도록 수정 필요
         val isAuthorizedAccount: Boolean = true
-        val snsKey: String = ""
+        val jwt: String =
+            "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrZXkxIiwiaWF0IjoxNjIxMzQ4NDk0fQ.0n9rRThJzxgw20LgeoFj_MtICdU17YtGHqXkbbWLhAI"
 
         if (!isAuthorizedAccount) {
             throw Exception("oauth is not started.")
         }
 
-        newBuilder.header("Authorization", snsKey)
+        newBuilder.header("Authorization", jwt)
 
         return chain.proceed(newBuilder.build())
     }

@@ -11,12 +11,6 @@ internal class LoginViewModel : BaseViewModel() {
     val name = MutableLiveData("요기 터치")
     val api = MemoryTraceUtils.apiService()
 
-    init {
-        viewModelScope.launch {
-            name.value = api.fetchBooks(1)[0].toString()
-        }
-    }
-
     fun onClickWrite() {
         navDirections.value = LoginFragmentDirections.actionLoginFragmentToWriteFragment()
     }

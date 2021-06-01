@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">MemoryTrace-Android</string>
 
     <string name="close_back_pressed">뒤로가기를 한번 더 누르면 앱이 종료됩니다</string>
@@ -14,5 +15,15 @@
     <string name="write_select_camera">카메라</string>
     <string name="write_select_color">단색</string>
 
+    <string name="crop_title">사진 편집</string>
+    <string name="crop_finish">완료</string>
+
     <string name="by">by&#160;</string>
+
+    <!--    일기장-->
+    <string name="book_list_title">%d님의\n교환일기장 목록</string>
+    <string name="create_book_title">일기장 만들기</string>
+    <string name="create_book_section_title">일기장 표지 꾸미기</string>
+    <string name="create">생성</string>
+    <string name="cover_color">표지색상</string>
 </resources>
