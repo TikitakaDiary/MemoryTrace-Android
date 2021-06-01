@@ -57,7 +57,7 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         observe(viewModel.isShowSelectImgDialog) { showSelectImageDialog() }
         observe(viewModel.isLoadGallery) { accessGallery() }
         observe(viewModel.isLoadCamera) { accessCamera() }
-        observe(viewModel.isAttachSticker) { attachSticker() }
+        observe(viewModel.isShowStickerDialog) { loadStickerDialog() }
     }
 
     private fun setProperties() {
@@ -125,6 +125,14 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         galleryActivityResultLauncher.launch(intent)
     }
 
+    private fun loadStickerDialog() {
+        if (viewModel.bitmap.value == null && viewModel.color.value == null) {
+            toast(NOTICE_ADD_POLAROID)
+        } else {
+            attachSticker()
+        }
+    }
+
     private fun attachSticker() {
         val drawable =
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_launcher_foreground)
@@ -133,6 +141,7 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
 
     companion object {
         private const val NOTICE_DO_NOT_LOAD_GALLERY = "이미지를 로드하려면 권한이 필요합니다."
+        private const val NOTICE_ADD_POLAROID = "사진이나 단색을 먼저 입력해주세요"
         private const val SELECT_IMG_DIALOG_TAG = "SelectImageDialog"
     }
 }

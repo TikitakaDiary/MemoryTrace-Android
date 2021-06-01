@@ -13,7 +13,7 @@ internal class WriteViewModel : BaseViewModel() {
     val isShowSelectImgDialog = LiveEvent<Unit?>()
     val isLoadGallery = LiveEvent<Unit?>()
     val isLoadCamera = LiveEvent<Unit?>()
-    val isAttachSticker = LiveEvent<Unit?>()
+    val isShowStickerDialog = LiveEvent<Unit?>()
 
     fun showSelectImgDialog() {
         isShowSelectImgDialog.call()
@@ -27,7 +27,7 @@ internal class WriteViewModel : BaseViewModel() {
         isLoadCamera.call()
     }
 
-    fun attachSticker() {
-        isAttachSticker.call()
+    fun showStickerDialog() {
+        isShowStickerDialog.call()
     }
 }
