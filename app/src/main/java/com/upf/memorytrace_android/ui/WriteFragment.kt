@@ -65,6 +65,7 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
             dateTv.text = TimeUtil.getTodayDate(TimeUtil.YYYY_M_D_KR)
             nameTv.text = "유진진"
         }
+        receiveArgFromOtherView<Bitmap>("image") { viewModel.bitmap.value = it }
     }
 
     private fun cropImageWithBitmap(bitmap: Bitmap?) {

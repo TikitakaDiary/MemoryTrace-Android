@@ -17,7 +17,6 @@ internal class CropFragment : BaseFragment<CropViewModel, FragmentCropBinding>()
     override val viewModelClass = CropViewModel::class
     override val navArgs by navArgs<CropFragmentArgs>()
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setCropView()
@@ -33,7 +32,8 @@ internal class CropFragment : BaseFragment<CropViewModel, FragmentCropBinding>()
 
     private fun setCropView() {
         with(binding.cropIv) {
-            setImageUriAsync(navArgs.imageUri)
+            if (navArgs.imageUri != null) setImageUriAsync(navArgs.imageUri)
+            if (navArgs.bitmap != null) setImageBitmap(navArgs.bitmap)
             setOnCropImageCompleteListener(this@CropFragment)
         }
     }
