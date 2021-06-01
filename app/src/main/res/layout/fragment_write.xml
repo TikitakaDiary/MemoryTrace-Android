@@ -62,18 +62,38 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/top_layout">
 
-            <com.xiaopo.flying.sticker.StickerView
-                android:id="@+id/sticker_view"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="@android:color/white"
-                app:borderColor="@android:color/white"
+                android:backgroundTint="@color/lightGray"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="0dp"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:showBorder="true"
-                app:showIcons="true" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.xiaopo.flying.sticker.StickerView
+                    android:id="@+id/sticker_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:borderColor="@android:color/white"
+                    app:showBorder="true"
+                    app:showIcons="true">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_plus" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@{viewModel.bitmap}" />
+                </com.xiaopo.flying.sticker.StickerView>
+            </androidx.cardview.widget.CardView>
 
             <EditText
                 android:id="@+id/title_et"
@@ -82,7 +102,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_padding_24"
                 android:hint="@string/write_hint_title"
-                app:layout_constraintTop_toBottomOf="@id/sticker_view" />
+                android:textColorHint="@color/lightGray"
+                app:layout_constraintTop_toBottomOf="@id/card_view" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -145,8 +166,8 @@
             android:id="@+id/menu_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
             android:background="@color/systemGray02"
+            android:padding="12dp"
             android:paddingHorizontal="@dimen/default_padding_24"
             android:paddingVertical="@dimen/default_spacing_8"
             app:layout_constraintBottom_toBottomOf="parent">
