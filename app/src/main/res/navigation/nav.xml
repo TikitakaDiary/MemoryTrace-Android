@@ -50,4 +50,8 @@
             android:name="imageUri"
             app:argType="android.net.Uri" />
     </fragment>
+    <fragment
+        android:id="@+id/diaryFragment"
+        android:name="com.upf.memorytrace_android.ui.DiaryFragment"
+        android:label="DiaryFragment" />
 </navigation>
