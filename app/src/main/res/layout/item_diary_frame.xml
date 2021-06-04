@@ -19,7 +19,6 @@
             android:id="@+id/polaroid_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/default_padding_24"
             android:layout_marginTop="@dimen/default_spacing_8"
             android:background="@drawable/bg_polaroid"
             android:padding="@dimen/default_padding_24"
