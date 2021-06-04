@@ -1,4 +1,4 @@
-package com.upf.memorytrace_android.ui
+package com.upf.memorytrace_android.ui.diary
 
 import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.base.BaseFragment

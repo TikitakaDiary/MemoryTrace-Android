@@ -35,6 +35,11 @@
         <item name="android:textSize">@dimen/font_16</item>
     </style>
 
+    <style name="GmarketMedium24" parent="Content">
+        <item name="android:fontFamily">@font/gmarket_sans_ttf_medium</item>
+        <item name="android:textSize">@dimen/font_24</item>
+    </style>
+
     <style name="GmarketMedium18" parent="Content">
         <item name="android:fontFamily">@font/gmarket_sans_ttf_medium</item>
         <item name="android:textSize">@dimen/font_18</item>
