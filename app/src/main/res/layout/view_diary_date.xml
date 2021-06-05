@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="item"
-            type="com.upf.memorytrace_android.ui.diary.DiaryDateItem" />
+            name="date"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,7 +19,7 @@
             style="@style/GmarketMedium16"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{item.dateStr}"
+            android:text="@{date}"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="2021.06" />
     </androidx.constraintlayout.widget.ConstraintLayout>
