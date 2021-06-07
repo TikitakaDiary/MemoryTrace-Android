@@ -49,6 +49,9 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
     private val selectImageDialog by lazy(LazyThreadSafetyMode.NONE) {
         WriteImageBottomSheetFragment(viewModel)
     }
+    private val stickerDialog by lazy(LazyThreadSafetyMode.NONE) {
+        WriteStickerBottomSheetFragment(viewModel)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,6 +61,7 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         observe(viewModel.isLoadGallery) { accessGallery() }
         observe(viewModel.isLoadCamera) { accessCamera() }
         observe(viewModel.isShowStickerDialog) { loadStickerDialog() }
+        observe(viewModel.addSticker) { attachSticker() }
     }
 
     private fun setProperties() {
@@ -129,7 +133,7 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         if (viewModel.bitmap.value == null && viewModel.color.value == null) {
             toast(NOTICE_ADD_POLAROID)
         } else {
-            attachSticker()
+            stickerDialog.show(parentFragmentManager, STICKER_DIALOG_TAG)
         }
     }
 
@@ -143,5 +147,6 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         private const val NOTICE_DO_NOT_LOAD_GALLERY = "이미지를 로드하려면 권한이 필요합니다."
         private const val NOTICE_ADD_POLAROID = "사진이나 단색을 먼저 입력해주세요"
         private const val SELECT_IMG_DIALOG_TAG = "SelectImageDialog"
+        private const val STICKER_DIALOG_TAG = "StickerDialog"
     }
 }
