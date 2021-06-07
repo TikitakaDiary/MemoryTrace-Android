@@ -65,6 +65,7 @@
                 android:id="@+id/type_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{()->viewModel.changeListType()}"
                 android:src="@drawable/ic_grid"
                 app:layout_constraintBottom_toBottomOf="@id/title_tv"
                 app:layout_constraintEnd_toEndOf="parent"
