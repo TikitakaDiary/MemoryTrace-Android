@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_bottom_sheet_write_img"
+        android:background="@drawable/bg_bottom_sheet_write"
         android:paddingHorizontal="24dp"
         android:paddingVertical="28dp">
 
