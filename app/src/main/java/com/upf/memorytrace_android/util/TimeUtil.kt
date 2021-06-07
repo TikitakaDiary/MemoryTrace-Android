@@ -6,6 +6,7 @@ import java.util.*
 object TimeUtil {
     const val YYYY_MM_DD_KR = 0
     const val YYYY_M_D_KR = 1
+    const val YYYY_MM = 2
 
     private const val EMPTY = ""
 
@@ -15,6 +16,7 @@ object TimeUtil {
         val dateFormat = when (format) {
             YYYY_M_D_KR -> "yyyy년 M월 d일"
             YYYY_MM_DD_KR -> "yyyy년 MM월 dd일"
+            YYYY_MM -> "yyyy.MM"
             else -> EMPTY
         }
         return SimpleDateFormat(dateFormat, Locale.getDefault()).format(date)
