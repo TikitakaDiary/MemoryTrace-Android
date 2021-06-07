@@ -70,5 +70,9 @@
     <fragment
         android:id="@+id/diaryFragment"
         android:name="com.upf.memorytrace_android.ui.diary.DiaryFragment"
-        android:label="DiaryFragment" />
+        android:label="DiaryFragment" >
+        <action
+            android:id="@+id/action_diaryFragment_to_writeFragment"
+            app:destination="@id/writeFragment" />
+    </fragment>
 </navigation>

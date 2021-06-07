@@ -3,11 +3,12 @@ package com.upf.memorytrace_android.viewmodel
 import androidx.lifecycle.MutableLiveData
 import com.upf.memorytrace_android.base.BaseViewModel
 import com.upf.memorytrace_android.ui.diary.DiaryItem
+import com.upf.memorytrace_android.ui.diary.DiaryFragmentDirections
 import com.upf.memorytrace_android.ui.diary.DiaryListItem
 import com.upf.memorytrace_android.ui.diary.DiaryListType
 import com.upf.memorytrace_android.ui.diary.DiaryMonthItem
 import com.upf.memorytrace_android.util.TimeUtil
-import java.util.*
+import java.util.Calendar
 
 internal class DiaryViewModel : BaseViewModel() {
     val diaryListItem = MutableLiveData<List<DiaryListItem>>()
@@ -32,6 +33,10 @@ internal class DiaryViewModel : BaseViewModel() {
             .map {
                 DiaryMonthItem(it.key, it.value)
             }
+    }
+
+    fun onClickWriteDiary() {
+        navDirections.value = DiaryFragmentDirections.actionDiaryFragmentToWriteFragment()
     }
 
     fun changeListType() {
