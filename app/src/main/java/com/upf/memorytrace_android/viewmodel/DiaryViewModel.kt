@@ -14,7 +14,7 @@ internal class DiaryViewModel : BaseViewModel() {
     val diaryListItem = MutableLiveData<List<DiaryListItem>>()
 
     val title = MutableLiveData<String>()
-    val listType = MutableLiveData<DiaryListType>(DiaryListType.GRID)
+    val listType = MutableLiveData<DiaryListType>(DiaryListType.FRAME)
     val diaryOfMonthList = MutableLiveData<List<DiaryMonthItem>>()
     val isMyTurn = true
 
