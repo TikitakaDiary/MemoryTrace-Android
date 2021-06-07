@@ -1,4 +1,4 @@
-package com.upf.memorytrace_android.ui
+package com.upf.memorytrace_android.ui.write
 
 import android.Manifest
 import android.app.Activity

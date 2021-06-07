@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/writeFragment"
-        android:name="com.upf.memorytrace_android.ui.WriteFragment"
+        android:name="com.upf.memorytrace_android.ui.write.WriteFragment"
         android:label="WriteFragment" >
         <action
             android:id="@+id/action_writeFragment_to_cropFragment"

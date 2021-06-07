@@ -1,4 +1,4 @@
-package com.upf.memorytrace_android.ui
+package com.upf.memorytrace_android.ui.write
 
 import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.base.BaseBottomSheetFragment
