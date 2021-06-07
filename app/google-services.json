@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "319121424343",
+    "project_id": "memorytrace-42402",
+    "storage_bucket": "memorytrace-42402.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:319121424343:android:fc79575387b4d98f841592",
+        "android_client_info": {
+          "package_name": "com.upf.memorytrace_android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "319121424343-di4omj6glurlj8r1s9bj6joanm7m91ju.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.upf.memorytrace_android",
+            "certificate_hash": "1255238453b7c0eebe922222931a64a4a793d0bf"
+          }
+        },
+        {
+          "client_id": "319121424343-ogobvap5n1a8vchcma8a1viip07ikk48.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABDcGI1HXc975Wyr041cXaEqxhXtFb5UQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "319121424343-ogobvap5n1a8vchcma8a1viip07ikk48.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "319121424343-o6lc0k0e447tbq4bcnlhkq84bh4scqeg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tistory.lsh424.MemoryTrace"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

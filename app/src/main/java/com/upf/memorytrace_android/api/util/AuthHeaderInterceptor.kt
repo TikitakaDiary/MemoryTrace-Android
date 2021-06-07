@@ -1,5 +1,6 @@
 package com.upf.memorytrace_android.api.util
 
+import com.upf.memorytrace_android.util.MemoryTraceConfig
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -10,8 +11,7 @@ class AuthHeaderInterceptor : Interceptor {
 
         // TODO: preference로 관리하도록 수정 필요
         val isAuthorizedAccount: Boolean = true
-        val jwt: String =
-            "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrZXkxIiwiaWF0IjoxNjIxMzQ4NDk0fQ.0n9rRThJzxgw20LgeoFj_MtICdU17YtGHqXkbbWLhAI"
+        val jwt: String = MemoryTraceConfig.token ?: ""
 
         if (!isAuthorizedAccount) {
             throw Exception("oauth is not started.")
