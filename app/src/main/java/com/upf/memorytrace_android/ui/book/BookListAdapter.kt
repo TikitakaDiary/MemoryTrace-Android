@@ -28,9 +28,9 @@ class BookListAdapter : RecyclerView.Adapter<BookViewHolder>() {
     fun updateItems(newItems: List<Book>) {
         //TODO: diffUtil이 제대로 작동안해서? 우선 notifyDataSetChanged처리 해놓음 ..
         // 뒤로가기시 최 상단이동, diffutil처리 확인 필요
-//        val result = DiffUtil.calculateDiff(ItemDiffCallback(items, newItems))
+        val result = DiffUtil.calculateDiff(ItemDiffCallback(items, newItems))
         items.clearAndAddAll(newItems)
-//        result.dispatchUpdatesTo(this)
+        result.dispatchUpdatesTo(this)
         notifyDataSetChanged()
     }
 

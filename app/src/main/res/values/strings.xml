@@ -23,6 +23,7 @@
     <string name="create_book_section_title">일기장 표지 꾸미기</string>
     <string name="create">생성</string>
     <string name="cover_color">표지색상</string>
+    <string name="book_list_author">%s 작성중</string>
 
     <!--    로그인-->
     <string name="kakao_login">카카오톡으로 시작하기</string>
