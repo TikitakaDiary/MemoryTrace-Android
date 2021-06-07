@@ -12,8 +12,19 @@ object UserRepository {
             MemoryTraceUtils.apiService().createUser(user)
         if (response.isSuccess) {
             //update memory
-            MemoryTraceConfig.nickname = response.data?.nickname
-            MemoryTraceConfig.token = response.data?.jwt
+            response.data?.let {
+                MemoryTraceConfig.nickname = it.nickname
+                MemoryTraceConfig.token = it.jwt
+                MemoryTraceConfig.sns = it.snsType
+                MemoryTraceConfig.signupDate = it.createdDate.substring(0, 10)
+            }
+        }
+    }
+
+    suspend fun withdrawalUser() {
+        val response = MemoryTraceUtils.apiService().withdrawalUser()
+        if (response.isSuccess) {
+            //todo; 
         }
     }
 }

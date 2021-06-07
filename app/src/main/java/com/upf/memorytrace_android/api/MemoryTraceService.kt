@@ -40,4 +40,7 @@ interface MemoryTraceService {
      */
     @POST("user")
     suspend fun createUser(@Body user: User): UserResponse
+
+    @GET("user/withdrawal")
+    suspend fun withdrawalUser(): BaseResponse
 }
