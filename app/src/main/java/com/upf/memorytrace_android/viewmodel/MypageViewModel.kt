@@ -22,6 +22,12 @@ internal class MypageViewModel : BaseViewModel() {
         date.value = MemoryTraceConfig.signupDate
         version.value = BuildConfig.VERSION_NAME
     }
+
+    fun onClickMakers() {
+        navDirections.value =
+            MypageFragmentDirections.actionMypageFragmentToMakersFragment()
+    }
+
     fun withdrawalUser() {
         viewModelScope.launch {
             UserRepository.withdrawalUser()
