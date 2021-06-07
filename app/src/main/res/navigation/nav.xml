@@ -13,17 +13,25 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_bookListFragment"
+            app:destination="@id/bookListFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
     </fragment>
+
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.upf.memorytrace_android.ui.LoginFragment"
         android:label="LoginFragment">
-        <!--        <action-->
-        <!--            android:id="@+id/action_loginFragment_to_bookListFragment"-->
-        <!--            app:destination="@id/bookListFragment" />-->
+        <action
+            android:id="@+id/action_loginFragment_to_bookListFragment"
+            app:destination="@id/bookListFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_loginFragment_to_writeFragment"
-            app:destination="@id/bookListFragment" />
+            app:destination="@id/writeFragment" />
 
     </fragment>
     <fragment
@@ -42,4 +50,12 @@
         android:id="@+id/createBookFragment"
         android:name="com.upf.memorytrace_android.ui.book.CreateBookFragment"
         android:label="CreateBookFragment" />
+    <fragment
+        android:id="@+id/cropFragment"
+        android:name="com.upf.memorytrace_android.ui.CropFragment"
+        android:label="CropFragment" >
+        <argument
+            android:name="imageUri"
+            app:argType="android.net.Uri" />
+    </fragment>
 </navigation>
