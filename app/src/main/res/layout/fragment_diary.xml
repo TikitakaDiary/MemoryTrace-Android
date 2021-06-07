@@ -49,7 +49,7 @@
 
             <TextView
                 android:id="@+id/title_tv"
-                style="@style/GmarketMedium24"
+                style="@style/GmarketBold24"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="112dp"
@@ -60,7 +60,7 @@
                 app:layout_constraintEnd_toStartOf="@id/type_iv"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="해당 교환일기장 제목" />
+                tools:text="해당 교환일기장\n제목" />
 
             <ImageView
                 android:id="@+id/type_iv"
