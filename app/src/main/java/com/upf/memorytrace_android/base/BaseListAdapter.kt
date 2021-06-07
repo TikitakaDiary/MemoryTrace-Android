@@ -11,7 +11,7 @@ import com.upf.memorytrace_android.BR
 internal abstract class BaseListAdapter<T : BaseItem>(
     diffItemCallback: DiffUtil.ItemCallback<T> = BaseDiffItemCallback()
 ) : ListAdapter<T, BaseViewHolder<T>>(diffItemCallback) {
-    private var viewModel: BaseViewModel? = null
+    var viewModel: BaseViewModel? = null
 
     abstract fun getItemViewTypeByItemType(item: T): Int
 
@@ -46,7 +46,7 @@ internal abstract class BaseListAdapter<T : BaseItem>(
         holder.bind(getItem(position))
     }
 
-    fun setViewModel(vm: BaseViewModel) {
+    fun setViewHolderViewModel(vm: BaseViewModel) {
         viewModel = vm
     }
 }

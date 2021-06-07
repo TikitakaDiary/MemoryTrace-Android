@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.upf.memorytrace_android.ui.diary.DiaryMonthItem" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp">
+
+        <include
+            android:id="@+id/layout_date"
+            layout="@layout/view_diary_date"
+            app:date="@{item.date}" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/frame_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/layout_date"
+            tools:listitem="@layout/item_diary_frame" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

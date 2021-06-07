@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
+apply plugin: 'com.google.gms.google-services' //google login
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion rootProject.compile_sdk_version
@@ -35,6 +37,7 @@ android {
         dataBinding true
     }
 
+    //java 8 for kakao login
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -95,6 +98,18 @@ dependencies {
     // Module
     implementation project(path: ':sticker')
     implementation project(path: ':cropper')
+
+
+    // kakao login
+    implementation "com.kakao.sdk:v2-user:$kakao_version"
+
+    //firebase
+    implementation platform("com.google.firebase:firebase-bom:$firebase_version")
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation "com.google.android.gms:play-services-auth:$firebase_auth_version"
+
 
     // Test
     testImplementation 'junit:junit:4.12'
