@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/tv_name"
+        style="@style/NotoRegular16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/default_padding_24"
+        android:layout_marginBottom="@dimen/default_spacing_8"
+        android:background="@drawable/rect_gray_rounded"
+        android:padding="@dimen/default_padding_24"
+        android:textColor="@color/systemWhite"
+        tools:text="혜데이" />
+</layout>
