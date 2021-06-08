@@ -5,6 +5,7 @@ import android.view.*
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.upf.memorytrace_android.R
+import com.upf.memorytrace_android.api.model.Book
 import com.upf.memorytrace_android.base.BaseFragment
 import com.upf.memorytrace_android.databinding.FragmentCreateBookBinding
 import com.upf.memorytrace_android.databinding.ItemColorListBinding
@@ -23,6 +24,13 @@ internal class CreateBookFragment : BaseFragment<CreateBookViewModel, FragmentCr
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        //todo; arg를 받았을 경우 해당 값으로 수정할 수 있도록 그려줘야한다.
+//        receiveArgFromOtherView<Book>("book") {
+//            binding.title.setText(it.title)
+//            viewModel.setSelectedColor(Colors.getColor(it.bgColor))
+//            binding.toolbar.title = getString(R.string.setting_cover_edit)
+//        }
 
         setupRecyclerView()
         initViewModel()

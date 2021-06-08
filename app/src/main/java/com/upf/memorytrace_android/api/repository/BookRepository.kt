@@ -18,7 +18,7 @@ object BookRepository {
             val response = MemoryTraceUtils.apiService().fetchBooks(page, PAGE_SIZE)
             response.let {
 //                if (it.isSuccess)
-                    it
+                it
 //                else
 //                    throw Exception("internal error")
             }
@@ -27,4 +27,21 @@ object BookRepository {
         }
     }
 
+    suspend fun fetchBookSetting(id: Int): BaseResponse {
+
+        return try {
+            return MemoryTraceUtils.apiService().fetchBookSetting(id)
+        } catch (e: Exception) {
+            throw Exception(e.message ?: "Internet Error")
+        }
+    }
+
+    suspend fun exitBook(id: Int): BaseResponse {
+
+        return try {
+            return MemoryTraceUtils.apiService().exitBook(id)
+        } catch (e: Exception) {
+            throw Exception(e.message ?: "Internet Error")
+        }
+    }
 }

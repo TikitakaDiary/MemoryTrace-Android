@@ -28,6 +28,15 @@ interface MemoryTraceService {
     ): BookResponse
 
     /**
+     * 일기장 상세 조회
+     */
+    @GET("book/{bid}")
+    suspend fun fetchBookSetting(@Path("bid") id: Int): BaseResponse
+
+    @PUT("diary/exit/{bid}")
+    suspend fun exitBook(@Path("bid") id: Int): BaseResponse
+
+    /**
      * 초대코드로 일기장 입장
      */
     @POST("invite")
