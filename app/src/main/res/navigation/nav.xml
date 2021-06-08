@@ -63,11 +63,18 @@
         <action
             android:id="@+id/action_mypageFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_mypageFragment_to_nameEditFragment"
+            app:destination="@id/nameEditFragment" />
     </fragment>
     <fragment
         android:id="@+id/makersFragment"
         android:name="com.upf.memorytrace_android.ui.MakersFragment"
         android:label="MakersFragment" />
+    <fragment
+        android:id="@+id/nameEditFragment"
+        android:name="com.upf.memorytrace_android.ui.NameEditFragment"
+        android:label="NameEditFragment" />
     <fragment
         android:id="@+id/cropFragment"
         android:name="com.upf.memorytrace_android.ui.CropFragment"
@@ -76,4 +83,5 @@
             android:name="imageUri"
             app:argType="android.net.Uri" />
     </fragment>
+
 </navigation>

@@ -10,3 +10,5 @@ data class User(
     var snsType: String = "",
     var createdDate: String = ""
 )
+
+data class UserName(var nickname: String = "")

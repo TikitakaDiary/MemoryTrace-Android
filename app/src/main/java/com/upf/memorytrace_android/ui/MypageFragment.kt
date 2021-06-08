@@ -18,6 +18,10 @@ internal class MypageFragment : BaseFragment<MypageViewModel, FragmentMypageBind
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        receiveArgFromOtherView<Boolean>("reload") {
+            if (it) viewModel.name.value = MemoryTraceConfig.nickname
+        }
+
         binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
@@ -30,6 +34,9 @@ internal class MypageFragment : BaseFragment<MypageViewModel, FragmentMypageBind
             }
         }
 
+        binding.btnNameEdit.setOnClickListener {
+            findNavController().navigate(MypageFragmentDirections.actionMypageFragmentToNameEditFragment())
+        }
         binding.btnMakers.setOnClickListener {
             findNavController().navigate(MypageFragmentDirections.actionMypageFragmentToMakersFragment())
         }
