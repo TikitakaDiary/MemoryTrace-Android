@@ -11,6 +11,7 @@ import com.facebook.flipper.plugins.navigation.NavigationFlipperPlugin
 import com.facebook.flipper.plugins.network.NetworkFlipperPlugin
 import com.facebook.flipper.plugins.sharedpreferences.SharedPreferencesFlipperPlugin
 import com.facebook.soloader.SoLoader
+import com.kakao.sdk.common.KakaoSdk
 import com.upf.memorytrace_android.di.DaggerAppComponent
 
 
@@ -19,23 +20,34 @@ class MemoryTraceApplication : Application() {
         DaggerAppComponent.factory().create(this)
     }
 
+    init {
+        instance = this
+    }
+
     override fun onCreate() {
         super.onCreate()
+
         SoLoader.init(this, false);
 
-        if (BuildConfig.DEBUG && FlipperUtils.shouldEnableFlipper(this)) {
-            val client = AndroidFlipperClient.getInstance(this)
-            client.addPlugin(InspectorFlipperPlugin(this, DescriptorMapping.withDefaults()))
-            client.addPlugin(NavigationFlipperPlugin.getInstance())
-            client.addPlugin(DatabasesFlipperPlugin(this))
-            client.addPlugin(SharedPreferencesFlipperPlugin(this))
-            client.addPlugin(CrashReporterPlugin.getInstance())
-            client.addPlugin(networkFlipperPlugin)
-            client.start()
+        if (BuildConfig.DEBUG && FlipperUtils.shouldEnableFlipper(instance)) {
+            AndroidFlipperClient.getInstance(instance).apply {
+                addPlugin(InspectorFlipperPlugin(instance, DescriptorMapping.withDefaults()))
+                addPlugin(NavigationFlipperPlugin.getInstance())
+                addPlugin(DatabasesFlipperPlugin(instance))
+                addPlugin(SharedPreferencesFlipperPlugin(instance))
+                addPlugin(CrashReporterPlugin.getInstance())
+                addPlugin(networkFlipperPlugin)
+            }.start()
         }
+
+        KakaoSdk.init(this, getString(R.string.kakao_app_key))
     }
 
     companion object {
         internal val networkFlipperPlugin = NetworkFlipperPlugin()
+        lateinit var instance: MemoryTraceApplication
+        fun getApplication(): MemoryTraceApplication {
+            return instance
+        }
     }
 }

@@ -21,9 +21,29 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--        for flipper-->
         <activity
             android:name="com.facebook.flipper.android.diagnostics.FlipperDiagnosticActivity"
             android:exported="true" />
+
+        <!--        for kakao login-->
+        <meta-data
+            android:name="kakaoAppKey"
+            android:value="@string/kakao_app_key" />
+        <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth" -->
+                <data
+                    android:host="oauth"
+                    android:scheme="kakaoff1dcb2582530e46c8cb8cd7256f5418" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

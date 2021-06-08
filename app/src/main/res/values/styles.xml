@@ -35,9 +35,24 @@
         <item name="android:textSize">@dimen/font_16</item>
     </style>
 
+    <style name="GmarketMedium24" parent="Content">
+        <item name="android:fontFamily">@font/gmarket_sans_ttf_medium</item>
+        <item name="android:textSize">@dimen/font_24</item>
+    </style>
+
+    <style name="GmarketMedium20" parent="Content">
+        <item name="android:fontFamily">@font/gmarket_sans_ttf_medium</item>
+        <item name="android:textSize">@dimen/font_20</item>
+    </style>
+
     <style name="GmarketMedium18" parent="Content">
         <item name="android:fontFamily">@font/gmarket_sans_ttf_medium</item>
         <item name="android:textSize">@dimen/font_18</item>
+    </style>
+
+    <style name="GmarketMedium16" parent="Content">
+        <item name="android:fontFamily">@font/gmarket_sans_ttf_medium</item>
+        <item name="android:textSize">@dimen/font_16</item>
     </style>
 
     <style name="GmarketMedium14" parent="Content">
@@ -109,5 +124,30 @@
         <item name="android:textColor">@color/systemBlue</item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="TransparentDialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+    </style>
+  
+    <style name="LoginButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingHorizontal">@dimen/title_spacing_16</item>
+        <item name="android:paddingVertical">@dimen/item_spacing_12</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/rect_white_rounded</item>
+    </style>
+
+    <style name="ImageView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:adjustViewBounds">true</item>
     </style>
 </resources>
