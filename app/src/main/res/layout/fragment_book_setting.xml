@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.upf.memorytrace_android.viewmodel.BookSettingViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_back" />
+
+        <RelativeLayout
+            android:id="@+id/btn_member"
+            style="@style/MypageItemLayout"
+            android:layout_marginTop="@dimen/default_padding_24"
+            android:onClick="@{()->viewModel.onClickMember()}"
+            android:paddingHorizontal="@dimen/default_padding_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+
+            <TextView
+                style="@style/MypageItem"
+                android:text="@string/setting_members" />
+
+            <ImageView
+                style="@style/ImageView"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_right_arrow" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/btn_cover_edit"
+            style="@style/MypageItemLayout"
+            android:paddingHorizontal="@dimen/default_padding_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_member">
+
+            <TextView
+                style="@style/MypageItem"
+                android:text="@string/setting_cover_edit" />
+
+            <ImageView
+                style="@style/ImageView"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_right_arrow" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/btn_leave"
+            style="@style/MypageItemLayout"
+            android:onClick="@{()->viewModel.onClickLeave()}"
+            android:paddingHorizontal="@dimen/default_padding_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_cover_edit">
+
+            <TextView
+                style="@style/MypageItem"
+                android:text="@string/setting_leave_book" />
+
+        </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

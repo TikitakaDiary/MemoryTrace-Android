@@ -181,4 +181,13 @@
     <style name="DialogConfirm" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
         <item name="android:textColor">@color/red</item>
     </style>
+
+    <style name="WhiteButton" parent="NotoBold14">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/rect_white_rounded_22</item>
+        <item name="android:paddingHorizontal">@dimen/default_padding_24</item>
+        <item name="android:paddingVertical">@dimen/default_spacing_8</item>
+        <item name="android:textColor">@color/systemBlack</item>
+    </style>
 </resources>
