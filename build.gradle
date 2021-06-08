@@ -19,6 +19,9 @@ buildscript {
         gson_converter_version = "2.9.0"
         http_logging_version = "4.9.1"
 
+        // glide
+        glide_version = '4.12.0'
+
         //login
         kakao_version = "2.5.0"
 
