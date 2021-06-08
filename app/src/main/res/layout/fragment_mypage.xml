@@ -149,14 +149,8 @@
 
                 <TextView
                     android:id="@+id/btn_invite"
-                    style="@style/NotoBold14"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rect_white_rounded_22"
-                    android:paddingHorizontal="@dimen/default_padding_24"
-                    android:paddingVertical="@dimen/default_spacing_8"
+                    style="@style/WhiteButton"
                     android:text="@string/mypage_confirm"
-                    android:textColor="@color/systemBlack"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/ed_invite"
                     app:layout_constraintTop_toBottomOf="@id/label_invite" />
@@ -197,11 +191,13 @@
 
                         <TextView
                             style="@style/MypageItem"
+                            android:layout_centerVertical="true"
                             android:text="@string/mypage_makers" />
 
                         <ImageView
                             style="@style/ImageView"
                             android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
                             android:src="@drawable/ic_right_arrow" />
                     </RelativeLayout>
 
@@ -216,6 +212,7 @@
                         <ImageView
                             style="@style/ImageView"
                             android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
                             android:src="@drawable/ic_right_arrow" />
                     </RelativeLayout>
 
@@ -237,6 +234,7 @@
                         <ImageView
                             style="@style/ImageView"
                             android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
                             android:src="@drawable/ic_right_arrow" />
                     </RelativeLayout>
 
