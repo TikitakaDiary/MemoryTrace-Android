@@ -28,10 +28,11 @@ interface MemoryTraceService {
     ): BookResponse
 
     /**
-     * 초대코드 생성
+     * 초대코드로 일기장 입장
      */
     @POST("invite")
-    suspend fun createInviteLink(@Body inviteModel: InviteModel): BaseResponse
+    suspend fun joinToBook(@Body inviteCode: String): BaseResponse
+
 
     /**
      * 회원가입 및 로그인

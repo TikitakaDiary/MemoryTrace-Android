@@ -50,5 +50,15 @@ object UserRepository {
         }
     }
 
-   
+    suspend fun joinToBook(code: String) {
+        try {
+            val response = MemoryTraceUtils.apiService().joinToBook(code)
+            if (response.isSuccess) {
+                //todo;
+            }
+        } catch (e: Exception) {
+
+        }
+
+    }
 }

@@ -30,7 +30,7 @@ internal class MypageFragment : BaseFragment<MypageViewModel, FragmentMypageBind
             if (binding.edInvite.text.isNullOrBlank())
                 toast(getString(R.string.mypage_invite_code_hint))
             else {
-                //todo: invite
+                viewModel.joinToBook(binding.edInvite.text.toString())
             }
         }
 
@@ -48,7 +48,7 @@ internal class MypageFragment : BaseFragment<MypageViewModel, FragmentMypageBind
                 getString(R.string.mypage_logout_message),
                 getString(R.string.mypage_logout)
             ) {
-                resetUser()
+                viewModel.resetUser()
             }
         }
         binding.btnLeave.setOnClickListener {
@@ -58,7 +58,6 @@ internal class MypageFragment : BaseFragment<MypageViewModel, FragmentMypageBind
                 getString(R.string.mypage_leave_confirm)
             ) {
                 viewModel.withdrawalUser()
-                resetUser()
             }
         }
 
@@ -77,11 +76,6 @@ internal class MypageFragment : BaseFragment<MypageViewModel, FragmentMypageBind
             .setPositiveButton(confirm) { _, _ ->
                 positive?.invoke()
             }.create().show()
-    }
-
-    private fun resetUser() {
-        MemoryTraceConfig.clear()
-        findNavController().navigate(MypageFragmentDirections.actionMypageFragmentToLoginFragment())
     }
 
 }
