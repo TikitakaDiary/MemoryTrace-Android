@@ -24,13 +24,20 @@ enum class Colors(val id: Int, val color: Long) {
 
 
     companion object {
-        fun getColor(id: Int): String {
+        fun getColorHex(id: Int): String {
             for (current in values()) {
                 if (current.id == id)
                     return "#${Integer.toHexString(current.color.toInt()).substring(2)}"
 
             }
             return ""
+        }
+
+        fun getColor(id: Int): Colors {
+            for (current in values()) {
+                if (current.id == id) return current
+            }
+            return RED
         }
 
         fun getColors(): List<Colors> {

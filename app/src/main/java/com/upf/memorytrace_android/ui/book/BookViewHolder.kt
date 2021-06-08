@@ -13,7 +13,7 @@ class BookViewHolder(val binding: ItemBookListBinding) : RecyclerView.ViewHolder
         binding.itemBookAuthor.text =
             itemView.context.getString(R.string.book_list_author, item.nickname)
         binding.itemBookTitle.text = item.title
-        binding.itemBook.setCardBackgroundColor(Color.parseColor(Colors.getColor(item.bgColor)))
+        binding.itemBook.setCardBackgroundColor(Color.parseColor(Colors.getColorHex(item.bgColor)))
 
         itemView.setOnClickListener {
             // using item.id
