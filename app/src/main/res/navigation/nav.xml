@@ -49,15 +49,40 @@
         <action
             android:id="@+id/action_bookListFragment_to_createBookFragment"
             app:destination="@id/createBookFragment" />
+        <action
+            android:id="@+id/action_bookListFragment_to_mypageFragment"
+            app:destination="@id/mypageFragment" />
     </fragment>
     <fragment
         android:id="@+id/createBookFragment"
         android:name="com.upf.memorytrace_android.ui.book.CreateBookFragment"
         android:label="CreateBookFragment" />
     <fragment
+        android:id="@+id/mypageFragment"
+        android:name="com.upf.memorytrace_android.ui.MypageFragment"
+        android:label="MypageFragment">
+        <action
+            android:id="@+id/action_mypageFragment_to_makersFragment"
+            app:destination="@id/makersFragment" />
+        <action
+            android:id="@+id/action_mypageFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_mypageFragment_to_nameEditFragment"
+            app:destination="@id/nameEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/makersFragment"
+        android:name="com.upf.memorytrace_android.ui.MakersFragment"
+        android:label="MakersFragment" />
+    <fragment
+        android:id="@+id/nameEditFragment"
+        android:name="com.upf.memorytrace_android.ui.NameEditFragment"
+        android:label="NameEditFragment" />
+    <fragment
         android:id="@+id/cropFragment"
         android:name="com.upf.memorytrace_android.ui.CropFragment"
-        android:label="CropFragment" >
+        android:label="CropFragment">
         <argument
             android:name="imageUri"
             app:argType="android.net.Uri"

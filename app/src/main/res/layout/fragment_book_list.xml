@@ -25,6 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
+                android:onClick="@{()->viewModel.onClickMypage()}"
                 android:paddingHorizontal="@dimen/default_padding_24"
                 android:src="@drawable/ic_mypage" />
         </androidx.appcompat.widget.Toolbar>

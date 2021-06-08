@@ -15,9 +15,9 @@ internal class SplashViewModel : BaseViewModel() {
         viewModelScope.launch {
             delay(1500L)
             navDirections.value = if (MemoryTraceConfig.isLoggedIn) {
-                SplashFragmentDirections.actionSplashFragmentToLoginFragment()
-            } else {
                 SplashFragmentDirections.actionSplashFragmentToBookListFragment()
+            } else {
+                SplashFragmentDirections.actionSplashFragmentToLoginFragment()
             }
         }
     }

@@ -31,7 +31,7 @@
 
             <ImageView
                 style="@style/ImageView"
-                android:src="@drawable/ic_add_diary" />
+                android:src="@drawable/ic_kakaotalk" />
 
             <TextView
                 style="@style/NotoRegular16"
@@ -49,7 +49,7 @@
 
             <ImageView
                 style="@style/ImageView"
-                android:src="@drawable/ic_add_diary" />
+                android:src="@drawable/ic_google" />
 
             <TextView
                 style="@style/NotoRegular16"

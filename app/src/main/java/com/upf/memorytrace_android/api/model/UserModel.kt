@@ -6,6 +6,9 @@ data class User(
     var nickname: String = "",
     var profilemg: String? = null,
     var jwt: String = "",
-    var snsKey:String = "",
-    var snsType:String = ""
+    var snsKey: String = "",
+    var snsType: String = "",
+    var createdDate: String = ""
 )
+
+data class UserName(var nickname: String = "")

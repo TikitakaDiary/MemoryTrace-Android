@@ -33,7 +33,6 @@ internal class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding
 
         binding.btnGoogleLogin.setOnClickListener {
             loginWithGoogle()
-//            viewModel.onClickKakaoLogin()
         }
     }
 

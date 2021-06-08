@@ -4,11 +4,14 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.upf.memorytrace_android.MemoryTraceApplication
+import java.time.format.SignStyle
 
 object MemoryTraceConfig {
     private const val PREFERENCE = "MemoryTrace.preference"
     private const val NICKNAME = "nickname"
     private const val USER_TOKEN = "user_token"
+    private const val SIGNUP_SNS = "signup_sns"
+    private const val SIGNUP_DATE = "signup_date"
 
     private val pref: SharedPreferences =
         MemoryTraceApplication.getApplication()
@@ -23,5 +26,17 @@ object MemoryTraceConfig {
         get() = pref.getString(USER_TOKEN, "")
         set(value) = pref.edit { putString(USER_TOKEN, value) }
 
+    var sns: String?
+        get() = pref.getString(SIGNUP_SNS, "")
+        set(value) = pref.edit { putString(SIGNUP_SNS, value) }
+
+    var signupDate: String?
+        get() = pref.getString(SIGNUP_DATE, "")
+        set(value) = pref.edit { putString(SIGNUP_DATE, value) }
+
     var isLoggedIn: Boolean = !nickname.isNullOrBlank() && !token.isNullOrBlank()
+
+    fun clear(){
+        pref.edit { clear() }
+    }
 }
