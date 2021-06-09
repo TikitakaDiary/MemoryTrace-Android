@@ -81,24 +81,29 @@
                     app:showBorder="true"
                     app:showIcons="true">
 
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@{viewModel.bitmap}" />
-
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/lightGray"
                         android:gravity="center"
-                        android:visibility="@{viewModel.bitmap == null}">
+                        android:onClick="@{()->viewModel.showSelectImgDialog()}">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/ic_plus" />
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="@{viewModel.color != null}" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@{viewModel.bitmap}"
+                        android:visibility="@{viewModel.bitmap != null}" />
                 </com.xiaopo.flying.sticker.StickerView>
             </androidx.cardview.widget.CardView>
 
@@ -194,8 +199,8 @@
                 android:id="@+id/sticker_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_sticker"
                 android:onClick="@{()->viewModel.showStickerDialog()}"
+                android:src="@drawable/ic_sticker"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
