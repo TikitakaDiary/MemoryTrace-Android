@@ -42,4 +42,8 @@ internal class WriteViewModel : BaseViewModel() {
     fun showColorDialog() {
         isShowColorDialog.call()
     }
+
+    fun changeColor(c: Colors) {
+        color.value = c
+    }
 }
