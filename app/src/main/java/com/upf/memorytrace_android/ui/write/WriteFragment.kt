@@ -52,6 +52,9 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
     private val stickerDialog by lazy(LazyThreadSafetyMode.NONE) {
         WriteStickerBottomSheetFragment(viewModel)
     }
+    private val colorDialog by lazy(LazyThreadSafetyMode.NONE) {
+        WriteColorBottomSheetFragment(viewModel)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -62,6 +65,7 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         observe(viewModel.isLoadCamera) { accessCamera() }
         observe(viewModel.isShowStickerDialog) { loadStickerDialog() }
         observe(viewModel.addSticker) { attachSticker() }
+        observe(viewModel.isShowColorDialog) { showColorDialog() }
     }
 
     private fun setProperties() {
@@ -129,6 +133,11 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         galleryActivityResultLauncher.launch(intent)
     }
 
+    private fun showColorDialog() {
+        selectImageDialog.dismiss()
+        colorDialog.show(parentFragmentManager, COLOR_DIALOG_TAG)
+    }
+
     private fun loadStickerDialog() {
         if (viewModel.bitmap.value == null && viewModel.color.value == null) {
             toast(NOTICE_ADD_POLAROID)
@@ -148,5 +157,6 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         private const val NOTICE_ADD_POLAROID = "사진이나 단색을 먼저 입력해주세요"
         private const val SELECT_IMG_DIALOG_TAG = "SelectImageDialog"
         private const val STICKER_DIALOG_TAG = "StickerDialog"
+        private const val COLOR_DIALOG_TAG = "ColorDialog"
     }
 }
