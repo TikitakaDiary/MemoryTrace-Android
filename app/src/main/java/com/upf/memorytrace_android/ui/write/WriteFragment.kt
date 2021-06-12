@@ -17,6 +17,7 @@ import com.upf.memorytrace_android.databinding.FragmentWriteBinding
 import com.upf.memorytrace_android.extension.observe
 import com.upf.memorytrace_android.extension.toast
 import com.upf.memorytrace_android.util.Colors
+import com.upf.memorytrace_android.util.ImageConverter
 import com.upf.memorytrace_android.util.TimeUtil
 import com.upf.memorytrace_android.viewmodel.WriteViewModel
 import com.xiaopo.flying.sticker.DrawableSticker
@@ -68,6 +69,7 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         observe(viewModel.addSticker) { attachSticker() }
         observe(viewModel.isShowColorDialog) { showColorDialog() }
         observe(viewModel.color) { it?.let { color -> changeColor(color) } }
+        observe(viewModel.isSaveDiary) { saveDiary() }
     }
 
     private fun setProperties() {
@@ -156,6 +158,11 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
 
     private fun changeColor(color: Colors) {
         Colors.fillColor(binding.colorView, color)
+    }
+
+    private fun saveDiary() {
+        val bitmap = ImageConverter.convertViewToBitmap(binding.cardView)
+        viewModel.uploadDiary(bitmap)
     }
 
     companion object {
