@@ -6,8 +6,12 @@ import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.api.model.Book
 import com.upf.memorytrace_android.databinding.ItemBookListBinding
 import com.upf.memorytrace_android.util.Colors
+import com.upf.memorytrace_android.viewmodel.BookListViewModel
 
-class BookViewHolder(val binding: ItemBookListBinding) : RecyclerView.ViewHolder(binding.root) {
+internal class BookViewHolder(
+    val binding: ItemBookListBinding,
+    val viewModel: BookListViewModel
+) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: Book) {
         binding.itemBookAuthor.text =
@@ -16,8 +20,7 @@ class BookViewHolder(val binding: ItemBookListBinding) : RecyclerView.ViewHolder
         binding.itemBook.setCardBackgroundColor(Color.parseColor(Colors.getColor(item.bgColor)))
 
         itemView.setOnClickListener {
-            // using item.id
-
+            viewModel.onClickDiary(item.id)
         }
     }
 }

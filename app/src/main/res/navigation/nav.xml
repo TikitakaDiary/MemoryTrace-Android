@@ -52,6 +52,9 @@
         <action
             android:id="@+id/action_bookListFragment_to_mypageFragment"
             app:destination="@id/mypageFragment" />
+        <action
+            android:id="@+id/action_bookListFragment_to_diaryFragment"
+            app:destination="@id/diaryFragment" />
     </fragment>
     <fragment
         android:id="@+id/createBookFragment"
@@ -99,5 +102,9 @@
         <action
             android:id="@+id/action_diaryFragment_to_writeFragment"
             app:destination="@id/writeFragment" />
+        <argument
+            android:name="did"
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
 </navigation>
