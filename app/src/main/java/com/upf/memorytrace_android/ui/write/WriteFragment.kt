@@ -1,4 +1,4 @@
-package com.upf.memorytrace_android.ui
+package com.upf.memorytrace_android.ui.write
 
 import android.Manifest
 import android.app.Activity
@@ -16,6 +16,8 @@ import com.upf.memorytrace_android.base.BaseFragment
 import com.upf.memorytrace_android.databinding.FragmentWriteBinding
 import com.upf.memorytrace_android.extension.observe
 import com.upf.memorytrace_android.extension.toast
+import com.upf.memorytrace_android.util.Colors
+import com.upf.memorytrace_android.util.ImageConverter
 import com.upf.memorytrace_android.util.TimeUtil
 import com.upf.memorytrace_android.viewmodel.WriteViewModel
 import com.xiaopo.flying.sticker.DrawableSticker
@@ -49,6 +51,12 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
     private val selectImageDialog by lazy(LazyThreadSafetyMode.NONE) {
         WriteImageBottomSheetFragment(viewModel)
     }
+    private val stickerDialog by lazy(LazyThreadSafetyMode.NONE) {
+        WriteStickerBottomSheetFragment(viewModel)
+    }
+    private val colorDialog by lazy(LazyThreadSafetyMode.NONE) {
+        WriteColorBottomSheetFragment(viewModel)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,6 +66,10 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         observe(viewModel.isLoadGallery) { accessGallery() }
         observe(viewModel.isLoadCamera) { accessCamera() }
         observe(viewModel.isShowStickerDialog) { loadStickerDialog() }
+        observe(viewModel.addSticker) { attachSticker() }
+        observe(viewModel.isShowColorDialog) { showColorDialog() }
+        observe(viewModel.color) { it?.let { color -> changeColor(color) } }
+        observe(viewModel.isSaveDiary) { saveDiary() }
     }
 
     private fun setProperties() {
@@ -125,11 +137,16 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         galleryActivityResultLauncher.launch(intent)
     }
 
+    private fun showColorDialog() {
+        selectImageDialog.dismiss()
+        colorDialog.show(parentFragmentManager, COLOR_DIALOG_TAG)
+    }
+
     private fun loadStickerDialog() {
         if (viewModel.bitmap.value == null && viewModel.color.value == null) {
             toast(NOTICE_ADD_POLAROID)
         } else {
-            attachSticker()
+            stickerDialog.show(parentFragmentManager, STICKER_DIALOG_TAG)
         }
     }
 
@@ -139,9 +156,20 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         binding.stickerView.addSticker(DrawableSticker(drawable))
     }
 
+    private fun changeColor(color: Colors) {
+        Colors.fillColor(binding.colorView, color)
+    }
+
+    private fun saveDiary() {
+        val bitmap = ImageConverter.convertViewToBitmap(binding.cardView)
+        viewModel.uploadDiary(bitmap)
+    }
+
     companion object {
         private const val NOTICE_DO_NOT_LOAD_GALLERY = "이미지를 로드하려면 권한이 필요합니다."
         private const val NOTICE_ADD_POLAROID = "사진이나 단색을 먼저 입력해주세요"
         private const val SELECT_IMG_DIALOG_TAG = "SelectImageDialog"
+        private const val STICKER_DIALOG_TAG = "StickerDialog"
+        private const val COLOR_DIALOG_TAG = "ColorDialog"
     }
 }
