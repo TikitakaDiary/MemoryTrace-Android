@@ -19,6 +19,8 @@ internal class WriteViewModel : BaseViewModel() {
 
     val isShowColorDialog = LiveEvent<Unit?>()
 
+    val isSaveDiary = LiveEvent<Unit?>()
+
     fun showSelectImgDialog() {
         isShowSelectImgDialog.call()
     }
@@ -45,5 +47,13 @@ internal class WriteViewModel : BaseViewModel() {
 
     fun changeColor(c: Colors) {
         color.value = c
+    }
+
+    fun saveDiary() {
+        isSaveDiary.call()
+    }
+
+    fun uploadDiary(bitmap: Bitmap) {
+
     }
 }
