@@ -58,6 +58,15 @@ internal class DiaryViewModel : BaseViewModel() {
                     diaryOfMonthList.postValue(it)
                 }
         }
+//        diaryOfMonthList.value = (1..11).map {
+//            val calendar = Calendar.getInstance()
+//            calendar.add(Calendar.MONTH, -(it / 2))
+//            val date = calendar.time
+//            DiaryItem(it, "title$it", "n$it", "", date)
+//        }.groupBy { TimeUtil.getDate(TimeUtil.YYYY_MM, it.date) }
+//            .map {
+//                DiaryMonthItem(it.key, it.value)
+//            }
     }
 
     fun onClickWriteDiary() {

@@ -57,6 +57,11 @@ interface MemoryTraceService {
         @Path("bid") id: Int,
         @Query("page") page: Int,
         @Query("size") size: Int
+    ): Response<DiaryListResponse>
+
+    @GET("/diary/{did}")
+    suspend fun fetchDiary(
+        @Path("did") did: Int
     ): Response<DiaryResponse>
 
     @Multipart

@@ -3,6 +3,7 @@ package com.upf.memorytrace_android.api
 import com.google.gson.annotations.SerializedName
 import com.upf.memorytrace_android.api.model.BookList
 import com.upf.memorytrace_android.api.model.DiaryCreateModel
+import com.upf.memorytrace_android.api.model.DiaryDetailModel
 import com.upf.memorytrace_android.api.model.DiaryListModel
 import com.upf.memorytrace_android.api.model.User
 
@@ -23,9 +24,14 @@ class UserResponse : BaseResponse() {
     val data: User? = null
 }
 
-data class DiaryResponse(
+data class DiaryListResponse(
     @SerializedName("data")
     val data: DiaryListModel
+) : BaseResponse()
+
+data class DiaryResponse(
+    @SerializedName("data")
+    val data: DiaryDetailModel
 ) : BaseResponse()
 
 data class DiaryCreateResponse(
