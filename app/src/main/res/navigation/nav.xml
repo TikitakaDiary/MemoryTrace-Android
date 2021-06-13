@@ -41,6 +41,10 @@
         <action
             android:id="@+id/action_writeFragment_to_cropFragment"
             app:destination="@id/cropFragment" />
+        <argument
+            android:name="bid"
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
     <fragment
         android:id="@+id/bookListFragment"
@@ -103,7 +107,7 @@
             android:id="@+id/action_diaryFragment_to_writeFragment"
             app:destination="@id/writeFragment" />
         <argument
-            android:name="did"
+            android:name="bid"
             app:argType="integer"
             android:defaultValue="-1" />
     </fragment>

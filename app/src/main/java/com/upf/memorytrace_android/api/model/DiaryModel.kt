@@ -2,6 +2,11 @@ package com.upf.memorytrace_android.api.model
 
 import com.google.gson.annotations.SerializedName
 
+data class DiaryCreateModel(
+    @SerializedName("did")
+    val did: Int
+)
+
 data class DiaryListModel(
     @SerializedName("curPage")
     val curPage: Int,

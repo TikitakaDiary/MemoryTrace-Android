@@ -63,8 +63,8 @@ interface MemoryTraceService {
     @POST("/diary")
     suspend fun createDiary(
         @Query("bid") bid: Int,
+        @Query("title") title: String,
         @Query("content") content: String,
-        @Part img: MultipartBody.Part,
-        @Query("title") title: String
+        @Part img: MultipartBody.Part
     ): Response<DiaryCreateResponse>
 }

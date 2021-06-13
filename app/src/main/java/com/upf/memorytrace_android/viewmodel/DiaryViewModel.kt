@@ -61,7 +61,7 @@ internal class DiaryViewModel : BaseViewModel() {
     }
 
     fun onClickWriteDiary() {
-        navDirections.value = DiaryFragmentDirections.actionDiaryFragmentToWriteFragment()
+        navDirections.value = DiaryFragmentDirections.actionDiaryFragmentToWriteFragment(bid)
     }
 
     fun changeListType() {
