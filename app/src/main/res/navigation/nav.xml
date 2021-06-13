@@ -110,5 +110,17 @@
             android:name="bid"
             app:argType="integer"
             android:defaultValue="-1" />
+        <action
+            android:id="@+id/action_diaryFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.upf.memorytrace_android.ui.DetailFragment"
+        android:label="DetailFragment" >
+        <argument
+            android:name="did"
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
 </navigation>
