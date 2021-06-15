@@ -35,7 +35,7 @@ internal class CreateBookFragment : BaseFragment<CreateBookViewModel, FragmentCr
 
     private fun initViewModel() {
         observe(viewModel.selectedColor) {
-            binding.itemBook.setCardBackgroundColor(it.toInt())
+            binding.itemBook.background.setTint(it.toInt())
         }
         observe(viewModel.createBookSuccess) {
             //TODO: 리스트에 데이터 업데이트 되도록 확인 및 처리 필요
