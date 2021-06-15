@@ -57,6 +57,12 @@ enum class Colors(val id: Int, val color: Long) {
             )
         }
 
+        fun fillColor(view: View?, color: Colors) {
+            view?.apply {
+                setBackgroundColor(color.toInt())
+            }
+        }
+
         fun fillCircle(view: View?, color: Colors) {
             view?.apply {
                 background = ContextCompat.getDrawable(context, R.drawable.ic_circle)

@@ -12,7 +12,7 @@ internal class BookListFragment : BaseFragment<BookListViewModel, FragmentBookLi
     override val layoutId = R.layout.fragment_book_list
     override val viewModelClass = BookListViewModel::class
     private val adapter: BookListAdapter by lazy {
-        BookListAdapter()
+        BookListAdapter(viewModel)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

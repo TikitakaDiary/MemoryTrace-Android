@@ -26,6 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_back"
+                android:onClick="@{()->viewModel.onClickBack()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -43,6 +44,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{()->viewModel.saveDiary()}"
                 android:text="@string/write_delivery"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -81,24 +83,31 @@
                     app:showBorder="true"
                     app:showIcons="true">
 
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@{viewModel.bitmap}" />
-
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/lightGray"
                         android:gravity="center"
-                        android:visibility="@{viewModel.bitmap == null}">
+                        android:onClick="@{()->viewModel.showSelectImgDialog()}"
+                        android:visibility="@{viewModel.color == null &amp;&amp; viewModel.bitmap == null}">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/ic_plus" />
                     </LinearLayout>
+
+                    <View
+                        android:id="@+id/color_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="@{viewModel.color != null}" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@{viewModel.bitmap}"
+                        android:visibility="@{viewModel.bitmap != null}" />
                 </com.xiaopo.flying.sticker.StickerView>
             </androidx.cardview.widget.CardView>
 
@@ -109,6 +118,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_padding_24"
                 android:hint="@string/write_hint_title"
+                android:text="@={viewModel.title}"
                 android:textColorHint="@color/lightGray"
                 app:layout_constraintTop_toBottomOf="@id/card_view" />
 
@@ -166,6 +176,7 @@
             android:gravity="start|top"
             android:hint="@string/write_hint_content"
             android:maxLength="500"
+            android:text="@={viewModel.content}"
             app:layout_constraintBottom_toTopOf="@id/menu_layout"
             app:layout_constraintTop_toBottomOf="@id/polaroid_layout" />
 
@@ -194,8 +205,8 @@
                 android:id="@+id/sticker_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_sticker"
                 android:onClick="@{()->viewModel.showStickerDialog()}"
+                android:src="@drawable/ic_sticker"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

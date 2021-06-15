@@ -93,7 +93,8 @@
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:paddingVertical="20dp"
-                    android:layout_marginVertical="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="15dp"
                     android:visibility="@{viewModel.myTurn}"
                     android:onClick="@{()->viewModel.onClickWriteDiary()}"
                     app:layout_constraintTop_toTopOf="parent">
