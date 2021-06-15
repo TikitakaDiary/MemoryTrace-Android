@@ -40,44 +40,52 @@
                 android:text="@string/create_book_section_title" />
 
 
-            <LinearLayout
+            <androidx.cardview.widget.CardView
                 android:id="@+id/item_book"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/book_height"
-                android:background="@drawable/rect_gray_rounded"
                 android:orientation="horizontal"
+                app:cardBackgroundColor="@color/systemGray02"
+                app:cardCornerRadius="@dimen/default_spacing_8"
+                app:cardElevation="0dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title_tv">
 
-                <EditText
-                    android:id="@+id/title"
-                    style="@style/GmarketBold16"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:background="@android:color/transparent"
-                    android:hint="@string/write_hint_title"
-                    android:maxLength="15"
-                    android:paddingStart="@dimen/default_padding_24"
-                    android:textColor="@color/systemWhite"
-                    android:textColorHint="@color/systemWhite"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toLeftOf="@id/item_book_sticker"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/title"
+                        style="@style/GmarketBold16"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/write_hint_title"
+                        android:maxLength="15"
+                        android:paddingStart="@dimen/default_padding_24"
+                        android:textColor="@color/systemWhite"
+                        android:textColorHint="@color/systemWhite"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/item_book_sticker"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
-                <ImageView
-                    android:id="@+id/item_book_sticker"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="2"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@drawable/ic_launcher_foreground" />
-            </LinearLayout>
+                    <ImageView
+                        android:id="@+id/item_book_sticker"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="2"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:src="@drawable/ic_launcher_foreground" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 style="@style/NotoRegular14"

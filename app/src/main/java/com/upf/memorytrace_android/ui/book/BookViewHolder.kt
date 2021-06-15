@@ -17,7 +17,7 @@ internal class BookViewHolder(
         binding.itemBookAuthor.text =
             itemView.context.getString(R.string.book_list_author, item.nickname)
         binding.itemBookTitle.text = item.title
-        binding.itemBook.background.setTint(Color.parseColor(Colors.getColor(item.bgColor)))
+        binding.itemBook.setCardBackgroundColor(Colors.getColor(item.bgColor).toInt())
 
         itemView.setOnClickListener {
             viewModel.onClickDiary(item.id)
