@@ -2,13 +2,23 @@ package com.upf.memorytrace_android.viewmodel
 
 import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.upf.memorytrace_android.api.repository.DiaryRepository
 import com.upf.memorytrace_android.base.BaseViewModel
+import com.upf.memorytrace_android.ui.write.WriteFragmentArgs
+import com.upf.memorytrace_android.util.BackDirections
 import com.upf.memorytrace_android.util.Colors
+import com.upf.memorytrace_android.util.ImageConverter
 import com.upf.memorytrace_android.util.LiveEvent
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import java.io.File
 
 internal class WriteViewModel : BaseViewModel() {
     val bitmap = MutableLiveData<Bitmap?>()
     val color = MutableLiveData<Colors?>()
+    val title = MutableLiveData<String>()
+    val content = MutableLiveData<String>()
 
     val isShowSelectImgDialog = LiveEvent<Unit?>()
     val isLoadGallery = LiveEvent<Unit?>()
@@ -20,6 +30,17 @@ internal class WriteViewModel : BaseViewModel() {
     val isShowColorDialog = LiveEvent<Unit?>()
 
     val isSaveDiary = LiveEvent<Unit?>()
+
+    private var bid = -1
+
+    init {
+        viewModelScope.launch {
+            navArgs<WriteFragmentArgs>()
+                .collect {
+                    bid = it.bid
+                }
+        }
+    }
 
     fun showSelectImgDialog() {
         isShowSelectImgDialog.call()
@@ -53,7 +74,25 @@ internal class WriteViewModel : BaseViewModel() {
         isSaveDiary.call()
     }
 
-    fun uploadDiary(bitmap: Bitmap) {
+    fun uploadDiary(cacheDir: File, bitmap: Bitmap) {
+        viewModelScope.launch {
+            ImageConverter.convertBitmapToMultipartBody(bitmap, cacheDir, null, null)?.let {
+                val response = DiaryRepository.createDiary(
+                    bid,
+                    title.value ?: EMPTY_STRING,
+                    content.value ?: EMPTY_STRING,
+                    it
+                )
+                if (response.isSuccessful) onClickBack()
+            }
+        }
+    }
 
+    fun onClickBack() {
+        navDirections.value = BackDirections()
+    }
+
+    companion object {
+        private const val EMPTY_STRING = ""
     }
 }

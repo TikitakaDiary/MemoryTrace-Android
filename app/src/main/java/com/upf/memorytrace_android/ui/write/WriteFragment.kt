@@ -11,6 +11,7 @@ import android.provider.MediaStore
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.navArgs
 import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.base.BaseFragment
 import com.upf.memorytrace_android.databinding.FragmentWriteBinding
@@ -25,6 +26,7 @@ import com.xiaopo.flying.sticker.DrawableSticker
 internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding>() {
     override val layoutId = R.layout.fragment_write
     override val viewModelClass = WriteViewModel::class
+    override val navArgs by navArgs<WriteFragmentArgs>()
 
     private val cameraActivityResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -162,7 +164,8 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
 
     private fun saveDiary() {
         val bitmap = ImageConverter.convertViewToBitmap(binding.cardView)
-        viewModel.uploadDiary(bitmap)
+        val cacheDir = requireContext().cacheDir
+        viewModel.uploadDiary(cacheDir, bitmap)
     }
 
     companion object {

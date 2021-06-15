@@ -11,10 +11,6 @@ internal class LoginViewModel : BaseViewModel() {
 
     val name = MutableLiveData("요기 터치")
 
-    fun onClickWrite() {
-        navDirections.value = LoginFragmentDirections.actionLoginFragmentToWriteFragment()
-    }
-
     fun register(nickname: String, token: String, snsType: String) {
         viewModelScope.launch {
             //TODO: 응답 처리 필요
