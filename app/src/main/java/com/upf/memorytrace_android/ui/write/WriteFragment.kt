@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.navArgs
 import com.upf.memorytrace_android.R
@@ -68,7 +69,7 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         observe(viewModel.isLoadGallery) { accessGallery() }
         observe(viewModel.isLoadCamera) { accessCamera() }
         observe(viewModel.isShowStickerDialog) { loadStickerDialog() }
-        observe(viewModel.addSticker) { attachSticker() }
+        observe(viewModel.addSticker) { attachSticker(it) }
         observe(viewModel.isShowColorDialog) { showColorDialog() }
         observe(viewModel.color) { it?.let { color -> changeColor(color) } }
         observe(viewModel.isSaveDiary) { saveDiary() }
@@ -152,9 +153,8 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         }
     }
 
-    private fun attachSticker() {
-        val drawable =
-            ContextCompat.getDrawable(requireContext(), R.drawable.ic_launcher_foreground)
+    private fun attachSticker(@DrawableRes stickerId: Int) {
+        val drawable = ContextCompat.getDrawable(requireContext(), stickerId)
         binding.stickerView.addSticker(DrawableSticker(drawable))
     }
 

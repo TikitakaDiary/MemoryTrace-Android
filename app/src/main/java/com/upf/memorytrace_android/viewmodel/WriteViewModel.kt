@@ -1,6 +1,7 @@
 package com.upf.memorytrace_android.viewmodel
 
 import android.graphics.Bitmap
+import androidx.annotation.DrawableRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.upf.memorytrace_android.api.repository.DiaryRepository
@@ -58,8 +59,8 @@ internal class WriteViewModel : BaseViewModel() {
         isShowStickerDialog.call()
     }
 
-    fun attachSticker() {
-        addSticker.call()
+    fun attachSticker(@DrawableRes stickerId: Int) {
+        addSticker.value = stickerId
     }
 
     fun showColorDialog() {

@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
-            android:onClick="@{()->viewModel.attachSticker()}"
-            android:src="@drawable/ic_album" />
+            android:onClick="@{()->viewModel.attachSticker(item.resId)}"
+            android:src="@{item.resId}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
