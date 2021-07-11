@@ -11,6 +11,7 @@ import com.upf.memorytrace_android.util.BackDirections
 import com.upf.memorytrace_android.util.Colors
 import com.upf.memorytrace_android.util.ImageConverter
 import com.upf.memorytrace_android.util.LiveEvent
+import com.xiaopo.flying.sticker.Sticker
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.io.File
@@ -33,6 +34,7 @@ internal class WriteViewModel : BaseViewModel() {
     val isSaveDiary = LiveEvent<Unit?>()
 
     private var bid = -1
+    var stickerList = mutableListOf<Sticker>()
 
     init {
         viewModelScope.launch {

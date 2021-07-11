@@ -75,10 +75,20 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         observe(viewModel.isSaveDiary) { saveDiary() }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        with(viewModel.stickerList) {
+            clear()
+            addAll(binding.stickerView.stickers)
+        }
+    }
+
     private fun setProperties() {
         with(binding) {
             dateTv.text = TimeUtil.getTodayDate(TimeUtil.YYYY_M_D_KR)
             nameTv.text = "유진진"
+            stickerView.stickers = this@WriteFragment.viewModel.stickerList
         }
         receiveArgFromOtherView<Bitmap>("image") { viewModel.bitmap.value = it }
     }
