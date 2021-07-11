@@ -140,6 +140,24 @@
         <item name="android:background">@drawable/rect_white_rounded</item>
     </style>
 
+    <style name="buttonBarButtonStyle" parent="Widget.AppCompat.Button.Borderless.Colored">
+    </style>
+
+    <style name="buttonBarButtonStyle.Negative">
+        <item name="android:textColor">@color/gray04</item>
+    </style>
+
+    <style name="buttonBarButtonStyle.Positive">
+        <item name="android:textColor">@color/systemRed</item>
+    </style>
+
+    <style name="ExitAlertDialog" parent="Base.Theme.AppCompat.Light.Dialog">
+        <item name="fontFamily">@font/noto_sans_kr_regular</item>
+        <item name="android:textColor">@color/systemGray01</item>
+        <item name="buttonBarNegativeButtonStyle">@style/buttonBarButtonStyle.Negative</item>
+        <item name="buttonBarPositiveButtonStyle">@style/buttonBarButtonStyle.Positive</item>
+    </style>
+
     <style name="ImageView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

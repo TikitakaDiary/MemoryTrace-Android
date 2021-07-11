@@ -2,6 +2,7 @@ package com.upf.memorytrace_android.ui.write
 
 import android.Manifest
 import android.app.Activity
+import androidx.activity.addCallback
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -11,6 +12,7 @@ import android.provider.MediaStore
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.navArgs
 import com.upf.memorytrace_android.R
@@ -18,6 +20,7 @@ import com.upf.memorytrace_android.base.BaseFragment
 import com.upf.memorytrace_android.databinding.FragmentWriteBinding
 import com.upf.memorytrace_android.extension.observe
 import com.upf.memorytrace_android.extension.toast
+import com.upf.memorytrace_android.util.BackDirections
 import com.upf.memorytrace_android.util.Colors
 import com.upf.memorytrace_android.util.ImageConverter
 import com.upf.memorytrace_android.util.TimeUtil
@@ -65,6 +68,8 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         super.onViewCreated(view, savedInstanceState)
 
         setProperties()
+        setBackPressedDispatcher()
+
         observe(viewModel.isShowSelectImgDialog) { showSelectImageDialog() }
         observe(viewModel.isLoadGallery) { accessGallery() }
         observe(viewModel.isLoadCamera) { accessCamera() }
@@ -73,6 +78,7 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         observe(viewModel.isShowColorDialog) { showColorDialog(it) }
         observe(viewModel.color) { it?.let { color -> changeColor(color) } }
         observe(viewModel.isSaveDiary) { saveDiary() }
+        observe(viewModel.isBack) { showExitDialog() }
     }
 
     override fun onDestroyView() {
@@ -95,6 +101,12 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
             }
         }
         receiveArgFromOtherView<Bitmap>("image") { viewModel.bitmap.value = it }
+    }
+
+    private fun setBackPressedDispatcher() {
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            showExitDialog()
+        }
     }
 
     private fun cropImageWithBitmap(bitmap: Bitmap?) {
@@ -179,6 +191,22 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         val bitmap = ImageConverter.convertViewToBitmap(binding.cardView)
         val cacheDir = requireContext().cacheDir
         viewModel.uploadDiary(cacheDir, bitmap)
+    }
+
+    private fun showExitDialog() {
+        activity?.let {
+            val builder = AlertDialog.Builder(it, R.style.ExitAlertDialog).apply {
+                setTitle(R.string.write_exit_title)
+                setMessage(R.string.write_exit_content)
+                setPositiveButton(R.string.write_exit_exit) { _, _ -> back() }
+                setNegativeButton(R.string.write_exit_cancel, null)
+            }
+            builder.create().show()
+        }
+    }
+
+    private fun back() {
+        viewModel.navDirections.value = BackDirections()
     }
 
     companion object {

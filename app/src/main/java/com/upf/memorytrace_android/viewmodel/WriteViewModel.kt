@@ -31,6 +31,7 @@ internal class WriteViewModel : BaseViewModel() {
     val addSticker = LiveEvent<Int>()
 
     val isSaveDiary = LiveEvent<Unit?>()
+    val isBack = LiveEvent<Unit?>()
 
     private var bid = -1
     private var originalBackgroundColor: Colors? = null
@@ -102,7 +103,7 @@ internal class WriteViewModel : BaseViewModel() {
     }
 
     fun onClickBack() {
-        navDirections.value = BackDirections()
+        isBack.call()
     }
 
     companion object {
