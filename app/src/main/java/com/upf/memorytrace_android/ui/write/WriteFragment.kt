@@ -70,7 +70,7 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         observe(viewModel.isLoadCamera) { accessCamera() }
         observe(viewModel.isShowStickerDialog) { loadStickerDialog() }
         observe(viewModel.addSticker) { attachSticker(it) }
-        observe(viewModel.isShowColorDialog) { showColorDialog() }
+        observe(viewModel.isShowColorDialog) { showColorDialog(it) }
         observe(viewModel.color) { it?.let { color -> changeColor(color) } }
         observe(viewModel.isSaveDiary) { saveDiary() }
     }
@@ -89,6 +89,10 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
             dateTv.text = TimeUtil.getTodayDate(TimeUtil.YYYY_M_D_KR)
             nameTv.text = "유진진"
             stickerView.stickers = this@WriteFragment.viewModel.stickerList
+            colorRv.adapter = ColorAdapter().apply {
+                setViewHolderViewModel(this@WriteFragment.viewModel)
+                submitList(Colors.getColors().map { ColorItem(it) })
+            }
         }
         receiveArgFromOtherView<Bitmap>("image") { viewModel.bitmap.value = it }
     }
@@ -150,9 +154,8 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         galleryActivityResultLauncher.launch(intent)
     }
 
-    private fun showColorDialog() {
-        selectImageDialog.dismiss()
-        colorDialog.show(parentFragmentManager, COLOR_DIALOG_TAG)
+    private fun showColorDialog(isShow: Boolean) {
+        if (isShow) selectImageDialog.dismiss()
     }
 
     private fun loadStickerDialog() {

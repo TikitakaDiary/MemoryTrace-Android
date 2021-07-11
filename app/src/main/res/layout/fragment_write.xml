@@ -17,16 +17,15 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/top_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="52dp"
             android:paddingHorizontal="24dp"
-            android:paddingVertical="17dp"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_back"
                 android:onClick="@{()->viewModel.onClickBack()}"
+                android:src="@drawable/ic_back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -214,50 +213,67 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@color/systemGray02"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHeight_percent="0.45">
+            android:layout_height="match_parent"
+            android:clickable="@{viewModel.isShowColorDialog}"
+            android:visibility="@{viewModel.isShowColorDialog}"
+            tools:visibility="visible">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/sticker_top_layout"
+                android:id="@+id/color_top_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/default_padding_24"
+                android:layout_height="52dp"
+                android:background="@color/systemGray01"
+                android:paddingHorizontal="24dp"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{()->viewModel.dismissColorDialog()}"
                     android:src="@drawable/ic_x"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    style="@style/WriteStickerListTitleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/write_my_sticker_list"
+                    android:text="@string/write_select_color_title"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{()->viewModel.saveColor()}"
+                    android:text="@string/save"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/sticker_tab_layout"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/sticker_top_layout" />
+                android:background="@color/systemGray01"
+                android:paddingHorizontal="18dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="43dp"
+                app:layout_constraintBottom_toBottomOf="parent">
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/sticker_pager"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/sticker_tab_layout" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/color_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="6"
+                    tools:itemCount="12"
+                    tools:listitem="@layout/item_color" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

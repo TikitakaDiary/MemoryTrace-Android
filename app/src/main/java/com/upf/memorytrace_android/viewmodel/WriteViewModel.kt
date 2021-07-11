@@ -21,6 +21,7 @@ internal class WriteViewModel : BaseViewModel() {
     val color = MutableLiveData<Colors?>()
     val title = MutableLiveData<String>()
     val content = MutableLiveData<String>()
+    val isShowColorDialog = MutableLiveData<Boolean>()
 
     val isShowSelectImgDialog = LiveEvent<Unit?>()
     val isLoadGallery = LiveEvent<Unit?>()
@@ -29,11 +30,10 @@ internal class WriteViewModel : BaseViewModel() {
     val isShowStickerDialog = LiveEvent<Unit?>()
     val addSticker = LiveEvent<Int>()
 
-    val isShowColorDialog = LiveEvent<Unit?>()
-
     val isSaveDiary = LiveEvent<Unit?>()
 
     private var bid = -1
+    private var originalBackgroundColor: Colors? = null
     var stickerList = mutableListOf<Sticker>()
 
     init {
@@ -66,7 +66,17 @@ internal class WriteViewModel : BaseViewModel() {
     }
 
     fun showColorDialog() {
-        isShowColorDialog.call()
+        originalBackgroundColor = color.value
+        isShowColorDialog.value = true
+    }
+
+    fun dismissColorDialog() {
+        color.value = originalBackgroundColor
+        isShowColorDialog.value = false
+    }
+
+    fun saveColor() {
+        isShowColorDialog.value = false
     }
 
     fun changeColor(c: Colors) {
