@@ -14,6 +14,11 @@ internal class WriteStickerBottomSheetFragment(
 ) : BaseBottomSheetFragment<WriteViewModel, FragmentBottomSheetWriteStickerBinding>() {
     override val layoutId = R.layout.fragment_bottom_sheet_write_sticker
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NORMAL, R.style.TransparentDialog)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeViewPager()
