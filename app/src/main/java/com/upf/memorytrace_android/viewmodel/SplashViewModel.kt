@@ -14,10 +14,15 @@ internal class SplashViewModel : BaseViewModel() {
     init {
         viewModelScope.launch {
             delay(1500L)
-            navDirections.value = if (MemoryTraceConfig.isLoggedIn) {
-                SplashFragmentDirections.actionSplashFragmentToBookListFragment()
-            } else {
+            navDirections.value = if (!MemoryTraceConfig.isLoggedIn) {
                 SplashFragmentDirections.actionSplashFragmentToLoginFragment()
+            } else if (MemoryTraceConfig.bid != -1) {
+                val bid = MemoryTraceConfig.bid
+                MemoryTraceConfig.bid = -1
+                SplashFragmentDirections.actionSplashFragmentToDiaryFragment(bid)
+            } else {
+                SplashFragmentDirections.actionSplashFragmentToBookListFragment()
+
             }
         }
     }

@@ -63,4 +63,7 @@
     <string name="mypage_name_edit_label">이름 변경</string>
     <string name="mypage_name_edit_hint">변경할 닉네임을 입력해주세요</string>
     <string name="save">저장</string>
+
+    <string name="default_notification_channel_id">duck-z</string>
+    <string name="fcm_new_diary">새로운 일기가 등록되었어요!</string>
 </resources>

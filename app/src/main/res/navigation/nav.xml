@@ -18,6 +18,11 @@
             app:destination="@id/bookListFragment"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_diaryFragment"
+            app:destination="@id/diaryFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
