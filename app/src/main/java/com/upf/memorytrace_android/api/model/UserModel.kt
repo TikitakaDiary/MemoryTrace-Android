@@ -8,7 +8,8 @@ data class User(
     var jwt: String = "",
     var snsKey: String = "",
     var snsType: String = "",
-    var createdDate: String = ""
+    var createdDate: String = "",
+    var token: String = ""
 )
 
 data class UserName(var nickname: String = "")
