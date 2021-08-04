@@ -66,10 +66,9 @@ internal class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding
                 Log.e("LoginFragment", "사용자 정보 요청 실패", error)
             } else if (user != null) {
                 //register user
-                //TODO: 토큰 관리 어떻게 되는지 추가 확인 필요, 이미 가입된 유저면 로그인처리를 타야함.(현재는 생성만 있음)
                 viewModel.register(
                     user.kakaoAccount?.profile?.nickname ?: "덕지",
-                    token, KAKAO
+                    user.id.toString(), KAKAO
                 )
             }
         }
@@ -108,7 +107,7 @@ internal class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding
                 if (task.isSuccessful) {
                     val user = auth.currentUser
                     //register user
-                    viewModel.register(user.displayName, user.providerId, GOOGLE)
+                    viewModel.register(user.displayName, user.uid, GOOGLE)
                 } else {
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
                 }
