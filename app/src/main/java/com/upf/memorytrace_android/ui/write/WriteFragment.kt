@@ -154,7 +154,7 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
 
     private fun attachSticker() {
         val drawable =
-            ContextCompat.getDrawable(requireContext(), R.drawable.ic_launcher_foreground)
+            ContextCompat.getDrawable(requireContext(), R.mipmap.ic_launcher)
         binding.stickerView.addSticker(DrawableSticker(drawable))
     }
 

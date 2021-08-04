@@ -75,8 +75,7 @@
                     android:layout_weight="2"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@drawable/ic_launcher_foreground" />
+                    app:layout_constraintTop_toTopOf="parent"/>
             </LinearLayout>
 
             <TextView
