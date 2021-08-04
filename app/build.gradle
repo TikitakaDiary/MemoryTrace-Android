@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
-apply plugin: 'com.google.gms.google-services' //google login
+apply plugin: 'com.google.gms.google-services' //google login, fcm
 apply plugin: 'com.google.firebase.crashlytics'
 
 android {
@@ -111,7 +111,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-auth-ktx'
-    implementation "com.google.android.gms:play-services-auth:$firebase_auth_version"
+    implementation "com.google.android.gms:play-services-auth:$firebase_auth_version" //login
+    implementation 'com.google.firebase:firebase-messaging-ktx' //fcm
 
 
     // Test

@@ -49,6 +49,9 @@ interface MemoryTraceService {
     @PUT("user")
     suspend fun editName(@Body user: UserName): BaseResponse
 
+    @POST("user/fcm")
+    suspend fun registerFcmToken(@Body user: User):BaseResponse
+
     /**
      * 다이어리
      */
