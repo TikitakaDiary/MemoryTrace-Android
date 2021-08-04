@@ -8,6 +8,8 @@ import java.time.format.SignStyle
 
 object MemoryTraceConfig {
     private const val PREFERENCE = "MemoryTrace.preference"
+
+    private const val UID = "uid"
     private const val NICKNAME = "nickname"
     private const val USER_TOKEN = "user_token"
     private const val SIGNUP_SNS = "signup_sns"
@@ -17,6 +19,10 @@ object MemoryTraceConfig {
     private val pref: SharedPreferences =
         MemoryTraceApplication.getApplication()
             .getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE)
+
+    var uid: Int
+        get() = pref.getInt(UID, 0)
+        set(value) = pref.edit { putInt(UID, value) }
 
     var nickname: String?
         get() = pref.getString(NICKNAME, "")
