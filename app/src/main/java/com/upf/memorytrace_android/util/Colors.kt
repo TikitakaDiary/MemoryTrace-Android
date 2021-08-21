@@ -1,5 +1,6 @@
 package com.upf.memorytrace_android.util
 
+import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -24,13 +25,25 @@ enum class Colors(val id: Int, val color: Long) {
 
 
     companion object {
-        fun getColor(id: Int): String {
-            for (current in values()) {
-                if (current.id == id)
-                    return "#${Integer.toHexString(current.color.toInt()).substring(2)}"
 
+        fun getColorToHex(color: Colors): String {
+            return "#${Integer.toHexString(color.toInt()).substring(2)}"
+        }
+
+        fun getColorToHex(color: Int): String {
+            for (current in values()) {
+                if (current.id == color)
+                    return "#${Integer.toHexString(current.color.toInt()).substring(2)}"
             }
             return ""
+        }
+
+        fun getColor(id: Int): Colors {
+            for (current in values()) {
+                if (current.id == id)
+                    return current
+            }
+            return SYSTEM_GRAY
         }
 
         fun getColors(): List<Colors> {
@@ -53,6 +66,18 @@ enum class Colors(val id: Int, val color: Long) {
         fun fillColor(view: View?, color: Colors) {
             view?.apply {
                 setBackgroundColor(color.toInt())
+            }
+        }
+
+        fun fillColorTint(view: View?, color: Colors) {
+            view?.apply {
+                background.setTint(Color.parseColor(getColorToHex(color)))
+            }
+        }
+
+        fun fillColorTint(view: View?, color: Int) {
+            view?.apply {
+                background.setTint(Color.parseColor(getColorToHex(color)))
             }
         }
 

@@ -1,11 +1,7 @@
 package com.upf.memorytrace_android.api
 
 import com.google.gson.annotations.SerializedName
-import com.upf.memorytrace_android.api.model.BookList
-import com.upf.memorytrace_android.api.model.DiaryCreateModel
-import com.upf.memorytrace_android.api.model.DiaryDetailModel
-import com.upf.memorytrace_android.api.model.DiaryListModel
-import com.upf.memorytrace_android.api.model.User
+import com.upf.memorytrace_android.api.model.*
 
 open class BaseResponse {
     val statusCode: String = ""
@@ -15,8 +11,12 @@ open class BaseResponse {
         get() = statusCode == "201" || statusCode == "200"
 }
 
+data class BookResponse(
+    @SerializedName("data")
+    val data: Book
+) : BaseResponse()
 
-class BookResponse : BaseResponse() {
+class BookListResponse : BaseResponse() {
     val data: BookList? = null
 }
 

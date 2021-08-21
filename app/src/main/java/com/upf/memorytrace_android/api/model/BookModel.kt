@@ -9,7 +9,7 @@ data class BookList(
 )
 
 data class Book(
-    @SerializedName("bid") var id: Int = -1,
+    @SerializedName("bid") var bid: Int = -1,
     var nickname: String = "",
     var title: String = "",
     var bgColor: Int = -1,
