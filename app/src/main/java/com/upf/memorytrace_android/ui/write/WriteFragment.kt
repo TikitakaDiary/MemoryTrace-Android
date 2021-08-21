@@ -60,9 +60,6 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
     private val stickerDialog by lazy(LazyThreadSafetyMode.NONE) {
         WriteStickerBottomSheetFragment(viewModel)
     }
-    private val colorDialog by lazy(LazyThreadSafetyMode.NONE) {
-        WriteColorBottomSheetFragment(viewModel)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
