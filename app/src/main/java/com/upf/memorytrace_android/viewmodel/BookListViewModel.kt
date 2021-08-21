@@ -16,7 +16,7 @@ internal class BookListViewModel : BaseViewModel() {
 
     private var page: Int = 1
 
-    init {
+   fun init() {
         viewModelScope.launch {
             try {
                 val data = BookRepository.fetchBookList(page).data
