@@ -187,6 +187,7 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
     }
 
     private fun saveDiary() {
+        binding.stickerView.removeStickerHandler()
         val bitmap = ImageConverter.convertViewToBitmap(binding.cardView)
         val cacheDir = requireContext().cacheDir
         viewModel.uploadDiary(cacheDir, bitmap)
