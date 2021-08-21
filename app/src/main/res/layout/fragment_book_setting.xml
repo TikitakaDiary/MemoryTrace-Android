@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.upf.memorytrace_android.viewmodel.BookSettingViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/default_padding_24">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/top_layout"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->viewModel.onClickBack()}"
+                android:src="@drawable/ic_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_for_book_setting"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <RelativeLayout
+            android:id="@+id/btn_member"
+            style="@style/MypageItemLayout"
+            android:onClick="@{()->viewModel.onClickMember()}">
+
+            <TextView
+                style="@style/MypageItem"
+                android:text="@string/member_setting_section_title" />
+
+            <ImageView
+                style="@style/ImageView"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_right_arrow" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/btn_edit_book"
+            style="@style/MypageItemLayout"
+            android:onClick="@{()->viewModel.onClickUpdateBook()}">
+
+            <TextView
+                style="@style/MypageItem"
+                android:text="@string/update_book_section_title" />
+
+            <ImageView
+                style="@style/ImageView"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_right_arrow" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/btn_leave_book"
+            style="@style/MypageItemLayout"
+            android:onClick="@{()->viewModel.onclickLeaveBook()}">
+
+            <TextView
+                style="@style/MypageItem"
+                android:text="@string/leave_book_section_title" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>

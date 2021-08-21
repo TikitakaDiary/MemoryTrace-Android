@@ -89,6 +89,10 @@ internal class DiaryViewModel : BaseViewModel() {
         navDirections.value = DiaryFragmentDirections.actionDiaryFragmentToDetailFragment(did)
     }
 
+    fun onclickSetting() {
+        navDirections.value = DiaryFragmentDirections.actionDiaryFragmentToBookSettingFragment(bid)
+    }
+
     fun changeListType() {
         listType.value = when (listType.value) {
             DiaryListType.FRAME -> DiaryListType.GRID

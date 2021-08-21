@@ -7,6 +7,7 @@ import android.view.*
 import androidx.activity.addCallback
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.base.BaseFragment
@@ -22,6 +23,7 @@ import com.xiaopo.flying.sticker.DrawableSticker
 internal class CreateBookFragment : BaseFragment<CreateBookViewModel, FragmentCreateBookBinding>() {
     override val layoutId = R.layout.fragment_create_book
     override val viewModelClass = CreateBookViewModel::class
+    override val navArgs by navArgs<CreateBookFragmentArgs>()
 
     private val adapter: ColorListAdapter by lazy {
         ColorListAdapter(Colors.getColors())

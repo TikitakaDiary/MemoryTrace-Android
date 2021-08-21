@@ -72,4 +72,18 @@ object BookRepository {
             throw Exception(e.message ?: "Internet Error")
         }
     }
+
+
+    suspend fun leaveBook(bid: Int): NetworkState<String> {
+        return try {
+            val response = MemoryTraceUtils.apiService().leaveBook(bid)
+            if (response.isSuccess) {
+                NetworkState.Success("Success")
+            } else {
+                NetworkState.Failure(response.responseMessage)
+            }
+        } catch (e: Exception) {
+            throw Exception(e.message ?: "Internet Error")
+        }
+    }
 }

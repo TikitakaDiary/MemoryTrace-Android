@@ -22,7 +22,7 @@
             android:id="@+id/action_splashFragment_to_diaryFragment"
             app:destination="@id/diaryFragment"
             app:popUpTo="@id/splashFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -42,14 +42,14 @@
     <fragment
         android:id="@+id/writeFragment"
         android:name="com.upf.memorytrace_android.ui.write.WriteFragment"
-        android:label="WriteFragment" >
+        android:label="WriteFragment">
         <action
             android:id="@+id/action_writeFragment_to_cropFragment"
             app:destination="@id/cropFragment" />
         <argument
             android:name="bid"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/bookListFragment"
@@ -121,25 +121,56 @@
     <fragment
         android:id="@+id/diaryFragment"
         android:name="com.upf.memorytrace_android.ui.diary.DiaryFragment"
-        android:label="DiaryFragment" >
+        android:label="DiaryFragment">
         <action
             android:id="@+id/action_diaryFragment_to_writeFragment"
             app:destination="@id/writeFragment" />
         <argument
             android:name="bid"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
         <action
             android:id="@+id/action_diaryFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_diaryFragment_to_bookSettingFragment"
+            app:destination="@id/bookSettingFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.upf.memorytrace_android.ui.DetailFragment"
-        android:label="DetailFragment" >
+        android:label="DetailFragment">
         <argument
             android:name="did"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookSettingFragment"
+        android:name="com.upf.memorytrace_android.ui.book.BookSettingFragment"
+        android:label="BookSettingFragment">
+        <action
+            android:id="@+id/action_bookSettingFragment_to_memberSettingFragment"
+            app:destination="@id/memberSettingFragment" />
+        <action
+            android:id="@+id/action_bookSettingFragment_to_createBookFragment"
+            app:destination="@id/createBookFragment" />
+        <action
+            android:id="@+id/action_bookSettingFragment_to_bookListFragment"
+            app:destination="@id/bookListFragment" />
+        <argument
+            android:name="bid"
+            android:defaultValue="-1"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/memberSettingFragment"
+        android:name="com.upf.memorytrace_android.ui.MemberSettingFragment"
+        android:label="MemberSettingFragment">
+        <argument
+            android:name="bid"
+            android:defaultValue="-1"
+            app:argType="integer" />
     </fragment>
 </navigation>
