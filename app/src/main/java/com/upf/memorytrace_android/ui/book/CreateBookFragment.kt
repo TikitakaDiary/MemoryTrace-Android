@@ -93,6 +93,7 @@ internal class CreateBookFragment : BaseFragment<CreateBookViewModel, FragmentCr
     }
 
     private fun saveBook() {
+        binding.stickerView.removeStickerHandler()
         val bitmap: Bitmap? =
             if (binding.stickerView.width != 0 && binding.stickerView.height != 0) ImageConverter.convertViewToBitmap(
                 binding.stickerView
