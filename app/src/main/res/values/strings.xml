@@ -24,6 +24,7 @@
     <string name="write_exit_exit">나가기</string>
 
     <string name="diary_your_turn">Your turn!</string>
+    <string name="diary_empty">작성한 일기가 없습니다. 😥</string>
 
     <string name="crop_title">사진 편집</string>
     <string name="crop_finish">완료</string>
