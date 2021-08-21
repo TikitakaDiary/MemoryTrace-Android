@@ -2,7 +2,6 @@ package com.upf.memorytrace_android.ui.diary
 
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.NavArgs
 import androidx.navigation.fragment.navArgs
 import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.base.BaseFragment
@@ -27,13 +26,22 @@ internal class DiaryFragment : BaseFragment<DiaryViewModel, FragmentDiaryBinding
                 it,
                 viewModel.diaryOfMonthList.value
             )
+            viewModel.initializeDiaryList()
         }
         observe(viewModel.diaryOfMonthList) { diaryListAdapter.submitList(it) }
     }
 
     private fun initializeRecyclerView() {
         binding.rv.run {
-            adapter = diaryListAdapter.apply { setViewHolderViewModel(this@DiaryFragment.viewModel) }
+            adapter =
+                diaryListAdapter.apply { setViewHolderViewModel(this@DiaryFragment.viewModel) }
+        }
+        binding.nestedSv.run {
+            viewTreeObserver.addOnScrollChangedListener {
+                if (getChildAt(0).bottom <= scrollY + height + 50) {
+                    viewModel.loadDiaryList()
+                }
+            }
         }
     }
 
