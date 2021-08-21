@@ -19,6 +19,7 @@
         android:layout_marginBottom="@dimen/item_spacing_12"
         android:background="@drawable/rect_gray_rounded"
         android:theme="@style/Theme.MaterialComponents.Light"
+        android:onClick="@{()->viewModel.onClickDiary(item.book.id)}"
         app:cardCornerRadius="@dimen/book_radius"
         app:cardElevation="0dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,7 +68,7 @@
             android:id="@+id/item_book_sticker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{()->viewModel.onClickDiary(item.book.id)}"
+            android:src="@{item.book.image}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
