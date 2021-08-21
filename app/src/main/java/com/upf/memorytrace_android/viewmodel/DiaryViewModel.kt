@@ -10,6 +10,7 @@ import com.upf.memorytrace_android.ui.diary.DiaryFragmentDirections
 import com.upf.memorytrace_android.ui.diary.DiaryFragmentArgs
 import com.upf.memorytrace_android.ui.diary.DiaryListType
 import com.upf.memorytrace_android.ui.diary.DiaryMonthItem
+import com.upf.memorytrace_android.util.MemoryTraceConfig
 import com.upf.memorytrace_android.util.TimeUtil
 import java.util.Calendar
 import kotlinx.coroutines.flow.collect
@@ -20,7 +21,7 @@ internal class DiaryViewModel : BaseViewModel() {
     val listType = MutableLiveData<DiaryListType>(DiaryListType.FRAME)
     val diaryOfMonthList = MutableLiveData<List<DiaryMonthItem>>()
     val isLoading = MutableLiveData<Boolean>(false)
-    val isMyTurn = true
+    val isMyTurn = MutableLiveData<Boolean>(false)
 
     private var bid = -1
     private var page = 1
@@ -52,6 +53,7 @@ internal class DiaryViewModel : BaseViewModel() {
                 response.body()?.data?.apply {
                     this@DiaryViewModel.hasNext = hasNext
                     this@DiaryViewModel.title.value = title
+                    isMyTurn.postValue(MemoryTraceConfig.uid == whoseTurn)
                     diaryModelList.addAll(diaryList)
                     val diaryList = diaryModelList
                         .map { diary ->
