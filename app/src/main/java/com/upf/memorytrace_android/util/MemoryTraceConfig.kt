@@ -14,6 +14,7 @@ object MemoryTraceConfig {
     private const val USER_TOKEN = "user_token"
     private const val SIGNUP_SNS = "signup_sns"
     private const val SIGNUP_DATE = "signup_date"
+    private const val PROFILE_IMG = "profile_img"
     private const val BID = "bid"
 
     private val pref: SharedPreferences =
@@ -40,6 +41,10 @@ object MemoryTraceConfig {
     var signupDate: String?
         get() = pref.getString(SIGNUP_DATE, "")
         set(value) = pref.edit { putString(SIGNUP_DATE, value) }
+
+    var profileImg: String?
+        get() = pref.getString(PROFILE_IMG, "")
+        set(value) = pref.edit { putString(PROFILE_IMG, value) }
 
     var isLoggedIn: Boolean = !nickname.isNullOrBlank() && !token.isNullOrBlank()
 

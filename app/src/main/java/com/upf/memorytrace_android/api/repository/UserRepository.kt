@@ -17,9 +17,11 @@ object UserRepository {
             if (response.isSuccess) {
                 //update memory
                 response.data?.let {
+                    MemoryTraceConfig.uid = it.uid
                     MemoryTraceConfig.nickname = it.nickname
-                    MemoryTraceConfig.token = it.jwt
                     MemoryTraceConfig.sns = it.snsType
+                    MemoryTraceConfig.profileImg = it.profileImg
+                    MemoryTraceConfig.token = it.jwt
                     MemoryTraceConfig.signupDate = it.createdDate.substring(0, 10)
                 }
                 NetworkState.Success("Success")
