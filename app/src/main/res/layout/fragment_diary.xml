@@ -74,6 +74,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/nested_sv"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:overScrollMode="never"
@@ -89,14 +90,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_diary_write_button"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingVertical="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="15dp"
-                    android:visibility="@{viewModel.myTurn}"
+                    android:background="@drawable/bg_diary_write_button"
+                    android:gravity="center"
                     android:onClick="@{()->viewModel.onClickWriteDiary()}"
+                    android:orientation="horizontal"
+                    android:paddingVertical="20dp"
+                    android:visibility="@{viewModel.myTurn}"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
@@ -121,5 +122,16 @@
                     tools:listitem="@layout/item_diary_frame_list" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:indeterminateTint="@color/lightGray"
+            android:visibility="@{viewModel.isLoading()}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
