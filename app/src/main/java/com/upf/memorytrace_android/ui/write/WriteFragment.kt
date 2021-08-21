@@ -73,12 +73,12 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         observe(viewModel.isShowSelectImgDialog) { showSelectImageDialog() }
         observe(viewModel.isLoadGallery) { accessGallery() }
         observe(viewModel.isLoadCamera) { accessCamera() }
-        observe(viewModel.isShowStickerDialog) { loadStickerDialog() }
         observe(viewModel.addSticker) { attachSticker(it) }
         observe(viewModel.isShowColorDialog) { showColorDialog(it) }
         observe(viewModel.color) { it?.let { color -> changeColor(color) } }
         observe(viewModel.isSaveDiary) { saveDiary() }
         observe(viewModel.isExit) { showExitDialog() }
+        observe(viewModel.isShowStickerDialog) { if (it) loadStickerDialog() else closeStickerDialog() }
     }
 
     override fun onDestroyView() {
@@ -176,6 +176,10 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         } else {
             stickerDialog.show(parentFragmentManager, STICKER_DIALOG_TAG)
         }
+    }
+
+    private fun closeStickerDialog() {
+        stickerDialog.dismiss()
     }
 
     private fun attachSticker(@DrawableRes stickerId: Int) {

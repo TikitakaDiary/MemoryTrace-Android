@@ -35,6 +35,7 @@
                 android:layout_height="24dp"
                 android:layout_marginEnd="24dp"
                 android:src="@drawable/ic_x"
+                android:onClick="@{()->viewModel.closeStickerDialog()}"
                 app:layout_constraintBottom_toBottomOf="@id/sticker_title_tv"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/sticker_title_tv" />
