@@ -15,7 +15,13 @@
     <string name="write_select_album">사진 앨범</string>
     <string name="write_select_camera">카메라</string>
     <string name="write_select_color">단색</string>
+    <string name="write_select_color_title">단색 선택</string>
     <string name="write_sticker_title">내 스티커 목록</string>
+    <string name="write_save">저장</string>
+    <string name="write_exit_title">나가기</string>
+    <string name="write_exit_content">일기를 전달하지 않고 나갈시,\n작성한 내용은 저장되지 않습니다.</string>
+    <string name="write_exit_cancel">취소</string>
+    <string name="write_exit_exit">나가기</string>
 
     <string name="diary_your_turn">Your turn!</string>
 

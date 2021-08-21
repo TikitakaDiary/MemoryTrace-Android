@@ -37,7 +37,7 @@ internal class DiaryViewModel : BaseViewModel() {
                         ?.map { diary ->
                             val date = TimeUtil.convertStringToDate(
                                 TimeUtil.FORMAT_yyyy_MM_dd_B_HH_mm_ss,
-                                diary.modifiedDate
+                                diary.createdDate
                             ) ?: Calendar.getInstance().time
                             DiaryItem(
                                 diary.id,

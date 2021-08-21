@@ -31,8 +31,8 @@ data class DiaryModel(
     val img: String,
     @SerializedName("template")
     val template: Int,
-    @SerializedName("modifiedDate")
-    val modifiedDate: String
+    @SerializedName("createdDate")
+    val createdDate: String
 )
 
 data class DiaryDetailModel(

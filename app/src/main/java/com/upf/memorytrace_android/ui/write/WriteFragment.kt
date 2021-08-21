@@ -2,6 +2,7 @@ package com.upf.memorytrace_android.ui.write
 
 import android.Manifest
 import android.app.Activity
+import androidx.activity.addCallback
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -10,6 +11,8 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.DrawableRes
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.navArgs
 import com.upf.memorytrace_android.R
@@ -64,22 +67,45 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         super.onViewCreated(view, savedInstanceState)
 
         setProperties()
+        setBackPressedDispatcher()
+
         observe(viewModel.isShowSelectImgDialog) { showSelectImageDialog() }
         observe(viewModel.isLoadGallery) { accessGallery() }
         observe(viewModel.isLoadCamera) { accessCamera() }
         observe(viewModel.isShowStickerDialog) { loadStickerDialog() }
-        observe(viewModel.addSticker) { attachSticker() }
-        observe(viewModel.isShowColorDialog) { showColorDialog() }
+        observe(viewModel.addSticker) { attachSticker(it) }
+        observe(viewModel.isShowColorDialog) { showColorDialog(it) }
         observe(viewModel.color) { it?.let { color -> changeColor(color) } }
         observe(viewModel.isSaveDiary) { saveDiary() }
+        observe(viewModel.isExit) { showExitDialog() }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        with(viewModel.stickerList) {
+            clear()
+            addAll(binding.stickerView.stickers)
+        }
     }
 
     private fun setProperties() {
         with(binding) {
             dateTv.text = TimeUtil.getTodayDate(TimeUtil.YYYY_M_D_KR)
             nameTv.text = "유진진"
+            stickerView.stickers = this@WriteFragment.viewModel.stickerList
+            colorRv.adapter = ColorAdapter().apply {
+                setViewHolderViewModel(this@WriteFragment.viewModel)
+                submitList(Colors.getColors().map { ColorItem(it) })
+            }
         }
         receiveArgFromOtherView<Bitmap>("image") { viewModel.bitmap.value = it }
+    }
+
+    private fun setBackPressedDispatcher() {
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            showExitDialog()
+        }
     }
 
     private fun cropImageWithBitmap(bitmap: Bitmap?) {
@@ -139,9 +165,8 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         galleryActivityResultLauncher.launch(intent)
     }
 
-    private fun showColorDialog() {
-        selectImageDialog.dismiss()
-        colorDialog.show(parentFragmentManager, COLOR_DIALOG_TAG)
+    private fun showColorDialog(isShow: Boolean) {
+        if (isShow) selectImageDialog.dismiss()
     }
 
     private fun loadStickerDialog() {
@@ -152,9 +177,8 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         }
     }
 
-    private fun attachSticker() {
-        val drawable =
-            ContextCompat.getDrawable(requireContext(), R.mipmap.ic_launcher)
+    private fun attachSticker(@DrawableRes stickerId: Int) {
+        val drawable = ContextCompat.getDrawable(requireContext(), stickerId)
         binding.stickerView.addSticker(DrawableSticker(drawable))
     }
 
@@ -168,11 +192,22 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         viewModel.uploadDiary(cacheDir, bitmap)
     }
 
+    private fun showExitDialog() {
+        activity?.let {
+            val builder = AlertDialog.Builder(it, R.style.ExitAlertDialog).apply {
+                setTitle(R.string.write_exit_title)
+                setMessage(R.string.write_exit_content)
+                setPositiveButton(R.string.write_exit_exit) { _, _ -> viewModel.onClickBack() }
+                setNegativeButton(R.string.write_exit_cancel, null)
+            }
+            builder.create().show()
+        }
+    }
+
     companion object {
         private const val NOTICE_DO_NOT_LOAD_GALLERY = "이미지를 로드하려면 권한이 필요합니다."
         private const val NOTICE_ADD_POLAROID = "사진이나 단색을 먼저 입력해주세요"
         private const val SELECT_IMG_DIALOG_TAG = "SelectImageDialog"
         private const val STICKER_DIALOG_TAG = "StickerDialog"
-        private const val COLOR_DIALOG_TAG = "ColorDialog"
     }
 }

@@ -1,6 +1,7 @@
 package com.upf.memorytrace_android.viewmodel
 
 import android.graphics.Bitmap
+import androidx.annotation.DrawableRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.upf.memorytrace_android.api.repository.DiaryRepository
@@ -10,6 +11,7 @@ import com.upf.memorytrace_android.util.BackDirections
 import com.upf.memorytrace_android.util.Colors
 import com.upf.memorytrace_android.util.ImageConverter
 import com.upf.memorytrace_android.util.LiveEvent
+import com.xiaopo.flying.sticker.Sticker
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.io.File
@@ -19,6 +21,7 @@ internal class WriteViewModel : BaseViewModel() {
     val color = MutableLiveData<Colors?>()
     val title = MutableLiveData<String>()
     val content = MutableLiveData<String>()
+    val isShowColorDialog = MutableLiveData<Boolean>()
 
     val isShowSelectImgDialog = LiveEvent<Unit?>()
     val isLoadGallery = LiveEvent<Unit?>()
@@ -27,11 +30,12 @@ internal class WriteViewModel : BaseViewModel() {
     val isShowStickerDialog = LiveEvent<Unit?>()
     val addSticker = LiveEvent<Int>()
 
-    val isShowColorDialog = LiveEvent<Unit?>()
-
     val isSaveDiary = LiveEvent<Unit?>()
+    val isExit = LiveEvent<Unit?>()
 
     private var bid = -1
+    private var originalBackgroundColor: Colors? = null
+    var stickerList = mutableListOf<Sticker>()
 
     init {
         viewModelScope.launch {
@@ -58,12 +62,22 @@ internal class WriteViewModel : BaseViewModel() {
         isShowStickerDialog.call()
     }
 
-    fun attachSticker() {
-        addSticker.call()
+    fun attachSticker(@DrawableRes stickerId: Int) {
+        addSticker.value = stickerId
     }
 
     fun showColorDialog() {
-        isShowColorDialog.call()
+        originalBackgroundColor = color.value
+        isShowColorDialog.value = true
+    }
+
+    fun dismissColorDialog() {
+        color.value = originalBackgroundColor
+        isShowColorDialog.value = false
+    }
+
+    fun saveColor() {
+        isShowColorDialog.value = false
     }
 
     fun changeColor(c: Colors) {
@@ -88,8 +102,12 @@ internal class WriteViewModel : BaseViewModel() {
         }
     }
 
+    fun onClickExit() {
+        isExit.call()
+    }
+
     fun onClickBack() {
-        navDirections.value = BackDirections()
+        navDirections.postValue(BackDirections())
     }
 
     companion object {

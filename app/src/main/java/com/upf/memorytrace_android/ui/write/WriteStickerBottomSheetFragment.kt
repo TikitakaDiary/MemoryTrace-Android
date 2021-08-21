@@ -6,12 +6,18 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.base.BaseBottomSheetFragment
 import com.upf.memorytrace_android.databinding.FragmentBottomSheetWriteStickerBinding
+import com.upf.memorytrace_android.util.StickerPackage
 import com.upf.memorytrace_android.viewmodel.WriteViewModel
 
 internal class WriteStickerBottomSheetFragment(
     override val viewModel: WriteViewModel
 ) : BaseBottomSheetFragment<WriteViewModel, FragmentBottomSheetWriteStickerBinding>() {
     override val layoutId = R.layout.fragment_bottom_sheet_write_sticker
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NORMAL, R.style.TransparentDialog)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -24,7 +30,7 @@ internal class WriteStickerBottomSheetFragment(
             viewModel
         )
         TabLayoutMediator(binding.stickerTabLayout, binding.stickerViewpager) { tab, pos ->
-
+            tab.setIcon(StickerPackage.packageMap.keyAt(pos))
         }.attach()
     }
 }
