@@ -19,6 +19,15 @@ interface MemoryTraceService {
         @Part stickerImg: MultipartBody.Part? = null
     ): BaseResponse
 
+    @Multipart
+    @POST("book/update")
+    suspend fun updateBook(
+        @Part("bid") bid: Int,
+        @Part("title") title: String,
+        @Part("bgColor") bgColor: Int,
+        @Part stickerImg: MultipartBody.Part? = null
+    ): BaseResponse
+
     /**
      * 다이어리 목록 조회
      */
@@ -26,6 +35,11 @@ interface MemoryTraceService {
     suspend fun fetchBooks(
         @Query("page") page: Int,
         @Query("size") size: Int
+    ): BookListResponse
+
+    @GET("book/{bid}")
+    suspend fun fetchBook(
+        @Path("bid") bid: Int
     ): BookResponse
 
     /**
@@ -50,7 +64,7 @@ interface MemoryTraceService {
     suspend fun editName(@Body user: UserName): BaseResponse
 
     @POST("user/fcm")
-    suspend fun registerFcmToken(@Body user: User):BaseResponse
+    suspend fun registerFcmToken(@Body user: User): BaseResponse
 
     /**
      * 다이어리

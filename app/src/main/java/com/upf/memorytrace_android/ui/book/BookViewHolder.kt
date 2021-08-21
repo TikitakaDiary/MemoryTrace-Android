@@ -20,7 +20,7 @@ internal class BookViewHolder(
         binding.itemBook.background.setTint(Color.parseColor(Colors.getColor(item.bgColor)))
 
         itemView.setOnClickListener {
-            viewModel.onClickDiary(item.id)
+            viewModel.onClickDiary(item.bid)
         }
     }
 }

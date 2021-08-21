@@ -46,13 +46,13 @@ internal class BookListAdapter(
         override fun getNewListSize(): Int = newList.size
 
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldList[oldItemPosition].id == newList[newItemPosition].id
+            return oldList[oldItemPosition].bid == newList[newItemPosition].bid
         }
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
             val oldItem = oldList[oldItemPosition]
             val newItem = newList[newItemPosition]
-            return oldItem.id == newItem.id
+            return oldItem.bid == newItem.bid
                     && oldItem.nickname == newItem.nickname
                     && oldItem.title == newItem.title
                     && oldItem.bgColor == newItem.bgColor
