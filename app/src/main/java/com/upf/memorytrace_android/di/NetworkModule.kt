@@ -39,7 +39,6 @@ class NetworkModule {
             okHttpClientBuilder.addInterceptor(HttpLoggingInterceptor(object :
                 HttpLoggingInterceptor.Logger {
                 override fun log(message: String) {
-                    Log.d("OkHttp:KakaoHost", message)
                 }
             }).setLevel(HttpLoggingInterceptor.Level.BODY))
             okHttpClientBuilder.addNetworkInterceptor(
