@@ -1,6 +1,5 @@
 package com.upf.memorytrace_android.ui.book
 
-import android.graphics.Color
 import androidx.recyclerview.widget.RecyclerView
 import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.api.model.Book
@@ -17,7 +16,7 @@ internal class BookViewHolder(
         binding.itemBookAuthor.text =
             itemView.context.getString(R.string.book_list_author, item.nickname)
         binding.itemBookTitle.text = item.title
-        binding.itemBook.background.setTint(Color.parseColor(Colors.getColor(item.bgColor)))
+        Colors.fillColorTint(binding.itemBook, item.bgColor)
 
         itemView.setOnClickListener {
             viewModel.onClickDiary(item.bid)

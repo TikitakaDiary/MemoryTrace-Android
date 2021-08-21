@@ -68,7 +68,21 @@
     <fragment
         android:id="@+id/createBookFragment"
         android:name="com.upf.memorytrace_android.ui.book.CreateBookFragment"
-        android:label="CreateBookFragment" />
+        android:label="CreateBookFragment">
+        <argument
+            android:name="bid"
+            android:defaultValue="-1"
+            app:argType="integer" />
+        <argument
+            android:name="title"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="color"
+            android:defaultValue="-1"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/mypageFragment"
         android:name="com.upf.memorytrace_android.ui.MypageFragment"

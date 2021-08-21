@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.upf.memorytrace_android.viewmodel.CreateBookViewModel" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,13 +28,15 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
                 android:gravity="center"
+                android:onClick="@{()->viewModel.saveBook()}"
                 android:paddingHorizontal="@dimen/default_padding_24"
                 android:text="@string/create" />
         </androidx.appcompat.widget.Toolbar>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/default_padding_24">
 
@@ -40,43 +49,57 @@
                 android:text="@string/create_book_section_title" />
 
 
-            <LinearLayout
+            <androidx.cardview.widget.CardView
                 android:id="@+id/item_book"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/book_height"
-                android:background="@drawable/rect_gray_rounded"
-                android:orientation="horizontal"
+                android:backgroundTint="@color/systemGray02"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title_tv">
+                app:layout_constraintTop_toBottomOf="@id/title_tv"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <EditText
-                    android:id="@+id/title"
-                    style="@style/GmarketBold16"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:background="@android:color/transparent"
-                    android:hint="@string/write_hint_title"
-                    android:maxLength="15"
-                    android:paddingStart="@dimen/default_padding_24"
-                    android:textColor="@color/systemWhite"
-                    android:textColorHint="@color/systemWhite"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toLeftOf="@id/item_book_sticker"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/title"
+                        style="@style/GmarketBold16"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/write_hint_title"
+                        android:maxLength="15"
+                        android:paddingStart="@dimen/default_padding_24"
+                        android:text="@={viewModel.title}"
+                        android:textColor="@color/systemWhite"
+                        android:textColorHint="@color/systemWhite" />
 
 
-                <ImageView
-                    android:id="@+id/item_book_sticker"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="2"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
-            </LinearLayout>
+                    <com.xiaopo.flying.sticker.StickerView
+                        android:id="@+id/sticker_view"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="2"
+                        app:borderColor="@android:color/white"
+                        app:showBorder="true"
+                        app:showIcons="true">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@{viewModel.stickerImg}"
+                            android:visibility="@{viewModel.stickerImg != null}" />
+                    </com.xiaopo.flying.sticker.StickerView>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 style="@style/NotoRegular14"
@@ -93,5 +116,27 @@
                 app:spanCount="6"
                 tools:listitem="@layout/item_color_list" />
         </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/menu_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/systemGray02"
+            android:padding="12dp"
+            android:paddingHorizontal="@dimen/default_padding_24"
+            android:paddingVertical="@dimen/default_spacing_8"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+
+            <ImageView
+                android:id="@+id/sticker_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->viewModel.showStickerDialog()}"
+                android:src="@drawable/ic_sticker"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </layout>

@@ -37,6 +37,7 @@
     <string name="create">생성</string>
     <string name="cover_color">표지색상</string>
     <string name="book_list_author">%s 작성중</string>
+    <string name="create_book_exit_content">작성중인 내용은 저장되지 않습니다.</string>
 
     <!--    로그인-->
     <string name="kakao_login">카카오톡으로 시작하기</string>
