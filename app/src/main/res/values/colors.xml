@@ -28,4 +28,6 @@
     <color name="gray04">#BDBDBD</color>
     <color name="gray05">#E0E0E0</color>
     <color name="gray06">#F2F2F2</color>
+
+    <color name="background">#E5E5E5</color>
 </resources>
