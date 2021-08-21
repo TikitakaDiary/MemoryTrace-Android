@@ -48,7 +48,6 @@ internal class CreateBookViewModel : BaseViewModel() {
     private var bid = -1
     var stickerList = mutableListOf<Sticker>()
 
-
     init {
         viewModelScope.launch {
             navArgs<CreateBookFragmentArgs>()
@@ -92,35 +91,40 @@ internal class CreateBookViewModel : BaseViewModel() {
 
     fun createBook(cacheDir: File, bitmap: Bitmap?) {
         viewModelScope.launch {
-            var image: MultipartBody.Part? = null
-            if (bitmap != null) {
-                ImageConverter.convertBitmapToMultipartBody(bitmap, cacheDir, null, null)?.let {
-                    image = it
-                }
-            }
-
-            val response = if (bid > 0) {
-                BookRepository.createBook(
-                    title.value ?: EMPTY_STRING,
-                    _selectedColor.value?.id ?: 0,
-                    image
-                )
+            if (title.value.isNullOrBlank()) {
+                toast.value = EMPTY_TITLE
             } else {
-                BookRepository.updateBook(
-                    bid,
-                    title.value ?: EMPTY_STRING,
-                    _selectedColor.value?.id ?: 0,
-                    image
-                )
-            }
-            when (response) {
-                is NetworkState.Success -> onClickBack()
-                is NetworkState.Failure -> toast.value = response.message
+                var image: MultipartBody.Part? = null
+                if (bitmap != null) {
+                    ImageConverter.convertBitmapToMultipartBody(bitmap, cacheDir, null, null)?.let {
+                        image = it
+                    }
+                }
+
+                val response = if (bid < 0) {
+                    BookRepository.createBook(
+                        title.value ?: EMPTY_STRING,
+                        _selectedColor.value?.id ?: 0,
+                        image
+                    )
+                } else {
+                    BookRepository.updateBook(
+                        bid,
+                        title.value ?: EMPTY_STRING,
+                        _selectedColor.value?.id ?: 0,
+                        image
+                    )
+                }
+                when (response) {
+                    is NetworkState.Success -> onClickBack()
+                    is NetworkState.Failure -> toast.value = response.message
+                }
             }
         }
     }
 
     companion object {
         private const val EMPTY_STRING = ""
+        private const val EMPTY_TITLE = "제목을 입력해주세요!"
     }
 }
