@@ -6,6 +6,7 @@
 
     <color name="systemWhite">#FFFFFF</color>
     <color name="systemBlack">#000000</color>
+    <color name="systemRed">#FF3B30</color>
     <color name="systemBlue">#2D9CDB</color>
     <color name="systemGray01">#212121</color>
     <color name="systemGray02">#4f4f4f</color>
@@ -27,4 +28,6 @@
     <color name="gray04">#BDBDBD</color>
     <color name="gray05">#E0E0E0</color>
     <color name="gray06">#F2F2F2</color>
+
+    <color name="background">#E5E5E5</color>
 </resources>

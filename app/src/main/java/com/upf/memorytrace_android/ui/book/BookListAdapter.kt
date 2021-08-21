@@ -5,11 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.upf.memorytrace_android.api.model.Book
-import com.upf.memorytrace_android.base.BaseListAdapter
 import com.upf.memorytrace_android.databinding.ItemBookListBinding
 import com.upf.memorytrace_android.util.clearAndAddAll
+import com.upf.memorytrace_android.viewmodel.BookListViewModel
 
-class BookListAdapter : RecyclerView.Adapter<BookViewHolder>() {
+internal class BookListAdapter(
+    private val viewModel: BookListViewModel
+) : RecyclerView.Adapter<BookViewHolder>() {
 
     private val items = mutableListOf<Book>()
 
@@ -18,7 +20,7 @@ class BookListAdapter : RecyclerView.Adapter<BookViewHolder>() {
         val binding = ItemBookListBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
-        return BookViewHolder(binding)
+        return BookViewHolder(binding, viewModel)
     }
 
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {

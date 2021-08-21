@@ -35,11 +35,6 @@
         <item name="android:textSize">@dimen/font_16</item>
     </style>
 
-    <style name="GmarketMedium24" parent="Content">
-        <item name="android:fontFamily">@font/gmarket_sans_ttf_medium</item>
-        <item name="android:textSize">@dimen/font_24</item>
-    </style>
-
     <style name="GmarketMedium20" parent="Content">
         <item name="android:fontFamily">@font/gmarket_sans_ttf_medium</item>
         <item name="android:textSize">@dimen/font_20</item>
@@ -145,9 +140,63 @@
         <item name="android:background">@drawable/rect_white_rounded</item>
     </style>
 
+    <style name="buttonBarButtonStyle" parent="Widget.AppCompat.Button.Borderless.Colored">
+    </style>
+
+    <style name="buttonBarButtonStyle.Negative">
+        <item name="android:textColor">@color/gray04</item>
+    </style>
+
+    <style name="buttonBarButtonStyle.Positive">
+        <item name="android:textColor">@color/systemRed</item>
+    </style>
+
+    <style name="ExitAlertDialog" parent="Base.Theme.AppCompat.Light.Dialog">
+        <item name="fontFamily">@font/noto_sans_kr_regular</item>
+        <item name="android:textColor">@color/systemGray01</item>
+        <item name="buttonBarNegativeButtonStyle">@style/buttonBarButtonStyle.Negative</item>
+        <item name="buttonBarPositiveButtonStyle">@style/buttonBarButtonStyle.Positive</item>
+    </style>
+
     <style name="ImageView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:adjustViewBounds">true</item>
+    </style>
+
+    <!--    마이페이지-->
+    <style name="MypageLabel" parent="NotoRegular12">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/lightGray</item>
+    </style>
+
+    <style name="MypageItemLayout" parent="NotoRegular16">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingVertical">@dimen/title_spacing_16</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <style name="MypageItem" parent="NotoRegular16">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/gray06</item>
+    </style>
+
+    <style name="MyDialog" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="android:buttonBarNegativeButtonStyle">@style/DialogCancel</item>
+        <item name="android:textColor">@color/gray01</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/font_16</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/DialogConfirm</item>
+    </style>
+
+    <style name="DialogCancel" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/gray03</item>
+    </style>
+
+    <style name="DialogConfirm" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/red</item>
     </style>
 </resources>

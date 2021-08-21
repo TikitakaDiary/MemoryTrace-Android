@@ -36,4 +36,13 @@ internal class BookListViewModel : BaseViewModel() {
         navDirections.value =
             BookListFragmentDirections.actionBookListFragmentToCreateBookFragment()
     }
+
+    fun onClickMypage() {
+        navDirections.value =
+            BookListFragmentDirections.actionBookListFragmentToMypageFragment()
+    }
+
+    fun onClickDiary(did: Int) {
+        navDirections.value = BookListFragmentDirections.actionBookListFragmentToDiaryFragment(did)
+    }
 }

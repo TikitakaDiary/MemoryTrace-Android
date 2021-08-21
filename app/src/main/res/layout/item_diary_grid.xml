@@ -4,6 +4,10 @@
     <data>
 
         <variable
+            name="viewModel"
+            type="com.upf.memorytrace_android.viewmodel.DiaryViewModel" />
+
+        <variable
             name="item"
             type="com.upf.memorytrace_android.ui.diary.DiaryItem" />
     </data>
@@ -11,6 +15,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{()->viewModel.onClickDiaryDetail(item.id)}"
         android:padding="2.5dp">
 
         <androidx.cardview.widget.CardView
@@ -26,7 +31,9 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@{item.img}" />
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

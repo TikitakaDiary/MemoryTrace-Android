@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.upf.memorytrace_android.viewmodel.NameEditViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_back">
+
+            <TextView
+                android:id="@+id/btn_save"
+                style="@style/NotoRegular16"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/default_padding_24"
+                android:text="@string/save" />
+        </androidx.appcompat.widget.Toolbar>
+
+
+        <TextView
+            android:id="@+id/title_tv"
+            style="@style/GmarketBold24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/default_padding_24"
+            android:paddingVertical="@dimen/title_spacing_16"
+            android:text="@string/mypage_name_edit_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+
+        <EditText
+            android:id="@+id/ed_name"
+            style="@style/NotoRegular16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/default_padding_24"
+            android:background="@drawable/rect_gray_rounded"
+            android:hint="@string/mypage_name_edit_hint"
+            android:paddingVertical="@dimen/item_spacing_12"
+            android:paddingStart="@dimen/title_spacing_16"
+            android:text="@{viewModel.name}"
+            android:textColor="@color/systemWhite"
+            android:textColorHint="@color/lightGray"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_tv" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
