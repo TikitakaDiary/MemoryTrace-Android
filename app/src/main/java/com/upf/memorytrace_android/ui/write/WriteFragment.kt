@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
 import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.base.BaseFragment
@@ -59,9 +60,6 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
     private val stickerDialog by lazy(LazyThreadSafetyMode.NONE) {
         WriteStickerBottomSheetFragment(viewModel)
     }
-    private val colorDialog by lazy(LazyThreadSafetyMode.NONE) {
-        WriteColorBottomSheetFragment(viewModel)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -72,12 +70,12 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         observe(viewModel.isShowSelectImgDialog) { showSelectImageDialog() }
         observe(viewModel.isLoadGallery) { accessGallery() }
         observe(viewModel.isLoadCamera) { accessCamera() }
-        observe(viewModel.isShowStickerDialog) { loadStickerDialog() }
         observe(viewModel.addSticker) { attachSticker(it) }
         observe(viewModel.isShowColorDialog) { showColorDialog(it) }
         observe(viewModel.color) { it?.let { color -> changeColor(color) } }
         observe(viewModel.isSaveDiary) { saveDiary() }
         observe(viewModel.isExit) { showExitDialog() }
+        observe(viewModel.isShowStickerDialog) { if (it) loadStickerDialog() else closeStickerDialog() }
     }
 
     override fun onDestroyView() {
@@ -177,6 +175,10 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         }
     }
 
+    private fun closeStickerDialog() {
+        stickerDialog.dismiss()
+    }
+
     private fun attachSticker(@DrawableRes stickerId: Int) {
         val drawable = ContextCompat.getDrawable(requireContext(), stickerId)
         binding.stickerView.addSticker(DrawableSticker(drawable))
@@ -187,6 +189,8 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
     }
 
     private fun saveDiary() {
+        binding.progressbar.isVisible = true
+        binding.stickerView.removeStickerHandler()
         val bitmap = ImageConverter.convertViewToBitmap(binding.cardView)
         val cacheDir = requireContext().cacheDir
         viewModel.uploadDiary(cacheDir, bitmap)

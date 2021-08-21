@@ -27,7 +27,7 @@ internal class WriteViewModel : BaseViewModel() {
     val isLoadGallery = LiveEvent<Unit?>()
     val isLoadCamera = LiveEvent<Unit?>()
 
-    val isShowStickerDialog = LiveEvent<Unit?>()
+    val isShowStickerDialog = LiveEvent<Boolean>()
     val addSticker = LiveEvent<Int>()
 
     val isSaveDiary = LiveEvent<Unit?>()
@@ -59,7 +59,11 @@ internal class WriteViewModel : BaseViewModel() {
     }
 
     fun showStickerDialog() {
-        isShowStickerDialog.call()
+        isShowStickerDialog.value = true
+    }
+
+    fun closeStickerDialog() {
+        isShowStickerDialog.value = false
     }
 
     fun attachSticker(@DrawableRes stickerId: Int) {

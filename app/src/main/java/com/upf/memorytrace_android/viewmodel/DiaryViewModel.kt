@@ -2,6 +2,7 @@ package com.upf.memorytrace_android.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.upf.memorytrace_android.api.model.DiaryModel
 import com.upf.memorytrace_android.api.repository.DiaryRepository
 import com.upf.memorytrace_android.base.BaseViewModel
 import com.upf.memorytrace_android.ui.diary.DiaryItem
@@ -12,29 +13,48 @@ import com.upf.memorytrace_android.ui.diary.DiaryMonthItem
 import com.upf.memorytrace_android.util.TimeUtil
 import java.util.Calendar
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 internal class DiaryViewModel : BaseViewModel() {
     val title = MutableLiveData<String>()
     val listType = MutableLiveData<DiaryListType>(DiaryListType.FRAME)
     val diaryOfMonthList = MutableLiveData<List<DiaryMonthItem>>()
+    val isLoading = MutableLiveData<Boolean>(false)
     val isMyTurn = true
 
     private var bid = -1
+    private var page = 1
+    private var hasNext = true
+    private var diaryModelList = mutableListOf<DiaryModel>()
 
     init {
         viewModelScope.launch {
             navArgs<DiaryFragmentArgs>()
-                .map {
+                .collect {
                     bid = it.bid
-                    val response = DiaryRepository.fetchDiaries(it.bid)
-                    response.body()
-                }.map {
-                    title.value = it?.data?.title
-                    it?.data
-                        ?.diaryList
-                        ?.map { diary ->
+                }
+        }
+    }
+
+    fun initializeDiaryList() {
+        diaryOfMonthList.value = listOf()
+        diaryModelList = mutableListOf()
+        page = 1
+        hasNext = true
+        loadDiaryList()
+    }
+
+    fun loadDiaryList() {
+        if (hasNext && isLoading.value == false) {
+            viewModelScope.launch {
+                isLoading.postValue(true)
+                val response = DiaryRepository.fetchDiaries(bid, page++)
+                response.body()?.data?.apply {
+                    this@DiaryViewModel.hasNext = hasNext
+                    this@DiaryViewModel.title.value = title
+                    diaryModelList.addAll(diaryList)
+                    val diaryList = diaryModelList
+                        .map { diary ->
                             val date = TimeUtil.convertStringToDate(
                                 TimeUtil.FORMAT_yyyy_MM_dd_B_HH_mm_ss,
                                 diary.createdDate
@@ -46,27 +66,19 @@ internal class DiaryViewModel : BaseViewModel() {
                                 diary.img,
                                 date
                             )
-                        }?.groupBy { diaryItem ->
+                        }.groupBy { diaryItem ->
                             TimeUtil.getDate(
                                 TimeUtil.YYYY_MM,
                                 diaryItem.date
                             )
-                        }?.map { entry ->
+                        }.map { entry ->
                             DiaryMonthItem(entry.key, entry.value)
                         }
-                }.collect {
-                    diaryOfMonthList.postValue(it)
+                    diaryOfMonthList.postValue(diaryList)
                 }
+                isLoading.postValue(false)
+            }
         }
-//        diaryOfMonthList.value = (1..11).map {
-//            val calendar = Calendar.getInstance()
-//            calendar.add(Calendar.MONTH, -(it / 2))
-//            val date = calendar.time
-//            DiaryItem(it, "title$it", "n$it", "", date)
-//        }.groupBy { TimeUtil.getDate(TimeUtil.YYYY_MM, it.date) }
-//            .map {
-//                DiaryMonthItem(it.key, it.value)
-//            }
     }
 
     fun onClickWriteDiary() {

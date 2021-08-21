@@ -3,14 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="item"
+            type="com.upf.memorytrace_android.ui.book.BookItem" />
+
+        <variable
+            name="viewModel"
+            type="com.upf.memorytrace_android.viewmodel.BookListViewModel" />
+    </data>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/item_book"
         android:layout_width="match_parent"
         android:layout_height="@dimen/book_height"
         android:layout_marginBottom="@dimen/item_spacing_12"
+        android:background="@drawable/rect_gray_rounded"
         android:backgroundTint="@color/systemGray02"
-        app:cardCornerRadius="10dp"
+        android:onClick="@{()->viewModel.onClickDiary(item.book.bid)}"
+        android:theme="@style/Theme.MaterialComponents.Light"
+        app:cardCornerRadius="@dimen/book_radius"
         app:cardElevation="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -26,28 +39,43 @@
                 android:layout_height="wrap_content"
                 android:maxLength="15"
                 android:paddingStart="@dimen/default_padding_24"
+                android:text="@{item.book.title}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/item_book_sticker"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="안녕하세요아녕하신가요ddddddddddddddddd" />
 
-            <TextView
-                android:id="@+id/item_book_author"
-                style="@style/NotoRegular12"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:layout_marginBottom="@dimen/title_spacing_16"
                 android:paddingStart="@dimen/default_padding_24"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:text="김다솜 작성중" />
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/item_book_author"
+                    style="@style/NotoRegular12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{item.book.nickname}"
+                    tools:text="김다솜" />
+
+                <TextView
+                    style="@style/NotoRegular12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/book_list_writing"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/item_book_sticker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:src="@{item.book.image}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
