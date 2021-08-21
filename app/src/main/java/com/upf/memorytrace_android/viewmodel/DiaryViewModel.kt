@@ -10,6 +10,7 @@ import com.upf.memorytrace_android.ui.diary.DiaryFragmentDirections
 import com.upf.memorytrace_android.ui.diary.DiaryFragmentArgs
 import com.upf.memorytrace_android.ui.diary.DiaryListType
 import com.upf.memorytrace_android.ui.diary.DiaryMonthItem
+import com.upf.memorytrace_android.util.BackDirections
 import com.upf.memorytrace_android.util.MemoryTraceConfig
 import com.upf.memorytrace_android.util.TimeUtil
 import java.util.Calendar
@@ -93,6 +94,10 @@ internal class DiaryViewModel : BaseViewModel() {
 
     fun onclickSetting() {
         navDirections.value = DiaryFragmentDirections.actionDiaryFragmentToBookSettingFragment(bid)
+    }
+
+    fun onClickBack() {
+        navDirections.value = BackDirections()
     }
 
     fun changeListType() {
