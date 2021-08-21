@@ -11,9 +11,8 @@ import com.upf.memorytrace_android.viewmodel.BookListViewModel
 internal class BookListFragment : BaseFragment<BookListViewModel, FragmentBookListBinding>() {
     override val layoutId = R.layout.fragment_book_list
     override val viewModelClass = BookListViewModel::class
-    private val adapter: BookListAdapter by lazy {
-        BookListAdapter(viewModel)
-    }
+    private val adapter = BookListAdapter()
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -28,13 +27,13 @@ internal class BookListFragment : BaseFragment<BookListViewModel, FragmentBookLi
     }
 
     private fun initViewModel() {
-        observe(viewModel.bookList) {
-            adapter.updateItems(it)
+        observe(viewModel.bookList) { bookList ->
+            adapter.submitList(bookList.map { BookItem(it) })
         }
     }
 
     private fun setupRecyclerView() {
-        binding.list.setHasFixedSize(true)
+        adapter.setViewHolderViewModel(viewModel)
         binding.list.adapter = adapter
     }
 
