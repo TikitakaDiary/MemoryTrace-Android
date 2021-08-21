@@ -20,7 +20,6 @@ import com.upf.memorytrace_android.base.BaseFragment
 import com.upf.memorytrace_android.databinding.FragmentWriteBinding
 import com.upf.memorytrace_android.extension.observe
 import com.upf.memorytrace_android.extension.toast
-import com.upf.memorytrace_android.util.BackDirections
 import com.upf.memorytrace_android.util.Colors
 import com.upf.memorytrace_android.util.ImageConverter
 import com.upf.memorytrace_android.util.TimeUtil
@@ -78,7 +77,7 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         observe(viewModel.isShowColorDialog) { showColorDialog(it) }
         observe(viewModel.color) { it?.let { color -> changeColor(color) } }
         observe(viewModel.isSaveDiary) { saveDiary() }
-        observe(viewModel.isBack) { showExitDialog() }
+        observe(viewModel.isExit) { showExitDialog() }
     }
 
     override fun onDestroyView() {
@@ -198,15 +197,11 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
             val builder = AlertDialog.Builder(it, R.style.ExitAlertDialog).apply {
                 setTitle(R.string.write_exit_title)
                 setMessage(R.string.write_exit_content)
-                setPositiveButton(R.string.write_exit_exit) { _, _ -> back() }
+                setPositiveButton(R.string.write_exit_exit) { _, _ -> viewModel.onClickBack() }
                 setNegativeButton(R.string.write_exit_cancel, null)
             }
             builder.create().show()
         }
-    }
-
-    private fun back() {
-        viewModel.navDirections.value = BackDirections()
     }
 
     companion object {
@@ -214,6 +209,5 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         private const val NOTICE_ADD_POLAROID = "사진이나 단색을 먼저 입력해주세요"
         private const val SELECT_IMG_DIALOG_TAG = "SelectImageDialog"
         private const val STICKER_DIALOG_TAG = "StickerDialog"
-        private const val COLOR_DIALOG_TAG = "ColorDialog"
     }
 }
