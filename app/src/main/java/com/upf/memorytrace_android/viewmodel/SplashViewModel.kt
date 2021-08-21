@@ -9,8 +9,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 internal class SplashViewModel : BaseViewModel() {
-    val name = MutableLiveData("스플래시")
-
     init {
         viewModelScope.launch {
             delay(1500L)
