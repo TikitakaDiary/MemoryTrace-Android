@@ -11,6 +11,7 @@ import com.upf.memorytrace_android.databinding.FragmentMypageBinding
 import com.upf.memorytrace_android.extension.observe
 import com.upf.memorytrace_android.extension.toast
 import com.upf.memorytrace_android.util.MemoryTraceConfig
+import com.upf.memorytrace_android.util.showDialog
 import com.upf.memorytrace_android.viewmodel.MypageViewModel
 
 internal class MypageFragment : BaseFragment<MypageViewModel, FragmentMypageBinding>() {
@@ -45,20 +46,21 @@ internal class MypageFragment : BaseFragment<MypageViewModel, FragmentMypageBind
         }
 
         binding.btnLogout.setOnClickListener {
-
             showDialog(
-                getString(R.string.mypage_logout),
-                getString(R.string.mypage_logout_message),
-                getString(R.string.mypage_logout)
+                requireActivity(),
+                R.string.mypage_logout,
+                R.string.mypage_logout_message,
+                R.string.mypage_logout
             ) {
                 viewModel.resetUser()
             }
         }
         binding.btnLeave.setOnClickListener {
             showDialog(
-                getString(R.string.mypage_leave),
-                getString(R.string.mypage_leave_message),
-                getString(R.string.mypage_leave_confirm)
+                requireActivity(),
+                R.string.mypage_leave,
+                R.string.mypage_leave_message,
+                R.string.mypage_leave_confirm
             ) {
                 viewModel.withdrawalUser()
             }
@@ -67,19 +69,5 @@ internal class MypageFragment : BaseFragment<MypageViewModel, FragmentMypageBind
 
     }
 
-    private fun showDialog(
-        title: String,
-        message: String,
-        confirm: String,
-        positive: (() -> Unit)? = null
-    ) {
-        AlertDialog.Builder(context, R.style.MyDialog)
-            .setTitle(title)
-            .setMessage(message)
-            .setNegativeButton(getString(R.string.cancel), null)
-            .setPositiveButton(confirm) { _, _ ->
-                positive?.invoke()
-            }.create().show()
-    }
 
 }

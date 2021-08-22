@@ -1,11 +1,13 @@
 package com.upf.memorytrace_android.util
 
+import android.app.AlertDialog
 import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
+import com.upf.memorytrace_android.R
 
 
 fun View.visible() {
@@ -72,3 +74,37 @@ fun RecyclerView.isScrolled(checkerFirstVisibleItemPosition: Int = 2): Boolean {
     }
     return false
 }
+
+fun showDialog(
+    context: Context,
+    title: String,
+    message: String,
+    confirm: String,
+    positive: (() -> Unit)? = null
+) {
+    AlertDialog.Builder(context, R.style.MyDialog)
+        .setTitle(title)
+        .setMessage(message)
+        .setNegativeButton(context.getString(R.string.cancel), null)
+        .setPositiveButton(confirm) { _, _ ->
+            positive?.invoke()
+        }.create().show()
+}
+
+
+fun showDialog(
+    context: Context,
+    title: Int,
+    message: Int,
+    confirm: Int,
+    positive: (() -> Unit)? = null
+) {
+    AlertDialog.Builder(context, R.style.MyDialog)
+        .setTitle(context.getString(title))
+        .setMessage(context.getString(message))
+        .setNegativeButton(context.getString(R.string.cancel), null)
+        .setPositiveButton(context.getString(confirm)) { _, _ ->
+            positive?.invoke()
+        }.create().show()
+}
+
