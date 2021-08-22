@@ -20,6 +20,7 @@ internal class MypageViewModel : BaseViewModel() {
     val version = MutableLiveData<String>()
 
     val showOssPage = LiveEvent<Unit?>()
+    val sendEmail = LiveEvent<Unit?>()
 
     init {
         name.value = MemoryTraceConfig.nickname
@@ -50,6 +51,10 @@ internal class MypageViewModel : BaseViewModel() {
 
     fun onClickOssNotice(){
         showOssPage.call()
+    }
+
+    fun onClickSendEmail(){
+        sendEmail.call()
     }
 
     fun resetUser() {

@@ -129,6 +129,6 @@ dependencies {
     releaseImplementation "com.facebook.flipper:flipper-noop:$flipper_version"
 
     //notice open source
-    implementation("com.google.android.gms:play-services-oss-licenses:$oss_version")
+    implementation "com.google.android.gms:play-services-oss-licenses:$oss_version"
 
 }
