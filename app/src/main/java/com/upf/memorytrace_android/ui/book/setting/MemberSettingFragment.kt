@@ -1,4 +1,4 @@
-package com.upf.memorytrace_android.ui
+package com.upf.memorytrace_android.ui.book.setting
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -20,11 +20,18 @@ internal class MemberSettingFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        initializeRecyclerView()
+
         observe(viewModel.invite) {
             val clipboard: ClipboardManager =
                 requireActivity().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText("invite_code", it)
             clipboard.setPrimaryClip(clip)
         }
+    }
+
+    private fun initializeRecyclerView() {
+
     }
 }

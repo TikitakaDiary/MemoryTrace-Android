@@ -5,9 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.upf.memorytrace_android.api.repository.BookRepository
 import com.upf.memorytrace_android.api.util.NetworkState
 import com.upf.memorytrace_android.base.BaseViewModel
-import com.upf.memorytrace_android.ui.MemberSettingFragmentArgs
-import com.upf.memorytrace_android.ui.book.BookSettingFragmentArgs
-import com.upf.memorytrace_android.ui.book.CreateBookFragmentArgs
+import com.upf.memorytrace_android.ui.book.setting.MemberSettingFragmentArgs
 import com.upf.memorytrace_android.util.BackDirections
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map

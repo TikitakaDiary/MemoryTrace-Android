@@ -160,7 +160,7 @@
 
     <fragment
         android:id="@+id/memberSettingFragment"
-        android:name="com.upf.memorytrace_android.ui.MemberSettingFragment"
+        android:name="com.upf.memorytrace_android.ui.book.setting.MemberSettingFragment"
         android:label="MemberSettingFragment">
         <argument
             android:name="bid"
