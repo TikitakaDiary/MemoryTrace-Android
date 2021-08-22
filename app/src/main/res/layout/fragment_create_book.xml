@@ -92,22 +92,29 @@
                         android:textColorHint="@color/systemWhite" />
 
 
-                    <com.xiaopo.flying.sticker.StickerView
-                        android:id="@+id/sticker_view"
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_weight="2"
-                        app:borderColor="@android:color/white"
-                        app:showBorder="true"
-                        app:showIcons="true">
+                        android:background="@drawable/border_dash_rect_white">
 
-                        <ImageView
+                        <com.xiaopo.flying.sticker.StickerView
+                            android:id="@+id/sticker_view"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:src="@{viewModel.stickerImg}"
-                            android:visibility="@{viewModel.stickerImg != null}" />
-                    </com.xiaopo.flying.sticker.StickerView>
+                            app:borderColor="@android:color/white"
+                            app:showBorder="true"
+                            app:showIcons="true">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@{viewModel.stickerImg}"
+                                android:visibility="@{viewModel.stickerImg != null}" />
+                        </com.xiaopo.flying.sticker.StickerView>
+                    </LinearLayout>
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
