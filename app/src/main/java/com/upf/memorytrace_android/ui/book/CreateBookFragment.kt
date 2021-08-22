@@ -82,6 +82,7 @@ internal class CreateBookFragment : BaseFragment<CreateBookViewModel, FragmentCr
             adapter.notifyDataSetChanged()
         }
 
+        observe(viewModel.showStickerResetDialog) { showStickerResetDialog() }
         observe(viewModel.isShowStickerDialog) { loadStickerDialog() }
         observe(viewModel.isHideStickerDialog) { hideStickerDialog() }
         observe(viewModel.addSticker) { attachSticker(it) }
@@ -137,6 +138,18 @@ internal class CreateBookFragment : BaseFragment<CreateBookViewModel, FragmentCr
                 setTitle(R.string.write_exit_title)
                 setMessage(R.string.create_book_exit_content)
                 setPositiveButton(R.string.write_exit_exit) { _, _ -> viewModel.onClickBack() }
+                setNegativeButton(R.string.write_exit_cancel, null)
+            }
+            builder.create().show()
+        }
+    }
+
+    private fun showStickerResetDialog() {
+        activity?.let {
+            val builder = AlertDialog.Builder(it, R.style.ExitAlertDialog).apply {
+                setTitle(R.string.sticker_reset_title)
+                setMessage(R.string.sticker_reset_message)
+                setPositiveButton(R.string.edit) { _, _ -> viewModel.showStickerDialog(true) }
                 setNegativeButton(R.string.write_exit_cancel, null)
             }
             builder.create().show()
