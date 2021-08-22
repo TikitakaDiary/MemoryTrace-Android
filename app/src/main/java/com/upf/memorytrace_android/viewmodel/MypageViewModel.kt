@@ -40,7 +40,7 @@ internal class MypageViewModel : BaseViewModel() {
     fun joinToBook(code: String) {
         viewModelScope.launch {
             val response = UserRepository.joinToBook(code)
-            toast.value = "일기가 생성되었습니다?"
+            toast.value = "일기가 생성되었습니다"
             navDirections.value = BackDirections()
         }
     }

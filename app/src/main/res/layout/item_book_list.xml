@@ -34,21 +34,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/item_book_title"
-                style="@style/GmarketBold16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxLength="15"
-                android:paddingStart="@dimen/default_padding_24"
-                android:text="@{item.book.title}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/item_book_sticker"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="안녕하세요아녕하신가요ddddddddddddddddd" />
+            android:layout_height="match_parent"
+            android:paddingStart="@dimen/default_padding_24">
 
 
             <TextView
@@ -57,20 +44,36 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/title_spacing_16"
-                android:paddingStart="@dimen/default_padding_24"
                 android:textWithForm="@{item.book.nickname}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="김다솜" />
 
-            <ImageView
-                android:id="@+id/item_book_sticker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@{item.book.image}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/item_book_title"
+                    style="@style/GmarketBold16"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:gravity="center_vertical"
+                    android:text="@{item.book.title}"
+                    tools:text="안녕하세요아녕하신가요ddddddddddddddddd" />
+
+                <ImageView
+                    android:id="@+id/item_book_sticker"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:src="@{item.book.image}" />
+            </LinearLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>
