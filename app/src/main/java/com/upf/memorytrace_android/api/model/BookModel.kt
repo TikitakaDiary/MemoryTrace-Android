@@ -14,5 +14,8 @@ data class Book(
     var title: String = "",
     var bgColor: Int = -1,
     @SerializedName("stickerImg") var image: String = "",
-    @SerializedName("modifiedDate") var date: String = ""
+    @SerializedName("modifiedDate") var date: String = "",
+    var whoseTurn: Int = -1,
+    var inviteCode: String = "",
+    var userList: List<User>? = null
 )
