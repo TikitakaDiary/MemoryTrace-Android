@@ -23,6 +23,7 @@ import com.upf.memorytrace_android.extension.observe
 import com.upf.memorytrace_android.extension.toast
 import com.upf.memorytrace_android.util.Colors
 import com.upf.memorytrace_android.util.ImageConverter
+import com.upf.memorytrace_android.util.MemoryTraceConfig
 import com.upf.memorytrace_android.util.TimeUtil
 import com.upf.memorytrace_android.viewmodel.WriteViewModel
 import com.xiaopo.flying.sticker.DrawableSticker
@@ -90,7 +91,7 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
     private fun setProperties() {
         with(binding) {
             dateTv.text = TimeUtil.getTodayDate(TimeUtil.YYYY_M_D_KR)
-            nameTv.text = "유진진"
+            nameTv.text = MemoryTraceConfig.nickname
             stickerView.stickers = this@WriteFragment.viewModel.stickerList
             colorRv.adapter = ColorAdapter().apply {
                 setViewHolderViewModel(this@WriteFragment.viewModel)
