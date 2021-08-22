@@ -79,6 +79,7 @@ internal class CreateBookFragment : BaseFragment<CreateBookViewModel, FragmentCr
     private fun initViewModel() {
         observe(viewModel.selectedColor) {
             Colors.fillColorTint(binding.itemBook, it)
+            adapter.notifyDataSetChanged()
         }
 
         observe(viewModel.isShowStickerDialog) { loadStickerDialog() }
@@ -125,7 +126,6 @@ internal class CreateBookFragment : BaseFragment<CreateBookViewModel, FragmentCr
                 Colors.fillCircle(binding.circleColor, color)
                 itemView.setOnClickListener {
                     viewModel.setSelectedColor(color)
-                    notifyDataSetChanged()
                 }
             }
         }

@@ -45,17 +45,21 @@ internal class CreateBookViewModel : BaseViewModel() {
         return _selectedColor.value == color
     }
 
-    private var bid = -1
+    var bid = -1
     var stickerList = mutableListOf<Sticker>()
 
     init {
         viewModelScope.launch {
             navArgs<CreateBookFragmentArgs>()
                 .map {
-                    val response = BookRepository.fetchBook(it.bid)
-                    when (response) {
-                        is NetworkState.Success -> settingBook(response.data)
-                        is NetworkState.Failure -> toast.value = response.message
+                    bid = it.bid
+                }.collect {
+                    if (bid > 0) {
+                        val response = BookRepository.fetchBook(bid)
+                        when (response) {
+                            is NetworkState.Success -> settingBook(response.data)
+                            is NetworkState.Failure -> toast.value = response.message
+                        }
                     }
                 }
         }
@@ -65,6 +69,7 @@ internal class CreateBookViewModel : BaseViewModel() {
         book?.let {
             bid = it.bid
             title.value = it.title
+            stickerImg.value = it.image
             setSelectedColor(Colors.getColor(it.bgColor))
         }
     }
