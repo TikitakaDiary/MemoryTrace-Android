@@ -34,9 +34,10 @@ class NetworkModule {
             .connectTimeout(connectTimeout, TimeUnit.SECONDS)
             .readTimeout(readTimeout, TimeUnit.SECONDS)
         if (BuildConfig.DEBUG) {
-            okHttpClientBuilder.addInterceptor(HttpLoggingInterceptor(object :
+            okHttpClientBuilder.addNetworkInterceptor(HttpLoggingInterceptor(object :
                 HttpLoggingInterceptor.Logger {
                 override fun log(message: String) {
+                    Log.d("http", message)
                 }
             }).setLevel(HttpLoggingInterceptor.Level.BODY))
         }
