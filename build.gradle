@@ -32,7 +32,8 @@ buildscript {
         leakcanary_version = "2.7"
         flipper_version = "0.91.1"
         soloader_version = "0.10.1"
-        
+        oss_version = "17.0.0"
+
         PUBLISH_GROUP_ID = 'com.theartofdev.edmodo'
         PUBLISH_ARTIFACT_ID = 'android-image-cropper'
         PUBLISH_VERSION = '2.8.0'
@@ -48,6 +49,7 @@ buildscript {
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
         classpath 'com.google.gms:google-services:4.3.8'
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.6.1'
+        classpath("com.google.android.gms:oss-licenses-plugin:0.10.4")
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

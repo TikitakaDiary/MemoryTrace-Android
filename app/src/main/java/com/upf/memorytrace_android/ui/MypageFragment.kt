@@ -1,11 +1,14 @@
 package com.upf.memorytrace_android.ui
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.base.BaseFragment
 import com.upf.memorytrace_android.databinding.FragmentMypageBinding
+import com.upf.memorytrace_android.extension.observe
 import com.upf.memorytrace_android.extension.toast
 import com.upf.memorytrace_android.util.MemoryTraceConfig
 import com.upf.memorytrace_android.viewmodel.MypageViewModel
@@ -60,6 +63,7 @@ internal class MypageFragment : BaseFragment<MypageViewModel, FragmentMypageBind
                 viewModel.withdrawalUser()
             }
         }
+        observe(viewModel.showOssPage){ startActivity(Intent(requireActivity(), OssLicensesMenuActivity::class.java)) }
 
     }
 

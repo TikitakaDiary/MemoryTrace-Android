@@ -9,6 +9,7 @@ import com.upf.memorytrace_android.base.BaseViewModel
 import com.upf.memorytrace_android.ui.MypageFragmentDirections
 import com.upf.memorytrace_android.ui.book.BookListFragmentDirections
 import com.upf.memorytrace_android.util.BackDirections
+import com.upf.memorytrace_android.util.LiveEvent
 import com.upf.memorytrace_android.util.MemoryTraceConfig
 import kotlinx.coroutines.launch
 
@@ -17,6 +18,8 @@ internal class MypageViewModel : BaseViewModel() {
     val sns = MutableLiveData<String>()
     val date = MutableLiveData<String>()
     val version = MutableLiveData<String>()
+
+    val showOssPage = LiveEvent<Unit?>()
 
     init {
         name.value = MemoryTraceConfig.nickname
@@ -43,6 +46,10 @@ internal class MypageViewModel : BaseViewModel() {
             toast.value = "일기가 생성되었습니다"
             navDirections.value = BackDirections()
         }
+    }
+
+    fun onClickOssNotice(){
+        showOssPage.call()
     }
 
     fun resetUser() {

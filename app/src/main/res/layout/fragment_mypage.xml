@@ -207,7 +207,8 @@
 
                     <RelativeLayout
                         android:id="@+id/btn_open_source"
-                        style="@style/MypageItemLayout">
+                        style="@style/MypageItemLayout"
+                        android:onClick="@{()->viewModel.onClickOssNotice()}">
 
                         <TextView
                             style="@style/MypageItem"

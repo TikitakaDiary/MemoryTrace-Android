@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-<!--        for fcm-->
+        <!--        for fcm-->
         <service
             android:name=".fcm.MyFirebaseMessagingService"
             android:exported="false">
@@ -32,6 +32,7 @@
         <meta-data
             android:name="kakaoAppKey"
             android:value="@string/kakao_app_key" />
+
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -53,6 +54,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
 
     </application>
 
