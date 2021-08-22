@@ -111,7 +111,7 @@ internal class CreateBookViewModel : BaseViewModel() {
             } else {
                 var image: MultipartBody.Part? = null
                 if (bitmap != null) {
-                    ImageConverter.convertBitmapToMultipartBody(bitmap, cacheDir, null, null)?.let {
+                    ImageConverter.convertBitmapToMultipartBody(bitmap, cacheDir, null, "stickerImg")?.let {
                         image = it
                     }
                 }
