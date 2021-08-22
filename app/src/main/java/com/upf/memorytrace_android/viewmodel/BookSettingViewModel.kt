@@ -1,21 +1,20 @@
 package com.upf.memorytrace_android.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.upf.memorytrace_android.api.repository.BookRepository
 import com.upf.memorytrace_android.api.util.NetworkState
 import com.upf.memorytrace_android.base.BaseViewModel
 import com.upf.memorytrace_android.ui.book.BookSettingFragmentArgs
 import com.upf.memorytrace_android.ui.book.BookSettingFragmentDirections
-import com.upf.memorytrace_android.ui.write.WriteFragmentArgs
 import com.upf.memorytrace_android.util.BackDirections
+import com.upf.memorytrace_android.util.LiveEvent
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 internal class BookSettingViewModel : BaseViewModel() {
 
     private var bid: Int = -1
-
+    val showLeaveDialog = LiveEvent<Unit?>()
 
     init {
         viewModelScope.launch {
@@ -41,11 +40,14 @@ internal class BookSettingViewModel : BaseViewModel() {
     }
 
     fun onclickLeaveBook() {
+        showLeaveDialog.call()
+    }
+
+    fun leaveBook() {
         viewModelScope.launch {
             val response = BookRepository.leaveBook(bid)
             when (response) {
                 is NetworkState.Success -> {
-                    //todo: dialog
                     navDirections.value =
                         BookSettingFragmentDirections.actionBookSettingFragmentToBookListFragment()
                 }

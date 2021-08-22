@@ -9,7 +9,12 @@ import java.lang.Exception
 
 object UserRepository {
 
-    suspend fun createUser(nickname: String, snskey:String,  snsType: String, token: String): NetworkState<String> {
+    suspend fun createUser(
+        nickname: String,
+        snskey: String,
+        snsType: String,
+        token: String
+    ): NetworkState<String> {
         return try {
             val user = User(nickname = nickname, snsKey = snskey, snsType = snsType, token = token)
             val response =
@@ -33,36 +38,43 @@ object UserRepository {
         }
     }
 
-    suspend fun withdrawalUser() {
-        try {
+    suspend fun withdrawalUser(): NetworkState<String> {
+        return try {
             val response = MemoryTraceUtils.apiService().withdrawalUser()
             if (response.isSuccess) {
-                //todo;
+                NetworkState.Success("Success")
+            } else {
+                NetworkState.Failure(response.responseMessage)
             }
         } catch (e: Exception) {
-
+            NetworkState.Failure(e.message ?: "Internet Error")
         }
-
     }
 
-    suspend fun editName(name: String) {
-        try {
+    suspend fun editName(name: String): NetworkState<String> {
+        return try {
             val response = MemoryTraceUtils.apiService().editName(UserName(name))
+            if (response.isSuccess) {
+                NetworkState.Success("Success")
+            } else {
+                NetworkState.Failure(response.responseMessage)
+            }
         } catch (e: Exception) {
-
+            NetworkState.Failure(e.message ?: "Internet Error")
         }
     }
 
-    suspend fun joinToBook(code: String) {
-        try {
+    suspend fun joinToBook(code: String): NetworkState<String> {
+        return try {
             val response = MemoryTraceUtils.apiService().joinToBook(code)
             if (response.isSuccess) {
-                //todo;
+                NetworkState.Success("Success")
+            } else {
+                NetworkState.Failure(response.responseMessage)
             }
         } catch (e: Exception) {
-
+            NetworkState.Failure(e.message ?: "Internet Error")
         }
-
     }
 
     suspend fun updateFcmToken(token: String): NetworkState<String> {

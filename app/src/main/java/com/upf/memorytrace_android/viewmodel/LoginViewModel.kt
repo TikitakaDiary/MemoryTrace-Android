@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.messaging.FirebaseMessaging
 import com.upf.memorytrace_android.api.repository.UserRepository
+import com.upf.memorytrace_android.api.util.NetworkState
 import com.upf.memorytrace_android.base.BaseViewModel
 import com.upf.memorytrace_android.ui.LoginFragmentDirections
 import kotlinx.coroutines.Dispatchers
@@ -24,10 +25,12 @@ internal class LoginViewModel : BaseViewModel() {
                     }
                 }
             }
-            //TODO: 응답 처리 필요
-            // todo: token 실패시 처리 필요
-            UserRepository.createUser(nickname, snsKey, snsType, token)
-            navDirections.value = LoginFragmentDirections.actionLoginFragmentToBookListFragment()
+            val response = UserRepository.createUser(nickname, snsKey, snsType, token)
+            when (response) {
+                is NetworkState.Success -> navDirections.value =
+                    LoginFragmentDirections.actionLoginFragmentToBookListFragment()
+                is NetworkState.Failure -> toast.value = response.message
+            }
         }
     }
 }

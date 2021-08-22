@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.upf.memorytrace_android.BuildConfig
 import com.upf.memorytrace_android.api.repository.UserRepository
+import com.upf.memorytrace_android.api.util.NetworkState
 import com.upf.memorytrace_android.base.BaseViewModel
 import com.upf.memorytrace_android.util.BackDirections
 import com.upf.memorytrace_android.util.MemoryTraceConfig
@@ -18,8 +19,17 @@ internal class NameEditViewModel : BaseViewModel() {
 
     fun editName(name: String) {
         viewModelScope.launch {
-            UserRepository.editName(name)
-            MemoryTraceConfig.nickname = name
+           val response =  UserRepository.editName(name)
+
+            when (response) {
+                is NetworkState.Success -> {
+                    MemoryTraceConfig.nickname = name
+                    toast.value = "닉네임이 변경되었습니다."
+                    navDirections.value = BackDirections()
+                }
+                is NetworkState.Failure -> toast.value = response.message
+            }
+
         }
     }
 }

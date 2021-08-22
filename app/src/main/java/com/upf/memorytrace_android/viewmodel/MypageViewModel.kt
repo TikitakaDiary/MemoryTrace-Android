@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.upf.memorytrace_android.BuildConfig
 import com.upf.memorytrace_android.api.repository.UserRepository
+import com.upf.memorytrace_android.api.util.NetworkState
 import com.upf.memorytrace_android.base.BaseViewModel
 import com.upf.memorytrace_android.ui.MypageFragmentDirections
 import com.upf.memorytrace_android.ui.book.BookListFragmentDirections
@@ -36,24 +37,32 @@ internal class MypageViewModel : BaseViewModel() {
 
     fun withdrawalUser() {
         viewModelScope.launch {
-            UserRepository.withdrawalUser()
-            resetUser()
+            val response = UserRepository.withdrawalUser()
+            when (response) {
+                is NetworkState.Success -> resetUser()
+                is NetworkState.Failure -> toast.value = response.message
+            }
         }
     }
 
     fun joinToBook(code: String) {
         viewModelScope.launch {
             val response = UserRepository.joinToBook(code)
-            toast.value = "일기가 생성되었습니다"
-            navDirections.value = BackDirections()
+            when (response) {
+                is NetworkState.Success -> {
+                    toast.value = "일기가 생성되었습니다"
+                    navDirections.value = BackDirections()
+                }
+                is NetworkState.Failure -> toast.value = response.message
+            }
         }
     }
 
-    fun onClickOssNotice(){
+    fun onClickOssNotice() {
         showOssPage.call()
     }
 
-    fun onClickSendEmail(){
+    fun onClickSendEmail() {
         sendEmail.call()
     }
 
