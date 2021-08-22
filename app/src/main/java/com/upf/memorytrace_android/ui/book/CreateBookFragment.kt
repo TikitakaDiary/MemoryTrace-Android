@@ -82,7 +82,7 @@ internal class CreateBookFragment : BaseFragment<CreateBookViewModel, FragmentCr
             adapter.notifyDataSetChanged()
         }
 
-        observe(viewModel.showStickerResetDialog) { showStickerResetDialog() }
+        observe(viewModel.showStickerResetDialog) { if(it == true) showStickerResetDialog() }
         observe(viewModel.isShowStickerDialog) { loadStickerDialog() }
         observe(viewModel.isHideStickerDialog) { hideStickerDialog() }
         observe(viewModel.addSticker) { attachSticker(it) }

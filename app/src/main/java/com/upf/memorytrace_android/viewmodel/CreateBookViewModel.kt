@@ -28,7 +28,7 @@ internal class CreateBookViewModel : BaseViewModel() {
     val stickerImg = MutableLiveData<String?>()
     val title = MutableLiveData<String>()
 
-    val showStickerResetDialog = LiveEvent<Unit?>()
+    val showStickerResetDialog = MutableLiveData<Boolean?>()
     val isShowStickerDialog = LiveEvent<Unit?>()
     val isHideStickerDialog = LiveEvent<Unit?>()
     val addSticker = LiveEvent<Int>()
@@ -76,14 +76,15 @@ internal class CreateBookViewModel : BaseViewModel() {
     }
 
     fun showStickerDialog(force: Boolean) {
-        if (bid < 0) {
+        if (bid < 0 || showStickerResetDialog.value == false) {
             isShowStickerDialog.call()
         } else {
             if (force) {
+                showStickerResetDialog.value = false
                 stickerImg.value = null
                 isShowStickerDialog.call()
             } else {
-                showStickerResetDialog.call()
+                showStickerResetDialog.value = true
             }
         }
     }

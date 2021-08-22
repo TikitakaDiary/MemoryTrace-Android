@@ -2,6 +2,7 @@ package com.upf.memorytrace_android.util
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -103,7 +104,8 @@ fun showDialog(
         .setTitle(context.getString(title))
         .setMessage(context.getString(message))
         .setNegativeButton(context.getString(R.string.cancel), null)
-        .setPositiveButton(context.getString(confirm)) { _, _ ->
+        .setPositiveButton(context.getString(confirm)) { dialog: DialogInterface, _ ->
+            dialog.dismiss()
             positive?.invoke()
         }.create().show()
 }
