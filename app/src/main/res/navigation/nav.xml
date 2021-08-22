@@ -73,15 +73,6 @@
             android:name="bid"
             android:defaultValue="-1"
             app:argType="integer" />
-        <argument
-            android:name="title"
-            android:defaultValue="@null"
-            app:argType="string"
-            app:nullable="true" />
-        <argument
-            android:name="color"
-            android:defaultValue="-1"
-            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/mypageFragment"
@@ -157,7 +148,10 @@
             app:destination="@id/createBookFragment" />
         <action
             android:id="@+id/action_bookSettingFragment_to_bookListFragment"
-            app:destination="@id/bookListFragment" />
+            app:destination="@id/bookListFragment"
+            app:popUpTo="@id/bookListFragment"
+            app:popUpToInclusive="true" />
+
         <argument
             android:name="bid"
             android:defaultValue="-1"
