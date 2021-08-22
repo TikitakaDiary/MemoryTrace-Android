@@ -23,11 +23,6 @@
             </intent-filter>
         </service>
 
-        <!--        for flipper-->
-        <activity
-            android:name="com.facebook.flipper.android.diagnostics.FlipperDiagnosticActivity"
-            android:exported="true" />
-
         <!--        for kakao login-->
         <meta-data
             android:name="kakaoAppKey"
