@@ -2,6 +2,8 @@ package com.upf.memorytrace_android.ui.book
 
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.base.BaseFragment
 import com.upf.memorytrace_android.databinding.FragmentBookListBinding
@@ -12,7 +14,7 @@ import com.upf.memorytrace_android.viewmodel.BookListViewModel
 internal class BookListFragment : BaseFragment<BookListViewModel, FragmentBookListBinding>() {
     override val layoutId = R.layout.fragment_book_list
     override val viewModelClass = BookListViewModel::class
-    private val adapter = BookListAdapter()
+    private val bookAdapter = BookListAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -27,16 +29,34 @@ internal class BookListFragment : BaseFragment<BookListViewModel, FragmentBookLi
 
     private fun initViewModel() {
         observe(viewModel.bookList) { bookList ->
-            adapter.submitList(bookList.map { BookItem(it) })
-            //todo: 생성후 넘어왔을때를 위해 추가했으며, 페이징 추가하면 수정해야함.
-            if (bookList.isNotEmpty())
-                binding.list.smoothScrollToPosition(0)
+            bookAdapter.submitList(bookList.map { BookItem(it) })
         }
         viewModel.init()
     }
 
     private fun setupRecyclerView() {
-        adapter.setViewHolderViewModel(viewModel)
-        binding.list.adapter = adapter
+        bookAdapter.setViewHolderViewModel(viewModel)
+        binding.list.apply {
+            adapter = bookAdapter
+            addOnScrollListener(onScrollChangeListener)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.list.removeOnScrollListener(onScrollChangeListener)
+    }
+
+    private val onScrollChangeListener = object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+
+            val visibleItemCount = recyclerView.childCount
+            val totalItemCount = recyclerView.adapter?.itemCount ?: 0
+            val firstVisibleItem =
+                (recyclerView.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
+
+            viewModel.loadMore(visibleItemCount, totalItemCount, firstVisibleItem)
+        }
     }
 }

@@ -1,14 +1,14 @@
 package com.upf.memorytrace_android.api.repository
 
-import com.upf.memorytrace_android.api.BookListResponse
 import com.upf.memorytrace_android.api.model.Book
+import com.upf.memorytrace_android.api.model.BookList
 import com.upf.memorytrace_android.api.util.MemoryTraceUtils
 import com.upf.memorytrace_android.api.util.NetworkState
 import okhttp3.MultipartBody
 
 object BookRepository {
 
-    private val PAGE_SIZE = 20
+     val PAGE_SIZE = 50
 
     suspend fun createBook(
         title: String,
@@ -45,18 +45,15 @@ object BookRepository {
         }
     }
 
-    //TODO: error 객체 관리
-    suspend fun fetchBookList(page: Int): BookListResponse {
+    suspend fun fetchBookList(page: Int): NetworkState<BookList?> {
         return try {
             val response = MemoryTraceUtils.apiService().fetchBooks(page, PAGE_SIZE)
-            response.let {
-//                if (it.isSuccess)
-                it
-//                else
-//                    throw Exception("internal error")
-            }
+            if (response.isSuccess)
+                NetworkState.Success(response.data)
+            else
+                NetworkState.Failure(response.responseMessage)
         } catch (e: Exception) {
-            throw Exception(e.message ?: "Internet Error")
+            NetworkState.Failure(e.message ?: "Internet Error")
         }
     }
 
@@ -69,7 +66,7 @@ object BookRepository {
                 NetworkState.Failure(response.responseMessage)
             }
         } catch (e: Exception) {
-            throw Exception(e.message ?: "Internet Error")
+            NetworkState.Failure(e.message ?: "Internet Error")
         }
     }
 
@@ -83,7 +80,7 @@ object BookRepository {
                 NetworkState.Failure(response.responseMessage)
             }
         } catch (e: Exception) {
-            throw Exception(e.message ?: "Internet Error")
+            NetworkState.Failure(e.message ?: "Internet Error")
         }
     }
 }

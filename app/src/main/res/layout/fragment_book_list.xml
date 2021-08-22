@@ -10,15 +10,16 @@
             type="com.upf.memorytrace_android.viewmodel.BookListViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/btn_mypage"
@@ -30,34 +31,31 @@
                 android:src="@drawable/ic_mypage" />
         </androidx.appcompat.widget.Toolbar>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/GmarketBold24"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/default_padding_24">
+            android:layout_marginTop="@dimen/title_spacing_16"
+            android:lineSpacingExtra="@dimen/font_12"
+            android:paddingHorizontal="@dimen/default_padding_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            tools:text="혜데이님의 \n교환일기장 목록" />
 
-            <TextView
-                android:id="@+id/title"
-                style="@style/GmarketBold24"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/title_spacing_16"
-                android:lineSpacingExtra="@dimen/font_12"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="혜데이님의 \n교환일기장 목록" />
+        <ImageView
+            android:id="@+id/btn_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->viewModel.onClickCreateBook()}"
+            android:paddingHorizontal="@dimen/default_padding_24"
+            android:src="@drawable/ic_add_diary"
+            app:layout_constraintBottom_toBottomOf="@id/title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
-            <ImageView
-                android:id="@+id/btn_add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="@{()->viewModel.onClickCreateBook()}"
-                android:src="@drawable/ic_add_diary"
-                app:layout_constraintBottom_toBottomOf="@id/title"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"
@@ -66,16 +64,29 @@
             android:layout_marginTop="@dimen/section_spacing_40"
             android:paddingHorizontal="@dimen/default_padding_24"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/title"
             tools:listitem="@layout/item_book_list" />
 
         <TextView
             style="@style/NotoRegular16"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
+            android:layout_height="wrap_content"
             android:text="@string/book_empty"
-            android:visibility="@{viewModel.bookList.size() == 0}" />
+            android:visibility="@{viewModel.bookList.size() == 0}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:indeterminateTint="@color/lightGray"
+            android:visibility="@{viewModel.isLoading()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
