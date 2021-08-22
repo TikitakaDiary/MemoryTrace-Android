@@ -18,11 +18,16 @@ internal class MemberSettingFragment :
     override val viewModelClass = MemberSettingViewModel::class
     override val navArgs by navArgs<MemberSettingFragmentArgs>()
 
+    private val adapter = BookMemberAdapter()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initializeRecyclerView()
 
+        observe(viewModel.userList) { list ->
+            adapter.submitList(list.map { BookMemberItem(it.uid, it.nickname) })
+        }
         observe(viewModel.invite) {
             val clipboard: ClipboardManager =
                 requireActivity().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
@@ -32,6 +37,6 @@ internal class MemberSettingFragment :
     }
 
     private fun initializeRecyclerView() {
-
+        binding.memberRv.adapter = adapter
     }
 }

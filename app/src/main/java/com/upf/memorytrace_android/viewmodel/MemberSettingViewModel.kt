@@ -2,6 +2,7 @@ package com.upf.memorytrace_android.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.upf.memorytrace_android.api.model.User
 import com.upf.memorytrace_android.api.repository.BookRepository
 import com.upf.memorytrace_android.api.util.NetworkState
 import com.upf.memorytrace_android.base.BaseViewModel
@@ -12,9 +13,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 internal class MemberSettingViewModel : BaseViewModel() {
-
     val invite = MutableLiveData<String>()
+    val userList = MutableLiveData<List<User>>()
     private var code = ""
+
+    private var bid = -1
 
     init {
         viewModelScope.launch {
@@ -24,7 +27,10 @@ internal class MemberSettingViewModel : BaseViewModel() {
                 }.collect { response ->
                     when (response) {
                         is NetworkState.Success -> {
-                            code = response.data?.inviteCode ?: ""
+                            response.data?.let {
+                                code = it.inviteCode
+                                userList.postValue(it.userList)
+                            }
                         }
                         is NetworkState.Failure -> {
                             toast.value = response.message
