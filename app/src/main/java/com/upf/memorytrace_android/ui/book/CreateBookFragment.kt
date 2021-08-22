@@ -137,7 +137,7 @@ internal class CreateBookFragment : BaseFragment<CreateBookViewModel, FragmentCr
             requireActivity(),
             R.string.write_exit_title,
             R.string.create_book_exit_content,
-            R.string.write_exit_cancel
+            R.string.write_exit_exit
         ) {
             viewModel.onClickBack()
         }
