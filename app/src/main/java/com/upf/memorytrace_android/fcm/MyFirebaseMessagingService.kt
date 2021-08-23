@@ -22,6 +22,9 @@ import kotlinx.coroutines.launch
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        /*
+        키는 bid, bgcolor, nickname, stickerImg, modifiedDate, title 이렇게 있습니다
+         */
         if (remoteMessage.data.isNotEmpty()) {
             val message = remoteMessage.data["bid"]
             sendNotification(message!!)
