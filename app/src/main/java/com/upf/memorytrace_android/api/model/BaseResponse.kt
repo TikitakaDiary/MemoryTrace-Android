@@ -1,39 +1,26 @@
 package com.upf.memorytrace_android.api.model
 
+import com.google.gson.*
 import com.google.gson.annotations.SerializedName
+import java.lang.reflect.Type
 
-open class BaseResponse {
-    val statusCode: String = ""
-    val responseMessage: String = ""
-
+open class BaseResponse<out T>(
+    val statusCode: String = "",
+    val responseMessage: String = "",
+    open val data: T? = null
+) {
     open val isSuccess: Boolean
         get() = statusCode == "201" || statusCode == "200"
+
+    class Deserializer : JsonDeserializer<BaseResponse<*>> {
+        @Throws(JsonParseException::class)
+        override fun deserialize(
+            json: JsonElement,
+            typeOfT: Type,
+            context: JsonDeserializationContext
+        ): BaseResponse<*> {
+            val jsonObject = json.asJsonObject
+            return Gson().fromJson(jsonObject, BaseResponse::class.java)
+        }
+    }
 }
-
-data class BookResponse(
-    @SerializedName("data")
-    val data: Book
-) : BaseResponse()
-
-class BookListResponse : BaseResponse() {
-    val data: BookList? = null
-}
-
-class UserResponse : BaseResponse() {
-    val data: User? = null
-}
-
-data class DiaryListResponse(
-    @SerializedName("data")
-    val data: DiaryListModel
-) : BaseResponse()
-
-data class DiaryResponse(
-    @SerializedName("data")
-    val data: DiaryDetailModel
-) : BaseResponse()
-
-data class DiaryCreateResponse(
-    @SerializedName("data")
-    val data: DiaryCreateModel
-) : BaseResponse()

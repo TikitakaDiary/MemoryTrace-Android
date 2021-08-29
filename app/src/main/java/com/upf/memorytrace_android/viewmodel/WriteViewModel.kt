@@ -5,6 +5,7 @@ import androidx.annotation.DrawableRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.upf.memorytrace_android.api.repository.DiaryRepository
+import com.upf.memorytrace_android.api.util.NetworkState
 import com.upf.memorytrace_android.base.BaseViewModel
 import com.upf.memorytrace_android.ui.write.WriteFragmentArgs
 import com.upf.memorytrace_android.util.BackDirections
@@ -101,7 +102,10 @@ internal class WriteViewModel : BaseViewModel() {
                     content.value ?: EMPTY_STRING,
                     it
                 )
-                if (response.isSuccessful) onClickBack()
+                when (response) {
+                    is NetworkState.Success -> onClickBack()
+                    is NetworkState.Failure -> toast.value = response.message
+                }
             }
         }
     }

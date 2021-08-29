@@ -2,8 +2,10 @@ package com.upf.memorytrace_android.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.upf.memorytrace_android.api.model.Book
 import com.upf.memorytrace_android.api.model.DiaryModel
 import com.upf.memorytrace_android.api.repository.DiaryRepository
+import com.upf.memorytrace_android.api.util.NetworkState
 import com.upf.memorytrace_android.base.BaseViewModel
 import com.upf.memorytrace_android.ui.diary.DiaryItem
 import com.upf.memorytrace_android.ui.diary.DiaryFragmentDirections
@@ -16,6 +18,7 @@ import com.upf.memorytrace_android.util.TimeUtil
 import java.util.Calendar
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.ArrayList
 
 internal class DiaryViewModel : BaseViewModel() {
     val title = MutableLiveData<String>()
@@ -51,34 +54,41 @@ internal class DiaryViewModel : BaseViewModel() {
             viewModelScope.launch {
                 isLoading.postValue(true)
                 val response = DiaryRepository.fetchDiaries(bid, page++)
-                response.body()?.data?.apply {
-                    this@DiaryViewModel.hasNext = hasNext
-                    this@DiaryViewModel.title.value = title
-                    isMyTurn.postValue(MemoryTraceConfig.uid == whoseTurn)
-                    diaryModelList.addAll(diaryList)
-                    val diaryList = diaryModelList
-                        .map { diary ->
-                            val date = TimeUtil.convertStringToDate(
-                                TimeUtil.FORMAT_yyyy_MM_dd_B_HH_mm_ss,
-                                diary.createdDate
-                            ) ?: Calendar.getInstance().time
-                            DiaryItem(
-                                diary.id,
-                                diary.title,
-                                diary.nickname,
-                                diary.img,
-                                date
-                            )
-                        }.groupBy { diaryItem ->
-                            TimeUtil.getDate(
-                                TimeUtil.YYYY_MM,
-                                diaryItem.date
-                            )
-                        }.map { entry ->
-                            DiaryMonthItem(entry.key, entry.value)
+                when (response) {
+                    is NetworkState.Success -> {
+                        response.data.apply {
+                            this@DiaryViewModel.hasNext = hasNext
+                            this@DiaryViewModel.title.value = title
+                            isMyTurn.postValue(MemoryTraceConfig.uid == whoseTurn)
+                            diaryModelList.addAll(diaryList)
+                            val diaryList = diaryModelList
+                                .map { diary ->
+                                    val date = TimeUtil.convertStringToDate(
+                                        TimeUtil.FORMAT_yyyy_MM_dd_B_HH_mm_ss,
+                                        diary.createdDate
+                                    ) ?: Calendar.getInstance().time
+                                    DiaryItem(
+                                        diary.id,
+                                        diary.title,
+                                        diary.nickname,
+                                        diary.img,
+                                        date
+                                    )
+                                }.groupBy { diaryItem ->
+                                    TimeUtil.getDate(
+                                        TimeUtil.YYYY_MM,
+                                        diaryItem.date
+                                    )
+                                }.map { entry ->
+                                    DiaryMonthItem(entry.key, entry.value)
+                                }
+                            diaryOfMonthList.postValue(diaryList)
+
                         }
-                    diaryOfMonthList.postValue(diaryList)
+                    }
+                    is NetworkState.Failure -> toast.value = response.message
                 }
+
                 isLoading.postValue(false)
             }
         }

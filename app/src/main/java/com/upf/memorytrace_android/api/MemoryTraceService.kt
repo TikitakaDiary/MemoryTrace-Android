@@ -17,7 +17,7 @@ interface MemoryTraceService {
         @Part("title") title: String,
         @Part("bgColor") bgColor: Int,
         @Part stickerImg: MultipartBody.Part? = null
-    ): BaseResponse
+    ): BaseResponse<*>
 
     @Multipart
     @POST("book/update")
@@ -26,7 +26,7 @@ interface MemoryTraceService {
         @Part("title") title: String,
         @Part("bgColor") bgColor: Int,
         @Part stickerImg: MultipartBody.Part? = null
-    ): BaseResponse
+    ): BaseResponse<*>
 
     /**
      * 다이어리 목록 조회
@@ -35,24 +35,24 @@ interface MemoryTraceService {
     suspend fun fetchBooks(
         @Query("page") page: Int,
         @Query("size") size: Int
-    ): BookListResponse
+    ): BaseResponse<BookList>
 
     @GET("book/{bid}")
     suspend fun fetchBook(
         @Path("bid") bid: Int
-    ): BookResponse
+    ): BaseResponse<Book>
 
     @PUT("book/exit/{bid}")
     suspend fun leaveBook(
         @Path("bid") bid: Int
-    ): BaseResponse
+    ): BaseResponse<*>
 
 
     /**
      * 초대코드로 일기장 입장
      */
     @POST("invite")
-    suspend fun joinToBook(@Body inviteCode: String): BaseResponse
+    suspend fun joinToBook(@Body inviteCode: String): BaseResponse<*>
 
 
     /**
@@ -61,16 +61,16 @@ interface MemoryTraceService {
      * 201 : 가입 성공
      */
     @POST("user")
-    suspend fun createUser(@Body user: User): UserResponse
+    suspend fun createUser(@Body user: User): BaseResponse<User>
 
     @GET("user/withdrawal")
-    suspend fun withdrawalUser(): BaseResponse
+    suspend fun withdrawalUser(): BaseResponse<*>
 
     @PUT("user")
-    suspend fun editName(@Body user: UserName): BaseResponse
+    suspend fun editName(@Body user: UserName): BaseResponse<*>
 
     @POST("user/fcm")
-    suspend fun registerFcmToken(@Body user: User): BaseResponse
+    suspend fun registerFcmToken(@Body user: User): BaseResponse<*>
 
     /**
      * 다이어리
@@ -80,12 +80,12 @@ interface MemoryTraceService {
         @Path("bid") id: Int,
         @Query("page") page: Int,
         @Query("size") size: Int
-    ): Response<DiaryListResponse>
+    ): BaseResponse<DiaryListModel>
 
     @GET("/diary/{did}")
     suspend fun fetchDiary(
         @Path("did") did: Int
-    ): Response<DiaryResponse>
+    ): BaseResponse<DiaryDetailModel>
 
     @Multipart
     @POST("/diary")
@@ -94,5 +94,5 @@ interface MemoryTraceService {
         @Query("title") title: String,
         @Query("content") content: String,
         @Part img: MultipartBody.Part
-    ): Response<DiaryCreateResponse>
+    ): BaseResponse<*>
 }

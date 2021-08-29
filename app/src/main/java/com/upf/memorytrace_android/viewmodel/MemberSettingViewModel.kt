@@ -27,10 +27,8 @@ internal class MemberSettingViewModel : BaseViewModel() {
                 }.collect { response ->
                     when (response) {
                         is NetworkState.Success -> {
-                            response.data?.let {
-                                code = it.inviteCode
-                                userList.postValue(it.userList)
-                            }
+                            code = response.data.inviteCode
+                            userList.postValue(response.data.userList)
                         }
                         is NetworkState.Failure -> {
                             toast.value = response.message

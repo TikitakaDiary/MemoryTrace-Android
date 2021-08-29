@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.upf.memorytrace_android.api.model.DiaryDetailModel
 import com.upf.memorytrace_android.api.repository.DiaryRepository
+import com.upf.memorytrace_android.api.util.NetworkState
 import com.upf.memorytrace_android.base.BaseViewModel
 import com.upf.memorytrace_android.ui.DetailFragmentArgs
 import com.upf.memorytrace_android.util.TimeUtil
@@ -22,10 +23,12 @@ internal class DetailViewModel : BaseViewModel() {
         viewModelScope.launch {
             navArgs<DetailFragmentArgs>()
                 .map {
-                    val response = DiaryRepository.fetchDiary(it.did)
-                    response.body()
-                }.collect { res ->
-                    res?.let { settingDiary(it.data) }
+                    DiaryRepository.fetchDiary(it.did)
+                }.collect { response ->
+                    when (response) {
+                        is NetworkState.Success -> settingDiary(response.data)
+                        is NetworkState.Failure -> toast.value = response.message
+                    }
                 }
         }
     }

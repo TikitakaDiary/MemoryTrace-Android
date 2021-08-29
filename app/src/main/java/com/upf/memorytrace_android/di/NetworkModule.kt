@@ -6,6 +6,7 @@ import com.upf.memorytrace_android.BuildConfig
 import com.upf.memorytrace_android.BuildConfig.DEBUG
 import com.upf.memorytrace_android.api.MemoryTraceService
 import com.upf.memorytrace_android.api.util.AuthHeaderInterceptor
+import com.upf.memorytrace_android.api.util.StatusInterceptor
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -42,6 +43,7 @@ class NetworkModule {
             }).setLevel(HttpLoggingInterceptor.Level.BODY))
         }
         okHttpClientBuilder.addInterceptor(AuthHeaderInterceptor())
+        okHttpClientBuilder.addInterceptor(StatusInterceptor())
 
         return okHttpClientBuilder.build()
     }

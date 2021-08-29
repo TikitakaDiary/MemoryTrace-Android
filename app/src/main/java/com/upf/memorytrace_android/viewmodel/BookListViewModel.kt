@@ -35,7 +35,7 @@ internal class BookListViewModel : BaseViewModel() {
                 val response = BookRepository.fetchBookList(page++)
                 when (response) {
                     is NetworkState.Success -> {
-                        response.data?.let {
+                        response.data.let {
                             val list = _bookList.value as ArrayList<Book>
                             list.addAll(it.bookList ?: emptyList())
                             _bookList.postValue(list)
