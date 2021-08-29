@@ -1,7 +1,6 @@
-package com.upf.memorytrace_android.api
+package com.upf.memorytrace_android.api.model
 
 import com.google.gson.annotations.SerializedName
-import com.upf.memorytrace_android.api.model.*
 
 open class BaseResponse {
     val statusCode: String = ""
