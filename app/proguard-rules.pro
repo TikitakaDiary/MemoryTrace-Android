@@ -131,3 +131,8 @@
 -keep,allowobfuscation,allowshrinking class * extends com.google.gson.reflect.TypeToken
 
 ##---------------End: proguard configuration for Gson  ----------
+
+## crashlytics
+# Preserve annotations, line numbers, and source file names
+-keepattributes *Annotation*,SourceFile,LineNumberTable
+-keep public class * extends java.lang.Exception  # Optional: Keep custom exceptions.

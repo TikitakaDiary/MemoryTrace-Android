@@ -14,11 +14,27 @@
       },
       "oauth_client": [
         {
+          "client_id": "319121424343-654a1omv7siijusfrc150hn4880ekko5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.upf.memorytrace_android",
+            "certificate_hash": "ae4297f1730c59cae5ce0bfdd0615f1f56ef273f"
+          }
+        },
+        {
           "client_id": "319121424343-di4omj6glurlj8r1s9bj6joanm7m91ju.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.upf.memorytrace_android",
             "certificate_hash": "1255238453b7c0eebe922222931a64a4a793d0bf"
+          }
+        },
+        {
+          "client_id": "319121424343-ps2s6sbr7lit867ljon7lodb999sn4ri.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.upf.memorytrace_android",
+            "certificate_hash": "948ecaf039efc058f45b36024bfa50eb1ab5be84"
           }
         },
         {
@@ -39,10 +55,10 @@
               "client_type": 3
             },
             {
-              "client_id": "319121424343-o6lc0k0e447tbq4bcnlhkq84bh4scqeg.apps.googleusercontent.com",
+              "client_id": "319121424343-eb8upj7bev699ijs1r6id8lmcelq1gu3.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.tistory.lsh424.MemoryTrace"
+                "bundle_id": "com.tistory.lsh424.duck-z"
               }
             }
           ]
