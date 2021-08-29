@@ -3,6 +3,7 @@ package com.upf.memorytrace_android.util
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.upf.memorytrace_android.MemoryTraceApplication
 import java.time.format.SignStyle
 
@@ -16,6 +17,12 @@ object MemoryTraceConfig {
     private const val SIGNUP_DATE = "signup_date"
     private const val PROFILE_IMG = "profile_img"
     private const val BID = "bid"
+
+    fun setCrashlyticsCustomKeys() {
+        FirebaseCrashlytics.getInstance().setUserId(uid.toString())
+        FirebaseCrashlytics.getInstance().setCustomKey(SIGNUP_SNS, sns ?: "")
+        FirebaseCrashlytics.getInstance().setCustomKey(SIGNUP_DATE, signupDate ?: "")
+    }
 
     private val pref: SharedPreferences =
         MemoryTraceApplication.getApplication()
