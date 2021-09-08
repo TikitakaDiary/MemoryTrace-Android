@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
@@ -91,23 +92,25 @@ internal class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding
             val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
             try {
                 val account = task.getResult(ApiException::class.java)
-                account?.idToken?.let {
-                    setGoogleUserInfo(it)
-                }
+                setGoogleUserInfo(account)
             } catch (e: ApiException) {
                 Log.w(TAG, "Google sign in failed", e)
             }
         }
 
-    private fun setGoogleUserInfo(idToken: String) {
+    private fun setGoogleUserInfo(account: GoogleSignInAccount?) {
         val auth = FirebaseAuth.getInstance()
-        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
         auth.signInWithCredential(credential)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
-                    val user = auth.currentUser
+                    val user = auth.currentUser ?: return@addOnCompleteListener
                     //register user
-                    viewModel.register(user.displayName, user.uid, GOOGLE)
+                    viewModel.register(
+                        user.displayName ?: "",
+                        account?.id ?: return@addOnCompleteListener,
+                        GOOGLE
+                    )
                 } else {
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
                 }
