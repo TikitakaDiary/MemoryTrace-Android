@@ -14,7 +14,6 @@ import com.upf.memorytrace_android.databinding.FragmentCreateBookBinding
 import com.upf.memorytrace_android.databinding.ItemColorListBinding
 import com.upf.memorytrace_android.extension.observe
 import com.upf.memorytrace_android.ui.book.create.sticker.BookStickerBottomSheetFragment
-import com.upf.memorytrace_android.ui.write.*
 import com.upf.memorytrace_android.util.*
 import com.upf.memorytrace_android.util.ImageConverter
 import com.xiaopo.flying.sticker.DrawableSticker

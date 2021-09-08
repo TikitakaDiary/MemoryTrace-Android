@@ -14,16 +14,21 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
 import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.ui.base.BaseFragment
 import com.upf.memorytrace_android.databinding.FragmentWriteBinding
 import com.upf.memorytrace_android.extension.observe
 import com.upf.memorytrace_android.extension.toast
+import com.upf.memorytrace_android.ui.diary.write.color.ColorAdapter
+import com.upf.memorytrace_android.ui.diary.write.color.ColorItem
 import com.upf.memorytrace_android.util.Colors
 import com.upf.memorytrace_android.util.ImageConverter
 import com.upf.memorytrace_android.ui.diary.write.image.WriteImageBottomSheetFragment
 import com.upf.memorytrace_android.ui.diary.write.sticker.WriteStickerBottomSheetFragment
+import com.upf.memorytrace_android.util.MemoryTraceConfig
+import com.upf.memorytrace_android.util.TimeUtil
 import com.xiaopo.flying.sticker.DrawableSticker
 
 internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding>() {
