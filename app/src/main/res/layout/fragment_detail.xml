@@ -25,6 +25,7 @@
             <ImageView
                 android:layout_width="12.6dp"
                 android:layout_height="24dp"
+                android:onClick="@{()->viewModel.onClickBack()}"
                 android:src="@drawable/ic_back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

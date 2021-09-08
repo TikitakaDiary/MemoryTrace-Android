@@ -6,6 +6,7 @@ import com.upf.memorytrace_android.api.model.DiaryDetailModel
 import com.upf.memorytrace_android.api.repository.DiaryRepository
 import com.upf.memorytrace_android.api.util.NetworkState
 import com.upf.memorytrace_android.ui.base.BaseViewModel
+import com.upf.memorytrace_android.util.BackDirections
 import com.upf.memorytrace_android.util.TimeUtil
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
@@ -40,5 +41,9 @@ internal class DetailViewModel : BaseViewModel() {
         TimeUtil.convertStringToDate(TimeUtil.FORMAT_yyyy_MM_dd_B_HH_mm_ss, data.createdDate)?.let {
             date.postValue(TimeUtil.getDate(TimeUtil.YYYY_M_D_KR, it))
         }
+    }
+
+    fun onClickBack() {
+        navDirections.value = BackDirections()
     }
 }
