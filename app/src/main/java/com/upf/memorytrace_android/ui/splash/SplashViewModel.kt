@@ -17,8 +17,10 @@ internal class SplashViewModel : BaseViewModel() {
                 MemoryTraceConfig.bid = -1
                 SplashFragmentDirections.actionSplashFragmentToDiaryFragment(bid)
             } else {
+                if (MemoryTraceConfig.saveDebugKey == false)
+                    MemoryTraceConfig.setCrashlyticsCustomKeys()
+
                 SplashFragmentDirections.actionSplashFragmentToBookListFragment()
-                
             }
         }
     }

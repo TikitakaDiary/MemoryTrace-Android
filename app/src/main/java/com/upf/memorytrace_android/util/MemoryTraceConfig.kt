@@ -18,15 +18,20 @@ object MemoryTraceConfig {
     private const val PROFILE_IMG = "profile_img"
     private const val BID = "bid"
 
+    private const val SAVE_DEBUG_KEY = "save_debug_key"
+
     fun setCrashlyticsCustomKeys() {
         FirebaseCrashlytics.getInstance().setUserId(uid.toString())
         FirebaseCrashlytics.getInstance().setCustomKey(SIGNUP_SNS, sns ?: "")
         FirebaseCrashlytics.getInstance().setCustomKey(SIGNUP_DATE, signupDate ?: "")
+        saveDebugKey = true
     }
 
     private val pref: SharedPreferences =
         MemoryTraceApplication.getApplication()
             .getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE)
+
+
 
     var uid: Int
         get() = pref.getInt(UID, 0)
@@ -55,12 +60,15 @@ object MemoryTraceConfig {
 
     var isLoggedIn: Boolean = !nickname.isNullOrBlank() && !token.isNullOrBlank()
 
-
     var bid: Int
         get() = pref.getInt(BID, -1)
         set(value) = pref.edit { putInt(BID, value) }
 
-    fun clear(){
+    var saveDebugKey: Boolean?
+        get() = pref.getBoolean(SAVE_DEBUG_KEY, false)
+        set(value) = pref.edit { putBoolean(SAVE_DEBUG_KEY, value ?: false) }
+
+    fun clear() {
         pref.edit { clear() }
     }
 }
