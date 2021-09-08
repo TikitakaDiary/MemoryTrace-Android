@@ -7,14 +7,13 @@ import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
-import android.util.ArrayMap
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.api.repository.UserRepository
-import com.upf.memorytrace_android.ui.MainActivity
+import com.upf.memorytrace_android.ui.main.MainActivity
 import com.upf.memorytrace_android.util.MemoryTraceConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

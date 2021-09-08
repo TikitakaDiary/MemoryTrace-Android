@@ -6,11 +6,11 @@
 
         <variable
             name="viewModel"
-            type="com.upf.memorytrace_android.viewmodel.WriteViewModel" />
+            type="com.upf.memorytrace_android.ui.diary.write.WriteViewModel" />
 
         <variable
             name="item"
-            type="com.upf.memorytrace_android.ui.write.ColorItem" />
+            type="com.upf.memorytrace_android.ui.diary.write.color.ColorItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

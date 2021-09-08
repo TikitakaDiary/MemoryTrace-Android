@@ -5,11 +5,11 @@
 
         <variable
             name="viewModel"
-            type="com.upf.memorytrace_android.viewmodel.DiaryViewModel" />
+            type="com.upf.memorytrace_android.ui.diary.list.DiaryViewModel" />
 
         <variable
             name="item"
-            type="com.upf.memorytrace_android.ui.diary.DiaryItem" />
+            type="com.upf.memorytrace_android.ui.diary.list.item.DiaryItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

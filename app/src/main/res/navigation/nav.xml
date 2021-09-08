@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.upf.memorytrace_android.ui.SplashFragment"
+        android:name="com.upf.memorytrace_android.ui.splash.SplashFragment"
         android:label="SplashFragment">
         <action
             android:id="@+id/action_splashFragment_to_loginFragment"
@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.upf.memorytrace_android.ui.LoginFragment"
+        android:name="com.upf.memorytrace_android.ui.login.LoginFragment"
         android:label="LoginFragment">
         <action
             android:id="@+id/action_loginFragment_to_bookListFragment"
@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/writeFragment"
-        android:name="com.upf.memorytrace_android.ui.write.WriteFragment"
+        android:name="com.upf.memorytrace_android.ui.diary.write.WriteFragment"
         android:label="WriteFragment">
         <action
             android:id="@+id/action_writeFragment_to_cropFragment"
@@ -53,7 +53,7 @@
     </fragment>
     <fragment
         android:id="@+id/bookListFragment"
-        android:name="com.upf.memorytrace_android.ui.book.BookListFragment"
+        android:name="com.upf.memorytrace_android.ui.book.list.BookListFragment"
         android:label="BookListFragment">
         <action
             android:id="@+id/action_bookListFragment_to_createBookFragment"
@@ -67,7 +67,7 @@
     </fragment>
     <fragment
         android:id="@+id/createBookFragment"
-        android:name="com.upf.memorytrace_android.ui.book.CreateBookFragment"
+        android:name="com.upf.memorytrace_android.ui.book.create.CreateBookFragment"
         android:label="CreateBookFragment">
         <argument
             android:name="bid"
@@ -76,7 +76,7 @@
     </fragment>
     <fragment
         android:id="@+id/mypageFragment"
-        android:name="com.upf.memorytrace_android.ui.MypageFragment"
+        android:name="com.upf.memorytrace_android.ui.mypage.MypageFragment"
         android:label="MypageFragment">
         <action
             android:id="@+id/action_mypageFragment_to_makersFragment"
@@ -90,15 +90,15 @@
     </fragment>
     <fragment
         android:id="@+id/makersFragment"
-        android:name="com.upf.memorytrace_android.ui.MakersFragment"
+        android:name="com.upf.memorytrace_android.ui.mypage.makers.MakersFragment"
         android:label="MakersFragment" />
     <fragment
         android:id="@+id/nameEditFragment"
-        android:name="com.upf.memorytrace_android.ui.NameEditFragment"
+        android:name="com.upf.memorytrace_android.ui.mypage.nameedit.NameEditFragment"
         android:label="NameEditFragment" />
     <fragment
         android:id="@+id/cropFragment"
-        android:name="com.upf.memorytrace_android.ui.CropFragment"
+        android:name="com.upf.memorytrace_android.ui.diary.write.image.CropFragment"
         android:label="CropFragment">
         <argument
             android:name="imageUri"
@@ -111,7 +111,7 @@
     </fragment>
     <fragment
         android:id="@+id/diaryFragment"
-        android:name="com.upf.memorytrace_android.ui.diary.DiaryFragment"
+        android:name="com.upf.memorytrace_android.ui.diary.list.DiaryFragment"
         android:label="DiaryFragment">
         <action
             android:id="@+id/action_diaryFragment_to_writeFragment"
@@ -129,7 +129,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.upf.memorytrace_android.ui.DetailFragment"
+        android:name="com.upf.memorytrace_android.ui.diary.detail.DetailFragment"
         android:label="DetailFragment">
         <argument
             android:name="did"
@@ -138,7 +138,7 @@
     </fragment>
     <fragment
         android:id="@+id/bookSettingFragment"
-        android:name="com.upf.memorytrace_android.ui.book.BookSettingFragment"
+        android:name="com.upf.memorytrace_android.ui.book.setting.BookSettingFragment"
         android:label="BookSettingFragment">
         <action
             android:id="@+id/action_bookSettingFragment_to_memberSettingFragment"
@@ -160,7 +160,7 @@
 
     <fragment
         android:id="@+id/memberSettingFragment"
-        android:name="com.upf.memorytrace_android.ui.book.setting.MemberSettingFragment"
+        android:name="com.upf.memorytrace_android.ui.book.setting.member.MemberSettingFragment"
         android:label="MemberSettingFragment">
         <argument
             android:name="bid"

@@ -5,7 +5,7 @@
 
         <variable
             name="item"
-            type="com.upf.memorytrace_android.ui.book.setting.BookMemberItem" />
+            type="com.upf.memorytrace_android.ui.book.setting.member.BookMemberItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

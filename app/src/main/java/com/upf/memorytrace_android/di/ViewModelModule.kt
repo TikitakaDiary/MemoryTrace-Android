@@ -1,7 +1,7 @@
 package com.upf.memorytrace_android.di
 
 import androidx.lifecycle.ViewModel
-import com.upf.memorytrace_android.viewmodel.MainViewModel
+import com.upf.memorytrace_android.ui.main.MainViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

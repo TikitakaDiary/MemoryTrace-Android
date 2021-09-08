@@ -11,11 +11,11 @@
 
         <variable
             name="item"
-            type="com.upf.memorytrace_android.ui.book.BookItem" />
+            type="com.upf.memorytrace_android.ui.book.list.BookItem" />
 
         <variable
             name="viewModel"
-            type="com.upf.memorytrace_android.viewmodel.BookListViewModel" />
+            type="com.upf.memorytrace_android.ui.book.list.BookListViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView

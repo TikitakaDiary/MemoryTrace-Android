@@ -1,12 +1,10 @@
 package com.upf.memorytrace_android.di
 
-import android.content.Context
 import android.util.Log
 import com.upf.memorytrace_android.BuildConfig
-import com.upf.memorytrace_android.BuildConfig.DEBUG
 import com.upf.memorytrace_android.api.MemoryTraceService
-import com.upf.memorytrace_android.api.util.AuthHeaderInterceptor
-import com.upf.memorytrace_android.api.util.StatusInterceptor
+import com.upf.memorytrace_android.api.util.interceptor.AuthHeaderInterceptor
+import com.upf.memorytrace_android.api.util.interceptor.StatusInterceptor
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -16,8 +14,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
-import javax.net.ssl.SSLSocketFactory
-import javax.net.ssl.X509TrustManager
 
 
 @Module

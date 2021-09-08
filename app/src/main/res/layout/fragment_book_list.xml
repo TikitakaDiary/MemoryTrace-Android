@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.upf.memorytrace_android.viewmodel.BookListViewModel" />
+            type="com.upf.memorytrace_android.ui.book.list.BookListViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

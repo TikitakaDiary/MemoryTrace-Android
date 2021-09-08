@@ -5,11 +5,11 @@
 
         <variable
             name="item"
-            type="com.upf.memorytrace_android.ui.write.StickerItem" />
+            type="com.upf.memorytrace_android.ui.diary.write.sticker.StickerItem" />
 
         <variable
             name="viewModel"
-            type="com.upf.memorytrace_android.viewmodel.WriteViewModel" />
+            type="com.upf.memorytrace_android.ui.diary.write.WriteViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

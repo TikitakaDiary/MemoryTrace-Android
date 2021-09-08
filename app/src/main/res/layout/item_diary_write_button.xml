@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.upf.memorytrace_android.viewmodel.DiaryViewModel" />
+            type="com.upf.memorytrace_android.ui.diary.list.DiaryViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

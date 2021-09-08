@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.upf.memorytrace_android.viewmodel.NameEditViewModel" />
+            type="com.upf.memorytrace_android.ui.mypage.nameedit.NameEditViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
