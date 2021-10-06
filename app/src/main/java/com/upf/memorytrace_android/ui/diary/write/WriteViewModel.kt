@@ -1,12 +1,14 @@
 package com.upf.memorytrace_android.ui.diary.write
 
 import android.graphics.Bitmap
+import android.net.Uri
 import androidx.annotation.DrawableRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.upf.memorytrace_android.api.repository.DiaryRepository
 import com.upf.memorytrace_android.api.util.NetworkState
 import com.upf.memorytrace_android.ui.base.BaseViewModel
+import com.upf.memorytrace_android.ui.diary.write.image.CameraImageDelegate
 import com.upf.memorytrace_android.util.BackDirections
 import com.upf.memorytrace_android.util.Colors
 import com.upf.memorytrace_android.util.ImageConverter
@@ -16,7 +18,9 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.io.File
 
-internal class WriteViewModel : BaseViewModel() {
+internal class WriteViewModel(
+    private val cameraImageDelegate: CameraImageDelegate
+) : BaseViewModel() {
     val bitmap = MutableLiveData<Bitmap?>()
     val color = MutableLiveData<Colors?>()
     val title = MutableLiveData<String>()
@@ -32,6 +36,10 @@ internal class WriteViewModel : BaseViewModel() {
 
     val isSaveDiary = LiveEvent<Unit?>()
     val isExit = LiveEvent<Unit?>()
+
+    private var _imageUrl: Uri? = null
+    val imageUri : Uri?
+        get() = _imageUrl
 
     private var bid = -1
     private var originalBackgroundColor: Colors? = null
@@ -115,6 +123,10 @@ internal class WriteViewModel : BaseViewModel() {
 
     fun onClickBack() {
         navDirections.postValue(BackDirections())
+    }
+
+    fun getImageNewImageUri(): Uri {
+        return cameraImageDelegate.createImageUri().also { _imageUrl = it }
     }
 
     companion object {

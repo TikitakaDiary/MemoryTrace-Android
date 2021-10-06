@@ -128,4 +128,7 @@ dependencies {
     //notice open source
     implementation "com.google.android.gms:play-services-oss-licenses:$oss_version"
 
+    // TedPermission
+    implementation "gun0912.ted:tedpermission:$ted_permission_version"
+
 }

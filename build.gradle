@@ -28,6 +28,9 @@ buildscript {
         firebase_version = "27.1.0"
         firebase_auth_version = "19.2.0"
 
+        // TedPermission
+        ted_permission_version = '2.2.2'
+
         //others
         leakcanary_version = "2.7"
         oss_version = "17.0.0"

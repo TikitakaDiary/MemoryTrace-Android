@@ -2,46 +2,63 @@ package com.upf.memorytrace_android.ui.diary.write
 
 import android.Manifest
 import android.app.Activity
-import androidx.activity.addCallback
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.TedPermission
+import com.upf.memorytrace_android.MemoryTraceApplication
 import com.upf.memorytrace_android.R
-import com.upf.memorytrace_android.ui.base.BaseFragment
 import com.upf.memorytrace_android.databinding.FragmentWriteBinding
 import com.upf.memorytrace_android.extension.observe
 import com.upf.memorytrace_android.extension.toast
 import com.upf.memorytrace_android.ui.diary.write.color.ColorAdapter
 import com.upf.memorytrace_android.ui.diary.write.color.ColorItem
-import com.upf.memorytrace_android.util.Colors
-import com.upf.memorytrace_android.util.ImageConverter
+import com.upf.memorytrace_android.ui.diary.write.image.ImageType
 import com.upf.memorytrace_android.ui.diary.write.image.WriteImageBottomSheetFragment
 import com.upf.memorytrace_android.ui.diary.write.sticker.WriteStickerBottomSheetFragment
+import com.upf.memorytrace_android.util.BackDirections
+import com.upf.memorytrace_android.util.Colors
+import com.upf.memorytrace_android.util.ImageConverter
 import com.upf.memorytrace_android.util.MemoryTraceConfig
 import com.upf.memorytrace_android.util.TimeUtil
 import com.xiaopo.flying.sticker.DrawableSticker
 
-internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding>() {
-    override val layoutId = R.layout.fragment_write
-    override val viewModelClass = WriteViewModel::class
-    override val navArgs by navArgs<WriteFragmentArgs>()
+internal class WriteFragment : Fragment() {
+
+    private lateinit var binding: FragmentWriteBinding
+    private val navArgs by navArgs<WriteFragmentArgs>()
+
+    private val viewModel: WriteViewModel by viewModels(
+        { this },
+        { WriteViewModelProviderFactory(requireActivity().application) })
 
     private val cameraActivityResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             with(result) {
-                if (resultCode == Activity.RESULT_OK) {
-                    data?.let { cropImageWithBitmap(it.extras?.get("data") as? Bitmap) }
+                val imageUri = viewModel.imageUri
+                if (imageUri == null || resultCode != Activity.RESULT_OK) {
+                    toast(getString(R.string.write_load_image_fail))
+                    return@registerForActivityResult
                 }
+                cropImageWithUri(imageUri)
             }
         }
 
@@ -53,33 +70,43 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
                 }
             }
         }
-    private val readPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-            if (it) loadGallery()
-        }
 
     private val selectImageDialog by lazy(LazyThreadSafetyMode.NONE) {
         WriteImageBottomSheetFragment(viewModel)
     }
+
     private val stickerDialog by lazy(LazyThreadSafetyMode.NONE) {
         WriteStickerBottomSheetFragment(viewModel)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        (requireActivity().application as? MemoryTraceApplication)?.appComponent?.fragmentComponent()?.create()?.inject(this)
+
+        binding = FragmentWriteBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner = viewLifecycleOwner
+            viewModel = this@WriteFragment.viewModel
+        }
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.navArgs(navArgs)
         setProperties()
         setBackPressedDispatcher()
 
         observe(viewModel.isShowSelectImgDialog) { showSelectImageDialog() }
         observe(viewModel.isLoadGallery) { accessGallery() }
-        observe(viewModel.isLoadCamera) { accessCamera() }
+        observe(viewModel.isLoadCamera) { checkCameraPermission(ImageType.CAMERA) }
         observe(viewModel.addSticker) { attachSticker(it) }
         observe(viewModel.isShowColorDialog) { showColorDialog(it) }
         observe(viewModel.color) { it?.let { color -> changeColor(color) } }
         observe(viewModel.isSaveDiary) { saveDiary() }
         observe(viewModel.isExit) { showExitDialog() }
         observe(viewModel.isShowStickerDialog) { if (it) loadStickerDialog() else closeStickerDialog() }
+        observe(viewModel.navDirections) { navigation(it) }
+        observe(viewModel.toast) { toast(it) }
     }
 
     override fun onDestroyView() {
@@ -101,7 +128,11 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
                 submitList(Colors.getColors().map { ColorItem(it) })
             }
         }
-        receiveArgFromOtherView<Bitmap>("image") { viewModel.bitmap.value = it }
+        findNavController()
+            .currentBackStackEntry
+            ?.savedStateHandle
+            ?.getLiveData<Bitmap>("image")
+            ?.observe(viewLifecycleOwner) { viewModel.bitmap.value = it }
     }
 
     private fun setBackPressedDispatcher() {
@@ -110,17 +141,9 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         }
     }
 
-    private fun cropImageWithBitmap(bitmap: Bitmap?) {
-        cropImage(null, bitmap)
-    }
-
     private fun cropImageWithUri(uri: Uri?) {
-        cropImage(uri, null)
-    }
-
-    private fun cropImage(uri: Uri?, bitmap: Bitmap?) {
         viewModel.navDirections.value =
-            WriteFragmentDirections.actionWriteFragmentToCropFragment(uri, bitmap)
+            WriteFragmentDirections.actionWriteFragmentToCropFragment(uri, null)
     }
 
     private fun showSelectImageDialog() {
@@ -131,39 +154,61 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
         selectImageDialog.dismiss()
     }
 
-    private fun checkReadPermission() {
-        val selfPermission = ContextCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        )
-        if (selfPermission != PackageManager.PERMISSION_GRANTED) {
-            toast(NOTICE_DO_NOT_LOAD_GALLERY)
-            readPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
-        } else {
-            loadGallery()
-        }
-    }
-
     private fun accessCamera() {
         dismissSelectImageDialog()
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { intent ->
-            intent.resolveActivity(requireActivity().packageManager)?.also {
-                cameraActivityResultLauncher.launch(intent)
+        val imageUri = viewModel.getImageNewImageUri()
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            takePictureIntent.resolveActivity(requireActivity().packageManager)?.also {
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+                cameraActivityResultLauncher.launch(takePictureIntent)
             }
         }
     }
 
     private fun accessGallery() {
         dismissSelectImageDialog()
-        checkReadPermission()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            loadGallery()
+        } else {
+            checkCameraPermission(ImageType.GALLERY)
+        }
+    }
+
+    private fun checkCameraPermission(type: ImageType) {
+        TedPermission.with(context)
+            .setPermissionListener(object : PermissionListener {
+                override fun onPermissionGranted() {
+                    when (type) {
+                        ImageType.CAMERA -> accessCamera()
+                        ImageType.GALLERY -> loadGallery()
+                    }
+                }
+
+                override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {}
+            })
+            .setDeniedMessage(NOTICE_DO_NOT_LOAD_GALLERY)
+            .apply {
+                when (type) {
+                    ImageType.CAMERA -> {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+                            setPermissions(Manifest.permission.CAMERA)
+                        else
+                            setPermissions(
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.CAMERA
+                            )
+                    }
+                    ImageType.GALLERY -> setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
+                }
+            }
+            .check()
     }
 
     private fun loadGallery() {
-        val intent = Intent(
-            Intent.ACTION_PICK,
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        )
+        val intent = Intent()
         intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
         galleryActivityResultLauncher.launch(intent)
     }
 
@@ -209,6 +254,21 @@ internal class WriteFragment : BaseFragment<WriteViewModel, FragmentWriteBinding
                 setNegativeButton(R.string.write_exit_cancel, null)
             }
             builder.create().show()
+        }
+    }
+
+    //Todo : ViewModel 의 navigation 의존을 덜어낸 후에 제거가 가능합니다
+    private fun navigation(navDirections: NavDirections) {
+        if (navDirections is BackDirections) {
+            if (navDirections.destinationId == -1) {
+                findNavController().popBackStack()
+            } else {
+                with(navDirections) {
+                    findNavController().popBackStack(destinationId, inclusive)
+                }
+            }
+        } else {
+            findNavController().navigate(navDirections)
         }
     }
 

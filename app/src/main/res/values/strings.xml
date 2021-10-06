@@ -22,6 +22,7 @@
     <string name="write_exit_content">일기를 전달하지 않고 나갈시,\n작성한 내용은 저장되지 않습니다.</string>
     <string name="write_exit_cancel">취소</string>
     <string name="write_exit_exit">나가기</string>
+    <string name="write_load_image_fail">이미지를 불러오는데 실패하였습니다.</string>
 
     <string name="diary_your_turn">Your turn!</string>
     <string name="diary_empty">작성한 일기가 없습니다. 😥</string>
