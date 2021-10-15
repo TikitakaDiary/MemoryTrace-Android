@@ -7,6 +7,7 @@ data class User(
     var profileImg: String? = null,
     var jwt: String = "",
     var snsKey: String = "",
+    var tempKey: String? = "",
     var snsType: String = "",
     var createdDate: String = "",
     var token: String = ""

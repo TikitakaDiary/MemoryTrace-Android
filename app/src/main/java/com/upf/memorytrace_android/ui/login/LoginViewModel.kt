@@ -14,7 +14,7 @@ internal class LoginViewModel : BaseViewModel() {
 
     val name = MutableLiveData("요기 터치")
 
-    fun register(nickname: String, snsKey: String, snsType: String) {
+    fun register(nickname: String, snsKey: String, snsType: String, tempKey: String? = null) {
         viewModelScope.launch {
             var token = ""
             withContext(Dispatchers.Default) {
@@ -24,7 +24,7 @@ internal class LoginViewModel : BaseViewModel() {
                     }
                 }
             }
-            val response = UserRepository.createUser(nickname, snsKey, snsType, token)
+            val response = UserRepository.createUser(nickname, snsKey, tempKey, snsType, token)
             when (response) {
                 is NetworkState.Success -> navDirections.value =
                     LoginFragmentDirections.actionLoginFragmentToBookListFragment()

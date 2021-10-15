@@ -88,4 +88,7 @@
     <string name="default_notification_channel_id">duck-z</string>
     <string name="fcm_new_diary">새로운 일기가 등록되었어요!</string>
 
+    <string name="mypage_term_service_label">서비스 이용약관</string>
+    <string name="mypage_term_privacy_label">개인정보처리방침</string>
+
 </resources>

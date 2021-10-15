@@ -22,6 +22,7 @@ class StatusInterceptor : Interceptor {
         if (!data.isSuccess) {
             FirebaseCrashlytics.getInstance().log(data.responseMessage)
             FirebaseCrashlytics.getInstance().recordException(StatusError(data))
+            if (data.responseMessage.isBlank()) throw IOException()
             throw StatusError(data)
         }
         return response
