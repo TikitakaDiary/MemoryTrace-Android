@@ -87,6 +87,9 @@
         <action
             android:id="@+id/action_mypageFragment_to_nameEditFragment"
             app:destination="@id/nameEditFragment" />
+        <action
+            android:id="@+id/action_mypageFragment_to_termsFragment"
+            app:destination="@id/termsFragment" />
     </fragment>
     <fragment
         android:id="@+id/makersFragment"
@@ -164,6 +167,16 @@
         android:label="MemberSettingFragment">
         <argument
             android:name="bid"
+            android:defaultValue="-1"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/termsFragment"
+        android:name="com.upf.memorytrace_android.ui.mypage.terms.TermsFragment"
+        android:label="TermsFragment">
+        <argument
+            android:name="terms"
             android:defaultValue="-1"
             app:argType="integer" />
     </fragment>

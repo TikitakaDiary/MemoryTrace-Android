@@ -221,6 +221,36 @@
                             android:src="@drawable/ic_right_arrow" />
                     </RelativeLayout>
 
+                    <RelativeLayout
+                        android:id="@+id/btn_term_service"
+                        style="@style/MypageItemLayout"
+                        android:onClick="@{()->viewModel.onClickTermService()}">
+
+                        <TextView
+                            style="@style/MypageItem"
+                            android:text="@string/mypage_term_service_label" />
+
+                        <ImageView
+                            style="@style/ImageView"
+                            android:layout_alignParentEnd="true"
+                            android:src="@drawable/ic_right_arrow" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/btn_term_privacy"
+                        style="@style/MypageItemLayout"
+                        android:onClick="@{()->viewModel.onClickTermPrivacy()}">
+
+                        <TextView
+                            style="@style/MypageItem"
+                            android:text="@string/mypage_term_privacy_label" />
+
+                        <ImageView
+                            style="@style/ImageView"
+                            android:layout_alignParentEnd="true"
+                            android:src="@drawable/ic_right_arrow" />
+                    </RelativeLayout>
+
                     <TextView
                         android:id="@+id/label_cs"
                         style="@style/MypageLabel"

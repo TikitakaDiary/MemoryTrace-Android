@@ -63,6 +63,18 @@ internal class MypageViewModel : BaseViewModel() {
         sendEmail.call()
     }
 
+    /**
+     * service : 1
+     * privacy : 2
+     */
+    fun onClickTermService() {
+        navDirections.value = MypageFragmentDirections.actionMypageFragmentToTermsFragment(1)
+    }
+
+    fun onClickTermPrivacy() {
+        navDirections.value = MypageFragmentDirections.actionMypageFragmentToTermsFragment(2)
+    }
+
     fun resetUser() {
         MemoryTraceConfig.clear()
         navDirections.value = MypageFragmentDirections.actionMypageFragmentToLoginFragment()
