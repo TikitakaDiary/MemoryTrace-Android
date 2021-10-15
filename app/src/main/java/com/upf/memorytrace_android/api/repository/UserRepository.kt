@@ -16,11 +16,12 @@ object UserRepository {
     suspend fun createUser(
         nickname: String,
         snskey: String,
+        tempKey: String? = null,
         snsType: String,
         token: String
     ): NetworkState<String> {
         return try {
-            val user = User(nickname = nickname, snsKey = snskey, snsType = snsType, token = token)
+            val user = User(nickname = nickname, snsKey = snskey, tempKey = tempKey, snsType = snsType, token = token)
             val response = MemoryTraceUtils.apiService().createUser(user)
             //update memory
             response.data?.let {

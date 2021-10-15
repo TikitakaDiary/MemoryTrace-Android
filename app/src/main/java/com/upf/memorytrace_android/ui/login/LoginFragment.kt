@@ -108,7 +108,8 @@ internal class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding
                     viewModel.register(
                         user.displayName ?: "",
                         account?.id ?: return@addOnCompleteListener,
-                        GOOGLE
+                        GOOGLE,
+                        user.uid
                     )
                 } else {
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
