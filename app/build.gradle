@@ -20,21 +20,36 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
 
-        def addConstant = {constantName, constantValue ->
-            manifestPlaceholders += [ (constantName):constantValue]
+        def addConstant = { constantName, constantValue ->
+            manifestPlaceholders += [(constantName): constantValue]
             buildConfigField "String", "${constantName}", "\"${constantValue}\""
         }
         addConstant("BASE_URL", "${getProperty("local.properties", "BASE_URL")}")
+    }
+
+    signingConfigs {
+        release {
+            def keystoreProperties = new Properties()
+            keystoreProperties.load(rootProject.file("keystore.properties").newDataInputStream())
+
+            storeFile file(keystoreProperties["keystorePath"])
+            storePassword keystoreProperties["storePassword"]
+            keyPassword keystoreProperties["keyPassword"]
+            keyAlias keystoreProperties["keyAlias"]
+        }
     }
 
     buildTypes {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // debug 시에도 release 키로 서명
+            signingConfig signingConfigs.release
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 
