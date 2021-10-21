@@ -48,9 +48,7 @@ internal class WriteFragment : Fragment() {
     private lateinit var binding: FragmentWriteBinding
     private val navArgs by navArgs<WriteFragmentArgs>()
 
-    private val viewModel: WriteViewModel by viewModels(
-        { this },
-        { WriteViewModelProviderFactory(requireActivity().application) })
+    private val viewModel: WriteViewModel by viewModels()
 
     private val cameraActivityResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->

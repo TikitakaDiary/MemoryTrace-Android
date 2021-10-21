@@ -1,6 +1,6 @@
 package com.upf.memorytrace_android.ui.diary.write.image
 
-import android.app.Application
+import android.content.Context
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -11,7 +11,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CameraImageDelegate(private val application: Application) {
+class CameraImageDelegate(private val context: Context) {
 
     companion object {
         private const val DATE_FORMAT = "yyMMdd_HH:mm:ss"
@@ -20,20 +20,20 @@ class CameraImageDelegate(private val application: Application) {
     fun createImageUri() = createImageUri(createImageFile())
 
     private fun createImageUri(imageFile: File): Uri {
-        return FileProvider.getUriForFile(application, BuildConfig.APPLICATION_ID + ".provider", imageFile)
+        return FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", imageFile)
     }
 
     private fun createImageFile() : File {
         // Android 10 부터는 파일을 MediaStore 에 저장해야합니다.
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
-            val storageDir = application.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+            val storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
             return createTempFile(storageDir)
         }
         // Android 9 이하는 기기 갤러리에 이미지를 직접 생성합니다.
         else {
             val storageDir = File(
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                application.getString(R.string.app_name)
+                context.getString(R.string.app_name)
             )
 
             if(!storageDir.exists())
