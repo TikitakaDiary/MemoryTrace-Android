@@ -40,7 +40,9 @@ import com.upf.memorytrace_android.util.ImageConverter
 import com.upf.memorytrace_android.util.MemoryTraceConfig
 import com.upf.memorytrace_android.util.TimeUtil
 import com.xiaopo.flying.sticker.DrawableSticker
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 internal class WriteFragment : Fragment() {
 
     private lateinit var binding: FragmentWriteBinding
