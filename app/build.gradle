@@ -1,10 +1,13 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'androidx.navigation.safeargs.kotlin'
-apply plugin: 'com.google.gms.google-services' //google login, fcm
-apply plugin: 'com.google.firebase.crashlytics'
-apply plugin: 'com.google.android.gms.oss-licenses-plugin'
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'com.google.gms.google-services' //google login, fcm
+    id 'com.google.firebase.crashlytics'
+    id 'com.google.android.gms.oss-licenses-plugin'
+    id 'dagger.hilt.android.plugin'
+}
 
 android {
     compileSdkVersion rootProject.compile_sdk_version
@@ -134,6 +137,9 @@ dependencies {
     implementation "com.google.android.gms:play-services-auth:$firebase_auth_version" //login
     implementation 'com.google.firebase:firebase-messaging-ktx' //fcm
 
+    // Hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
     // Test
     testImplementation 'junit:junit:4.12'
@@ -145,5 +151,8 @@ dependencies {
 
     // TedPermission
     implementation "gun0912.ted:tedpermission:$ted_permission_version"
+}
 
+kapt {
+    correctErrorTypes true
 }

@@ -14,11 +14,14 @@ import com.upf.memorytrace_android.util.Colors
 import com.upf.memorytrace_android.util.ImageConverter
 import com.upf.memorytrace_android.util.LiveEvent
 import com.xiaopo.flying.sticker.Sticker
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.io.File
+import javax.inject.Inject
 
-internal class WriteViewModel(
+@HiltViewModel
+internal class WriteViewModel @Inject constructor(
     private val cameraImageDelegate: CameraImageDelegate
 ) : BaseViewModel() {
     val bitmap = MutableLiveData<Bitmap?>()
