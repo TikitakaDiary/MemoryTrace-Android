@@ -5,7 +5,6 @@ import android.net.Uri
 import androidx.annotation.DrawableRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.upf.memorytrace_android.api.model.DiaryDetailModel
 import com.upf.memorytrace_android.api.repository.DiaryRepository
 import com.upf.memorytrace_android.api.util.NetworkState
 import com.upf.memorytrace_android.ui.base.BaseViewModel
@@ -68,13 +67,13 @@ internal class WriteViewModel @Inject constructor(
 
     var isCreateMode: Boolean = true
 
-    private fun setDiary(diary: DiaryDetailModel) {
-        did = diary.did
+    private fun setDiary(diary: DiaryDetailDTO) {
+        did = diary.diaryId
         if (did != -1) isCreateMode = false
 
         title.value = diary.title
         content.value = diary.content
-        cantEditableImageUrl.value = diary.img
+        cantEditableImageUrl.value = diary.imageUrl
     }
 
     fun showSelectImgDialog() {

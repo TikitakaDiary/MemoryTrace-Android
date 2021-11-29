@@ -1,15 +1,14 @@
 package com.upf.memorytrace_android.api.model
 
 import com.google.gson.*
-import com.google.gson.annotations.SerializedName
 import java.lang.reflect.Type
 
 open class BaseResponse<out T>(
     val statusCode: String = "",
     val responseMessage: String = "",
-    open val data: T? = null
+    val data: T? = null
 ) {
-    open val isSuccess: Boolean
+    val isSuccess: Boolean
         get() = statusCode == "201" || statusCode == "200"
 
     class Deserializer : JsonDeserializer<BaseResponse<*>> {
@@ -21,6 +20,18 @@ open class BaseResponse<out T>(
         ): BaseResponse<*> {
             val jsonObject = json.asJsonObject
             return Gson().fromJson(jsonObject, BaseResponse::class.java)
+        }
+    }
+
+    fun getOrThrow(): T {
+        if (isSuccess) {
+            if (data == null) {
+                throw Throwable("success : $responseMessage")
+            } else {
+                return data
+            }
+        } else {
+            throw IllegalAccessException(responseMessage)
         }
     }
 }
