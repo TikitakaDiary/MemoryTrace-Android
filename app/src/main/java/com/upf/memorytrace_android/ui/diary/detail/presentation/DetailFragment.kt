@@ -46,7 +46,7 @@ class DetailFragment : BindingFragment<FragmentDetailBinding>(R.layout.fragment_
             }
 
         detailViewModel.run {
-            fetchDiaryDetail(args.did)
+            fetchDiaryDetail(args.diaryId)
 
             repeatOnStart {
                 launch {
@@ -74,7 +74,7 @@ class DetailFragment : BindingFragment<FragmentDetailBinding>(R.layout.fragment_
 
 
             observeEvent(uiEvent) {
-                DetailFragmentDirections.actionDetailFragmentToCommentListFragment().run {
+                DetailFragmentDirections.actionDetailFragmentToCommentListFragment(args.diaryId).run {
                     findNavController().navigate(this)
                 }
             }

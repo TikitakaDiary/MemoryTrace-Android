@@ -178,7 +178,7 @@
         android:label="DetailFragment">
 
         <argument
-            android:name="did"
+            android:name="diaryId"
             android:defaultValue="-1"
             app:argType="integer" />
 
@@ -197,7 +197,11 @@
     <fragment
         android:id="@+id/commentListFragment"
         android:name="com.upf.memorytrace_android.ui.diary.comment.presenter.CommentListFragment"
-        android:label="CommentListFragment" />
+        android:label="CommentListFragment" >
+        <argument
+            android:name="diaryId"
+            app:argType="integer" />
+    </fragment>
 
     <fragment
         android:id="@+id/bookSettingFragment"
