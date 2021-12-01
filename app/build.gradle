@@ -1,12 +1,14 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'androidx.navigation.safeargs.kotlin'
-apply plugin: 'com.google.gms.google-services' //google login, fcm
-apply plugin: 'com.google.firebase.crashlytics'
-apply plugin: 'com.google.android.gms.oss-licenses-plugin'
-apply plugin: 'kotlin-parcelize'
-
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'com.google.gms.google-services' //google login, fcm
+    id 'com.google.firebase.crashlytics'
+    id 'com.google.android.gms.oss-licenses-plugin'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-parcelize'
+}
 
 android {
     compileSdkVersion rootProject.compile_sdk_version
@@ -22,21 +24,37 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
 
-        def addConstant = {constantName, constantValue ->
-            manifestPlaceholders += [ (constantName):constantValue]
+        def addConstant = { constantName, constantValue ->
+            manifestPlaceholders += [(constantName): constantValue]
             buildConfigField "String", "${constantName}", "\"${constantValue}\""
         }
         addConstant("BASE_URL", "${getProperty("local.properties", "BASE_URL")}")
+    }
+
+    signingConfigs {
+        release {
+            def keystoreProperties = new Properties()
+            keystoreProperties.load(rootProject.file("keystore.properties").newDataInputStream())
+
+            storeFile file(keystoreProperties["keystorePath"])
+            storePassword keystoreProperties["storePassword"]
+            keyPassword keystoreProperties["keyPassword"]
+            keyAlias keystoreProperties["keyAlias"]
+
+        }
     }
 
     buildTypes {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // debug 시에도 release 키로 서명
+            signingConfig signingConfigs.release
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 
@@ -121,6 +139,9 @@ dependencies {
     implementation "com.google.android.gms:play-services-auth:$firebase_auth_version" //login
     implementation 'com.google.firebase:firebase-messaging-ktx' //fcm
 
+    // Hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
     // Test
     testImplementation 'junit:junit:4.12'
@@ -132,5 +153,8 @@ dependencies {
 
     // TedPermission
     implementation "gun0912.ted:tedpermission:$ted_permission_version"
+}
 
+kapt {
+    correctErrorTypes true
 }

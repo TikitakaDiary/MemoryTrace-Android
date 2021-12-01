@@ -3,7 +3,9 @@ package com.upf.memorytrace_android
 import android.app.Application
 import com.kakao.sdk.common.KakaoSdk
 import com.upf.memorytrace_android.di.DaggerAppComponent
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class MemoryTraceApplication : Application() {
     val appComponent by lazy {
         DaggerAppComponent.factory().create(this)
