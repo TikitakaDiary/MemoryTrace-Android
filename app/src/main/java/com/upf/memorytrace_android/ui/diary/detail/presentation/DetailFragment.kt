@@ -63,10 +63,8 @@ class DetailFragment : BindingFragment<FragmentDetailBinding>(R.layout.fragment_
 
                 launch {
                     uiState.collect { state ->
-                        if (state is UiState.Success<*>) {
-                            (state.data as? DiaryDetail)?.let {
-                                binding.diaryDetail = it
-                            }
+                        if (state is UiState.Success<DiaryDetail>) {
+                            binding.diaryDetail = state.data
                         }
                     }
                 }

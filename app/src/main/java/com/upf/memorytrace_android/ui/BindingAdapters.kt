@@ -10,17 +10,23 @@ object BindingAdapters {
 
     @JvmStatic
     @BindingAdapter("isVisible")
-    fun ProgressBar.isVisible(uiState: UiState) {
+    fun ProgressBar.isVisible(uiState: UiState<*>) {
         this.isVisible = uiState is UiState.Loading
     }
 
     @JvmStatic
     @BindingAdapter("showToast")
-    fun View.showToast(uiState: UiState) {
+    fun View.showToast(uiState: UiState<*>) {
         if (uiState is UiState.Failure) {
             uiState.throwable?.let {
                 Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    @JvmStatic
+    @BindingAdapter("isVisible")
+    fun View.isVisible(isVisible: Boolean) {
+        this.isVisible = isVisible
     }
 }

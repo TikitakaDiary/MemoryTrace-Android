@@ -7,7 +7,7 @@ class FetchCommentUseCase @Inject constructor(
     private val commentRepository: CommentRepository
 ) {
 
-    suspend operator fun invoke(diaryId: Int): UiState {
+    suspend operator fun invoke(diaryId: Int): UiState<List<Comment>> {
         return try {
             UiState.Success(commentRepository.fetchComments(diaryId))
         } catch (e: Exception) {

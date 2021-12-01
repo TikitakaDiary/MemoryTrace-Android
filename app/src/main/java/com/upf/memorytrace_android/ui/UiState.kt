@@ -1,7 +1,7 @@
 package com.upf.memorytrace_android.ui
 
-sealed class UiState {
-    data class Success<T>(val data: T): UiState()
-    object Loading: UiState()
-    data class Failure(val throwable: Throwable?): UiState()
+sealed class UiState<out T> {
+    data class Success<T>(val data: T): UiState<T>()
+    object Loading: UiState<Nothing>()
+    data class Failure(val throwable: Throwable?): UiState<Nothing>()
 }

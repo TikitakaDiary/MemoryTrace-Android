@@ -8,7 +8,7 @@ class FetchDiaryUseCase @Inject constructor(
     private val diaryRepository: DiaryRepository
 ) {
 
-    suspend operator fun invoke(diaryId: Int): UiState {
+    suspend operator fun invoke(diaryId: Int): UiState<DiaryDetail> {
         return try {
             UiState.Success(diaryRepository.fetchDiary(diaryId))
         } catch (e: Exception) {

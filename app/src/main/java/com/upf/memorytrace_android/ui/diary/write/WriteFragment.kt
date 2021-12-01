@@ -28,6 +28,7 @@ import com.upf.memorytrace_android.MemoryTraceApplication
 import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.databinding.FragmentWriteBinding
 import com.upf.memorytrace_android.extension.observe
+import com.upf.memorytrace_android.extension.applyAdjustPanMode
 import com.upf.memorytrace_android.extension.toast
 import com.upf.memorytrace_android.ui.diary.write.color.ColorAdapter
 import com.upf.memorytrace_android.ui.diary.write.color.ColorItem
@@ -87,6 +88,7 @@ internal class WriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        applyAdjustPanMode()
 
         viewModel.navArgs(navArgs)
         setProperties()

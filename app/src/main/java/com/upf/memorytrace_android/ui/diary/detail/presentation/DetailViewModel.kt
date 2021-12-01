@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.upf.memorytrace_android.databinding.EventLiveData
 import com.upf.memorytrace_android.databinding.MutableEventLiveData
 import com.upf.memorytrace_android.ui.UiState
+import com.upf.memorytrace_android.ui.diary.detail.domain.DiaryDetail
 import com.upf.memorytrace_android.ui.diary.detail.domain.FetchDiaryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,8 +28,8 @@ class DetailViewModel @Inject constructor(
     private val _uiEvent = MutableEventLiveData<Event>()
     val uiEvent: EventLiveData<Event> = _uiEvent
 
-    private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
-    val uiState: StateFlow<UiState> = _uiState
+    private val _uiState = MutableStateFlow<UiState<DiaryDetail>>(UiState.Loading)
+    val uiState: StateFlow<UiState<DiaryDetail>> = _uiState
 
     fun fetchDiaryDetail(diaryId: Int) {
         viewModelScope.launch {
