@@ -109,6 +109,18 @@ internal class WriteViewModel(
                     content.value ?: EMPTY_STRING,
                     it
                 )
+            if (title.value?.trim().isNullOrBlank()) {
+                toast.value = EMPTY_TITLE
+                showLoading.value = false
+                return@launch
+            }
+
+            if (bitmap.value == null && color.value == null) {
+                toast.value = EMPTY_IMAGE
+                showLoading.value = false
+                return@launch
+            }
+
                 when (response) {
                     is NetworkState.Success -> onClickBack()
                     is NetworkState.Failure -> toast.value = response.message
@@ -131,5 +143,7 @@ internal class WriteViewModel(
 
     companion object {
         private const val EMPTY_STRING = ""
+        private const val EMPTY_TITLE = "제목을 입력해 주세요!"
+        private const val EMPTY_IMAGE = "사진이나 색상을 지정해 주세요!"
     }
 }
