@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -20,14 +19,14 @@
             android:id="@+id/top_layout"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:paddingHorizontal="24dp"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_back"
+                android:layout_height="match_parent"
                 android:onClick="@{()->viewModel.onClickExit()}"
+                android:paddingHorizontal="24dp"
+                android:src="@drawable/ic_back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -46,6 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{()->viewModel.saveDiary()}"
+                android:paddingHorizontal="24dp"
                 android:text="@string/write_delivery"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -226,13 +226,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:background="@color/systemGray01"
-                android:paddingHorizontal="24dp"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="gone">
 
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:onClick="@{()->viewModel.dismissColorDialog()}"
+                    android:paddingHorizontal="24dp"
                     android:src="@drawable/ic_x"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -252,6 +253,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="@{()->viewModel.saveColor()}"
+                    android:paddingHorizontal="24dp"
                     android:text="@string/save"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
