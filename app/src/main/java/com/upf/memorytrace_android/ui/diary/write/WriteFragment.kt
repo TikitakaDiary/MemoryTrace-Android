@@ -256,6 +256,7 @@ internal class WriteFragment : Fragment() {
     }
 
     private fun saveDiary() {
+        if (!isSingleClick()) return
         binding.stickerView.removeStickerHandler()
         val bitmap = ImageConverter.convertViewToBitmap(binding.cardView)
         val cacheDir = requireContext().cacheDir
