@@ -5,6 +5,8 @@ apply plugin: 'androidx.navigation.safeargs.kotlin'
 apply plugin: 'com.google.gms.google-services' //google login, fcm
 apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.google.android.gms.oss-licenses-plugin'
+apply plugin: 'kotlin-parcelize'
+
 
 android {
     compileSdkVersion rootProject.compile_sdk_version

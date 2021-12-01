@@ -18,6 +18,8 @@ internal class DetailViewModel : BaseViewModel() {
     val nickname = MutableLiveData<String>()
     val date = MutableLiveData<String>()
     val img = MutableLiveData<String>()
+    val enableUpdate = MutableLiveData<Boolean>()
+    var diary :DiaryDetailModel? = null
 
     init {
         viewModelScope.launch {
@@ -34,6 +36,7 @@ internal class DetailViewModel : BaseViewModel() {
     }
 
     private fun settingDiary(data: DiaryDetailModel) {
+        diary = data
         title.postValue(data.title)
         content.postValue(data.content)
         nickname.postValue(data.nickname)
@@ -41,9 +44,19 @@ internal class DetailViewModel : BaseViewModel() {
         TimeUtil.convertStringToDate(TimeUtil.FORMAT_yyyy_MM_dd_B_HH_mm_ss, data.createdDate)?.let {
             date.postValue(TimeUtil.getDate(TimeUtil.YYYY_M_D_KR, it))
         }
+        enableUpdate.postValue(data.modifiable)
     }
 
     fun onClickBack() {
         navDirections.value = BackDirections()
+    }
+
+    fun updateDiary(){
+        if(enableUpdate.value == true){
+            navDirections.value = DetailFragmentDirections.actionDetailFragmentToWriteFragment(-1, diary)
+        }else{
+            //todo: 출력안됨.
+            toast.value = "일기장 수정은 작성 후 30분 내에만 가능해요!"
+        }
     }
 }

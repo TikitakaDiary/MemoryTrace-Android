@@ -50,6 +50,10 @@
             android:name="bid"
             android:defaultValue="-1"
             app:argType="integer" />
+        <argument
+            android:name="diary"
+            app:argType="com.upf.memorytrace_android.api.model.DiaryDetailModel"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/bookListFragment"
@@ -138,6 +142,9 @@
             android:name="did"
             android:defaultValue="-1"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_detailFragment_to_writeFragment"
+            app:destination="@id/writeFragment" />
     </fragment>
     <fragment
         android:id="@+id/bookSettingFragment"

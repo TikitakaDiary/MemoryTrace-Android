@@ -59,4 +59,21 @@ internal object DiaryRepository {
         }
     }
 
+    suspend fun modifyDiary(
+        did: Int,
+        title: String,
+        content: String,
+        img: MultipartBody.Part
+    ): NetworkState<String> {
+        return try {
+            MemoryTraceUtils.apiService().modifyDiary(did, title, content, img)
+            NetworkState.Success(SUCCESS)
+        } catch (e: StatusError) {
+            NetworkState.Failure(e.responseMessage)
+        } catch (e: Exception) {
+            FirebaseCrashlytics.getInstance().recordException(e)
+            NetworkState.Failure(ERROR)
+        }
+    }
+
 }

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
 
         <variable
             name="viewModel"
@@ -88,7 +90,7 @@
                         android:background="@color/lightGray"
                         android:gravity="center"
                         android:onClick="@{()->viewModel.showSelectImgDialog()}"
-                        android:visibility="@{viewModel.color == null &amp;&amp; viewModel.bitmap == null}">
+                        android:visibility="@{viewModel.color == null &amp;&amp; viewModel.bitmap == null &amp;&amp; viewModel.cantEditableImageUrl == null}">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -96,17 +98,19 @@
                             android:src="@drawable/ic_plus" />
                     </LinearLayout>
 
+                    <ImageView
+                        android:id="@+id/image"
+                        android:src="@{viewModel.bitmap}"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="@{viewModel.bitmap != null || viewModel.cantEditableImageUrl != null}" />
+
                     <View
                         android:id="@+id/color_view"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:visibility="@{viewModel.color != null}" />
 
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@{viewModel.bitmap}"
-                        android:visibility="@{viewModel.bitmap != null}" />
                 </com.xiaopo.flying.sticker.StickerView>
             </androidx.cardview.widget.CardView>
 
@@ -280,7 +284,7 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:indeterminateTint="@color/lightGray"
-            android:visibility="gone"
+            android:visibility="@{viewModel.showLoading?View.VISIBLE:View.GONE}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
