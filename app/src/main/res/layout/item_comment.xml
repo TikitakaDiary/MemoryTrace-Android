@@ -62,6 +62,7 @@
             tools:text="1시간 전" />
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/comment_reply_button"
             style="@style/CommentItem.Bottoms"
             isVisible="@{!comment.isReply}"
             android:layout_width="wrap_content"

@@ -1,6 +1,7 @@
 package com.upf.memorytrace_android.ui.diary.comment.presenter
 
 import android.view.View
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -25,5 +26,11 @@ object BindingAdapters {
         if (commentListAdapter is CommentListAdapter) {
             commentListAdapter.submitList(uiState.data)
         }
+    }
+
+    @JvmStatic
+    @BindingAdapter("replyingModeText")
+    fun TextView.setReplyingModeText(comment: Comment?) {
+        comment?.let { text = String.format("%s님께 댓글 남기는 중", it.nickname) }
     }
 }

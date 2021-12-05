@@ -10,14 +10,20 @@ import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.databinding.ItemCommentBinding
 import com.upf.memorytrace_android.ui.diary.comment.domain.Comment
 
-class CommentListAdapter: ListAdapter<Comment, CommentListAdapter.CommentViewHolder>(diffUtil) {
+class CommentListAdapter(
+    private val onReplyClick: (comment: Comment) -> Unit
+): ListAdapter<Comment, CommentListAdapter.CommentViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {
-        return CommentViewHolder(parent)
+        return CommentViewHolder(parent).apply {
+            binding?.commentReplyButton?.setOnClickListener {
+                onReplyClick.invoke(getItem(adapterPosition))
+            }
+        }
     }
 
     override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.binding?.comment = getItem(position)
     }
 
     companion object {
@@ -34,16 +40,12 @@ class CommentListAdapter: ListAdapter<Comment, CommentListAdapter.CommentViewHol
         }
     }
 
-    class CommentViewHolder(
+    inner class CommentViewHolder(
         parent: ViewGroup
     ): RecyclerView.ViewHolder(
         LayoutInflater.from(parent.context)
             .inflate(R.layout.item_comment, parent, false)
     ) {
-        private val binding = DataBindingUtil.bind<ItemCommentBinding>(itemView)
-
-        fun bind(comment: Comment) {
-            binding?.comment = comment
-        }
+        val binding = DataBindingUtil.bind<ItemCommentBinding>(itemView)
     }
 }

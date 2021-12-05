@@ -6,8 +6,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.databinding.FragmentCommentListBinding
+import com.upf.memorytrace_android.extension.hideKeyboard
+import com.upf.memorytrace_android.extension.repeatOnStart
+import com.upf.memorytrace_android.extension.showKeyboard
+import com.upf.memorytrace_android.ui.UiState
 import com.upf.memorytrace_android.ui.base.BindingFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+
 
 @AndroidEntryPoint
 class CommentListFragment :
@@ -19,11 +25,31 @@ class CommentListFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         with(binding) {
             viewModel = commentListViewModel
-            recyclerViewComments.adapter = CommentListAdapter()
+            recyclerViewComments.adapter = CommentListAdapter {
+                commentListViewModel.startReplyingMode(it)
+            }
         }
 
-        commentListViewModel.fetchComments(args.diaryId)
+        repeatOnStart {
+            commentListViewModel.uiState.collect {
+                if (it is UiState.Loading) {
+                    hideKeyboard()
+                }
+            }
+        }
+
+        commentListViewModel.run {
+            fetchComments(args.diaryId)
+
+            currentReplying.observe(viewLifecycleOwner) {
+                if (it != null) {
+                    binding.textInputComment.requestFocus()
+                    showKeyboard()
+                }
+            }
+        }
     }
 }
