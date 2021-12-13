@@ -1,14 +1,11 @@
 package com.upf.memorytrace_android.ui.diary.detail.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.upf.memorytrace_android.R
@@ -70,10 +67,23 @@ class DetailFragment : BindingFragment<FragmentDetailBinding>(R.layout.fragment_
                 }
             }
 
-
-            observeEvent(uiEvent) {
-                DetailFragmentDirections.actionDetailFragmentToCommentListFragment(args.diaryId).run {
-                    findNavController().navigate(this)
+            observeEvent(uiEvent) { event ->
+                when (event) {
+                    is DetailViewModel.Event.CommentList -> {
+                        DetailFragmentDirections.actionDetailFragmentToCommentListFragment(args.diaryId)
+                            .run {
+                                findNavController().navigate(this)
+                            }
+                    }
+                    is DetailViewModel.Event.EditDiary -> {
+                        DetailFragmentDirections.actionDetailFragmentToWriteFragment(-1, event.diaryDetailDTO)
+                            .run {
+                                findNavController().navigate(this)
+                            }
+                    }
+                    is DetailViewModel.Event.Toast -> {
+                        Toast.makeText(this@DetailFragment.context, event.content, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }

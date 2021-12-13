@@ -11,9 +11,9 @@ import com.upf.memorytrace_android.extension.repeatOnStart
 import com.upf.memorytrace_android.extension.showKeyboard
 import com.upf.memorytrace_android.ui.UiState
 import com.upf.memorytrace_android.ui.base.BindingFragment
+import com.upf.memorytrace_android.util.showDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-
 
 @AndroidEntryPoint
 class CommentListFragment :

@@ -7,6 +7,7 @@ import com.upf.memorytrace_android.databinding.MutableEventLiveData
 import com.upf.memorytrace_android.ui.UiState
 import com.upf.memorytrace_android.ui.diary.detail.domain.DiaryDetail
 import com.upf.memorytrace_android.ui.diary.detail.domain.FetchDiaryUseCase
+import com.upf.memorytrace_android.ui.diary.write.DiaryDetailDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,8 +19,10 @@ class DetailViewModel @Inject constructor(
     private val fetchDiaryUseCase: FetchDiaryUseCase
 ) : ViewModel() {
 
-    enum class Event {
-        COMMENT_LIST
+    sealed class Event {
+        object CommentList: Event()
+        data class EditDiary(val diaryDetailDTO: DiaryDetailDTO): Event()
+        data class Toast(val content: String): Event()
     }
 
     private val _isShowBottomLayout = MutableStateFlow(true)
@@ -48,16 +51,18 @@ class DetailViewModel @Inject constructor(
     }
 
     fun updateDiary() {
-        //Todo: 리베이스 후 수정
-//        if(enableUpdate.value == true){
-//            navDirections.value = DetailFragmentDirections.actionDetailFragmentToWriteFragment(-1, diary)
-//        }else{
-//            //todo: 출력안됨.
-//            toast.value = "일기장 수정은 작성 후 30분 내에만 가능해요!"
-//        }
+        val uiState = uiState.value
+        if (uiState is UiState.Success) {
+            val diaryDetail = uiState.data
+            if (diaryDetail.isModifiable) {
+                _uiEvent.event = Event.EditDiary(DiaryDetailDTO.from(diaryDetail))
+            } else {
+                _uiEvent.event = Event.Toast("일기장 수정은 작성 후 30분 내에만 가능해요!")
+            }
+        }
     }
 
     fun showCommentList() {
-        _uiEvent.event = Event.COMMENT_LIST
+        _uiEvent.event = Event.CommentList
     }
 }

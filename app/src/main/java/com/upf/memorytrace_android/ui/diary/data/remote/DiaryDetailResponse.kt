@@ -27,15 +27,17 @@ data class DiaryDetailResponse(
     val commentCount: Int
 )
 
-fun DiaryDetailResponse.toEntry(): DiaryDetail? {
+fun DiaryDetailResponse.toEntry(userId: Int): DiaryDetail? {
     val date = TimeUtil.convertStringToDate(TimeUtil.FORMAT_yyyy_MM_dd_B_HH_mm_ss, createdDate)?: return null
     return DiaryDetail(
         isModifiable = isModifiable,
+        diaryId = diaryId,
         title = title,
         content = content,
         nickname = nickname,
         imageUrl = img,
         date = TimeUtil.getDate(TimeUtil.YYYY_M_D_KR, date),
+        isMine = userId == this.userId,
         commentCount = commentCount
     )
 }

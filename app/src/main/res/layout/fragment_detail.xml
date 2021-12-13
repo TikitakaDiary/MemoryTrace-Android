@@ -35,13 +35,13 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                editButtonColor="@{diaryDetail.isModifiable}"
+                isVisible="@{diaryDetail.isMine}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:enabled="@{diaryDetail.isModifiable}"
                 android:onClick="@{() -> viewModel.updateDiary()}"
                 android:text="@string/update"
-                android:textColor="@drawable/selector_text_enable_white"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
