@@ -95,4 +95,13 @@ interface MemoryTraceService {
         @Query("content") content: String,
         @Part img: MultipartBody.Part
     ): BaseResponse<*>
+
+    @Multipart
+    @POST("/diary/update")
+    suspend fun modifyDiary(
+        @Query("did") did: Int,
+        @Query("title") title: String,
+        @Query("content") content: String,
+        @Part img: MultipartBody.Part
+    ): BaseResponse<*>
 }

@@ -16,12 +16,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import com.upf.memorytrace_android.MemoryTraceApplication
@@ -34,11 +34,7 @@ import com.upf.memorytrace_android.ui.diary.write.color.ColorItem
 import com.upf.memorytrace_android.ui.diary.write.image.ImageType
 import com.upf.memorytrace_android.ui.diary.write.image.WriteImageBottomSheetFragment
 import com.upf.memorytrace_android.ui.diary.write.sticker.WriteStickerBottomSheetFragment
-import com.upf.memorytrace_android.util.BackDirections
-import com.upf.memorytrace_android.util.Colors
-import com.upf.memorytrace_android.util.ImageConverter
-import com.upf.memorytrace_android.util.MemoryTraceConfig
-import com.upf.memorytrace_android.util.TimeUtil
+import com.upf.memorytrace_android.util.*
 import com.xiaopo.flying.sticker.DrawableSticker
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -96,6 +92,17 @@ internal class WriteFragment : Fragment() {
         setProperties()
         setBackPressedDispatcher()
 
+        observe(viewModel.showCantEditable) {
+            showDialog(
+                requireActivity(),
+                R.string.crop_title,
+                R.string.write_unmodifiable_image_dialog_message,
+                R.string.modify_image
+            ) {
+                viewModel.resetImages()
+                showSelectImageDialog()
+            }
+        }
         observe(viewModel.isShowSelectImgDialog) { showSelectImageDialog() }
         observe(viewModel.isLoadGallery) { accessGallery() }
         observe(viewModel.isLoadCamera) { checkCameraPermission(ImageType.CAMERA) }
@@ -107,6 +114,14 @@ internal class WriteFragment : Fragment() {
         observe(viewModel.isShowStickerDialog) { if (it) loadStickerDialog() else closeStickerDialog() }
         observe(viewModel.navDirections) { navigation(it) }
         observe(viewModel.toast) { toast(it) }
+        observe(viewModel.cantEditableImageUrl) {
+            it?.let {
+                Glide.with(requireContext())
+                    .load(it)
+                    .into(binding.image)
+            }
+        }
+
     }
 
     override fun onDestroyView() {
@@ -132,7 +147,10 @@ internal class WriteFragment : Fragment() {
             .currentBackStackEntry
             ?.savedStateHandle
             ?.getLiveData<Bitmap>("image")
-            ?.observe(viewLifecycleOwner) { viewModel.bitmap.value = it }
+            ?.observe(viewLifecycleOwner) {
+                viewModel.resetImages()
+                viewModel.bitmap.value = it
+            }
     }
 
     private fun setBackPressedDispatcher() {
@@ -238,7 +256,7 @@ internal class WriteFragment : Fragment() {
     }
 
     private fun saveDiary() {
-        binding.progressbar.isVisible = true
+        if (!isSingleClick()) return
         binding.stickerView.removeStickerHandler()
         val bitmap = ImageConverter.convertViewToBitmap(binding.cardView)
         val cacheDir = requireContext().cacheDir

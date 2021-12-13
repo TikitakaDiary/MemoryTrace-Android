@@ -1,6 +1,8 @@
 package com.upf.memorytrace_android.api.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 data class DiaryCreateModel(
     @SerializedName("did")
@@ -35,9 +37,14 @@ data class DiaryModel(
     val createdDate: String
 )
 
+@Parcelize
 data class DiaryDetailModel(
+    @SerializedName("modifiable")
+    val modifiable: Boolean,
     @SerializedName("did")
-    val id: Int,
+    val did: Int,
+    @SerializedName("uid")
+    val uid: Int,
     @SerializedName("nickname")
     val nickname: String,
     @SerializedName("title")
@@ -49,5 +56,7 @@ data class DiaryDetailModel(
     @SerializedName("template")
     val template: Int,
     @SerializedName("createdDate")
-    val createdDate: String
-)
+    val createdDate: String,
+    @SerializedName("commentCnt")
+    val commentCnt: Int
+) : Parcelable

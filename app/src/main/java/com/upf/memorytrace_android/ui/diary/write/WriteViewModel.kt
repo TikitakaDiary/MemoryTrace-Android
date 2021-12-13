@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.annotation.DrawableRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.upf.memorytrace_android.api.model.DiaryDetailModel
 import com.upf.memorytrace_android.api.repository.DiaryRepository
 import com.upf.memorytrace_android.api.util.NetworkState
 import com.upf.memorytrace_android.ui.base.BaseViewModel
@@ -24,12 +25,16 @@ import javax.inject.Inject
 internal class WriteViewModel @Inject constructor(
     private val cameraImageDelegate: CameraImageDelegate
 ) : BaseViewModel() {
+    var showLoading = MutableLiveData<Boolean>(false)
+
     val bitmap = MutableLiveData<Bitmap?>()
+    val cantEditableImageUrl = MutableLiveData<String?>()
     val color = MutableLiveData<Colors?>()
     val title = MutableLiveData<String>()
     val content = MutableLiveData<String>()
     val isShowColorDialog = MutableLiveData<Boolean>()
 
+    val showCantEditable = LiveEvent<Unit?>()
     val isShowSelectImgDialog = LiveEvent<Unit?>()
     val isLoadGallery = LiveEvent<Unit?>()
     val isLoadCamera = LiveEvent<Unit?>()
@@ -41,10 +46,11 @@ internal class WriteViewModel @Inject constructor(
     val isExit = LiveEvent<Unit?>()
 
     private var _imageUrl: Uri? = null
-    val imageUri : Uri?
+    val imageUri: Uri?
         get() = _imageUrl
 
     private var bid = -1
+    private var did = -1
     private var originalBackgroundColor: Colors? = null
     var stickerList = mutableListOf<Sticker>()
 
@@ -53,12 +59,36 @@ internal class WriteViewModel @Inject constructor(
             navArgs<WriteFragmentArgs>()
                 .collect {
                     bid = it.bid
+                    it.diary?.let { diary ->
+                        setDiary(diary)
+                    }
                 }
         }
     }
 
+    var isCreateMode: Boolean = true
+
+    private fun setDiary(diary: DiaryDetailModel) {
+        did = diary.did
+        if (did != -1) isCreateMode = false
+
+        title.value = diary.title
+        content.value = diary.content
+        cantEditableImageUrl.value = diary.img
+    }
+
     fun showSelectImgDialog() {
-        isShowSelectImgDialog.call()
+        if (!isCreateMode && cantEditableImageUrl.value != null) {
+            showCantEditable.call()
+        } else {
+            isShowSelectImgDialog.call()
+        }
+    }
+
+    fun resetImages() {
+        cantEditableImageUrl.value = null
+        bitmap.value = null
+        color.value = null
     }
 
     fun loadGallery() {
@@ -70,7 +100,11 @@ internal class WriteViewModel @Inject constructor(
     }
 
     fun showStickerDialog() {
-        isShowStickerDialog.value = true
+        if (!isCreateMode && cantEditableImageUrl.value != null) {
+            showCantEditable.call()
+        } else {
+            isShowStickerDialog.value = true
+        }
     }
 
     fun closeStickerDialog() {
@@ -92,6 +126,9 @@ internal class WriteViewModel @Inject constructor(
     }
 
     fun saveColor() {
+        //사전에 color가 설정되기 때문에 reset 함수를 쓸 수 없음
+        cantEditableImageUrl.value = null
+        bitmap.value = null
         isShowColorDialog.value = false
     }
 
@@ -103,20 +140,46 @@ internal class WriteViewModel @Inject constructor(
         isSaveDiary.call()
     }
 
-    fun uploadDiary(cacheDir: File, bitmap: Bitmap) {
+    fun uploadDiary(cacheDir: File, image: Bitmap) {
         viewModelScope.launch {
-            ImageConverter.convertBitmapToMultipartBody(bitmap, cacheDir, null, null)?.let {
-                val response = DiaryRepository.createDiary(
-                    bid,
-                    title.value ?: EMPTY_STRING,
-                    content.value ?: EMPTY_STRING,
-                    it
-                )
+            showLoading.value = true
+            if (title.value?.trim().isNullOrBlank()) {
+                toast.value = EMPTY_TITLE
+                showLoading.value = false
+                return@launch
+            }
+
+            if (bitmap.value == null && color.value == null && cantEditableImageUrl.value == null) {
+                toast.value = EMPTY_IMAGE
+                showLoading.value = false
+                return@launch
+            }
+
+            ImageConverter.convertBitmapToMultipartBody(image, cacheDir, null, null)?.let {
+                val response = if (isCreateMode) {
+                    //create diary
+                    DiaryRepository.createDiary(
+                        bid,
+                        title.value ?: EMPTY_STRING,
+                        content.value ?: EMPTY_STRING,
+                        it
+                    )
+                } else {
+                    //update diary
+                    DiaryRepository.modifyDiary(
+                        did,
+                        title.value ?: EMPTY_STRING,
+                        content.value ?: EMPTY_STRING,
+                        it
+                    )
+                }
+
                 when (response) {
                     is NetworkState.Success -> onClickBack()
                     is NetworkState.Failure -> toast.value = response.message
                 }
             }
+            showLoading.value = false
         }
     }
 
@@ -134,5 +197,7 @@ internal class WriteViewModel @Inject constructor(
 
     companion object {
         private const val EMPTY_STRING = ""
+        private const val EMPTY_TITLE = "제목을 입력해 주세요!"
+        private const val EMPTY_IMAGE = "사진이나 색상을 지정해 주세요!"
     }
 }
