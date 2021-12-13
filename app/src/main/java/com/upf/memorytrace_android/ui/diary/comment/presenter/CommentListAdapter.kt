@@ -11,13 +11,17 @@ import com.upf.memorytrace_android.databinding.ItemCommentBinding
 import com.upf.memorytrace_android.ui.diary.comment.domain.Comment
 
 class CommentListAdapter(
-    private val onReplyClick: (comment: Comment) -> Unit
+    private val onReplyClick: (comment: Comment) -> Unit,
+    private val onItemLongClick: (comment: Comment) -> Unit
 ): ListAdapter<Comment, CommentListAdapter.CommentViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {
         return CommentViewHolder(parent).apply {
             binding?.commentReplyButton?.setOnClickListener {
                 onReplyClick.invoke(getItem(adapterPosition))
+            }
+            binding?.commentDeleteButton?.setOnClickListener {
+                onItemLongClick.invoke(getItem(adapterPosition))
             }
         }
     }

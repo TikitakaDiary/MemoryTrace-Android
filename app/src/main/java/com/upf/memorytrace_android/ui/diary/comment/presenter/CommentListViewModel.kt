@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.upf.memorytrace_android.ui.UiState
 import com.upf.memorytrace_android.ui.diary.comment.domain.Comment
+import com.upf.memorytrace_android.ui.diary.comment.domain.DeleteCommentUseCase
 import com.upf.memorytrace_android.ui.diary.comment.domain.FetchCommentUseCase
 import com.upf.memorytrace_android.ui.diary.comment.domain.PostCommentUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CommentListViewModel @Inject constructor(
     private val fetchCommentsUseCase: FetchCommentUseCase,
-    private val postCommentUseCase: PostCommentUseCase
+    private val postCommentUseCase: PostCommentUseCase,
+    private val deleteCommentUseCase: DeleteCommentUseCase
 ) : ViewModel() {
 
     private var diaryId: Int? = null
@@ -47,22 +49,29 @@ class CommentListViewModel @Inject constructor(
 
     fun postComment() {
         viewModelScope.launch {
-            if (diaryId != null && currentCommentText.value != null) {
-                _uiState.emit(UiState.Loading)
+            val diaryId = this@CommentListViewModel.diaryId ?: return@launch
+            val content = currentCommentText.value ?: return@launch
+            _uiState.emit(UiState.Loading)
 
-                val parentCommentId = currentReplying.value?.commentId
-                val content = currentCommentText.value
-                currentCommentText.value = null
-                _currentReplying.value = null
+            val parentCommentId = currentReplying.value?.commentId
+            currentCommentText.value = null
+            _currentReplying.value = null
 
-                _uiState.emit(
-                    postCommentUseCase(
-                        parentCommentId,
-                        diaryId!!,
-                        content!!
-                    )
+            _uiState.emit(
+                postCommentUseCase(
+                    parentCommentId,
+                    diaryId,
+                    content
                 )
-            }
+            )
+        }
+    }
+
+    fun deleteComment(comment: Comment) {
+        viewModelScope.launch {
+            val diaryId = this@CommentListViewModel.diaryId ?: return@launch
+            _uiState.emit(UiState.Loading)
+            _uiState.emit(deleteCommentUseCase(diaryId, comment.commentId))
         }
     }
 }

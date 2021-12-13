@@ -28,9 +28,20 @@ class CommentListFragment :
 
         with(binding) {
             viewModel = commentListViewModel
-            recyclerViewComments.adapter = CommentListAdapter {
-                commentListViewModel.startReplyingMode(it)
-            }
+            recyclerViewComments.adapter = CommentListAdapter(
+                onReplyClick = commentListViewModel::startReplyingMode,
+                onItemLongClick = {
+                    showDialog(
+                        requireContext(),
+                        getString(R.string.comment_delete_dialog_title),
+                        getString(R.string.comment_delete_dialog_content),
+                        getString(R.string.comment_delete_dialog_positive),
+                        positive = {
+                            commentListViewModel.deleteComment(it)
+                        }
+                    )
+                }
+            )
         }
 
         repeatOnStart {

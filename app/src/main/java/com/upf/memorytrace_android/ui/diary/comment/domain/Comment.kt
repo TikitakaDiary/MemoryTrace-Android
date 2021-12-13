@@ -6,6 +6,7 @@ data class Comment(
     val nickname: String,
     val content: String,
     val createdDate: String,
-    val isDelete: Int,
-    val isReply: Boolean
+    val isDelete: Boolean,
+    val isReply: Boolean,
+    val isMine: Boolean
 )

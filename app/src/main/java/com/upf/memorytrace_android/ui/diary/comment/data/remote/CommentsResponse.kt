@@ -13,5 +13,8 @@ data class CommentsResponse(
     @SerializedName("commentList") val replies: List<ReplyResponse>
 )
 
-fun CommentsResponse.toEntity() =
-    Comment(commentId, userId, nickname, content, createdDate, isDeleted, false)
+fun CommentsResponse.toEntity(isMine: Boolean) =
+    Comment(commentId, userId, nickname, content, createdDate, isDeleted == 1,
+        isReply = false,
+        isMine = isMine
+    )

@@ -12,5 +12,8 @@ data class ReplyResponse(
     @SerializedName("isDelete") val isDeleted: Int
 )
 
-fun ReplyResponse.toEntity() =
-    Comment(commentId, userId, nickname, content, createdDate, isDeleted, true)
+fun ReplyResponse.toEntity(isMine: Boolean) =
+    Comment(commentId, userId, nickname, content, createdDate, isDeleted == 1,
+        isReply = true,
+        isMine = isMine
+    )

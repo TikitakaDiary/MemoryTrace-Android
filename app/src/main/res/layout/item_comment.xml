@@ -31,6 +31,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/comment_nickname"
             style="@style/CommentItem.Title"
+            deleteTranslucent="@{comment.isDelete}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{comment.nickname}"
@@ -41,11 +42,12 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/comment_content"
             style="@style/CommentItem.Content"
+            commentContent="@{comment}"
+            deleteTranslucent="@{comment.isDelete}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="2dp"
-            android:text="@{comment.content}"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/comment_nickname"
             app:layout_constraintTop_toBottomOf="@id/comment_nickname"
             tools:text="내용이 들어갈 자리입니다." />
@@ -53,9 +55,11 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/comment_time"
             style="@style/CommentItem.Bottoms"
+            deleteTranslucent="@{comment.isDelete}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:paddingEnd="5dp"
             android:text="@{comment.createdDate}"
             app:layout_constraintStart_toStartOf="@id/comment_nickname"
             app:layout_constraintTop_toBottomOf="@id/comment_content"
@@ -63,18 +67,27 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/comment_reply_button"
-            style="@style/CommentItem.Bottoms"
+            style="@style/CommentItem.Bottoms.Button"
             isVisible="@{!comment.isReply}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:minWidth="0dp"
-            android:minHeight="0dp"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="8dp"
-            android:text="답글달기"
+            android:text="@string/comment_reply_button"
+            android:visibility="gone"
             app:layout_constraintBaseline_toBaselineOf="@id/comment_time"
-            app:layout_constraintStart_toEndOf="@id/comment_time" />
+            app:layout_constraintStart_toEndOf="@id/comment_time"
+            tools:visibility="visible" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/comment_delete_button"
+            style="@style/CommentItem.Bottoms.Button"
+            isVisible="@{comment.isMine &amp;&amp; !comment.isDelete}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/comment_delete_button"
+            android:visibility="gone"
+            app:layout_constraintBaseline_toBaselineOf="@id/comment_time"
+            app:layout_constraintStart_toEndOf="@id/comment_reply_button"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
