@@ -133,6 +133,7 @@
                 android:layout_marginStart="18dp"
                 android:background="@null"
                 android:hint="@string/comment_hint"
+                android:maxLines="5"
                 android:paddingVertical="12dp"
                 android:text="@={viewModel.currentCommentText}"
                 android:textColor="@color/systemWhite"
