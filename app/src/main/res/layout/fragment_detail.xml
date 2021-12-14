@@ -7,10 +7,15 @@
 
         <variable
             name="viewModel"
-            type="com.upf.memorytrace_android.ui.diary.detail.DetailViewModel" />
+            type="com.upf.memorytrace_android.ui.diary.detail.presentation.DetailViewModel" />
+
+        <variable
+            name="diaryDetail"
+            type="com.upf.memorytrace_android.ui.diary.detail.domain.DiaryDetail" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        showToast="@{viewModel.uiState}"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -18,35 +23,33 @@
             android:id="@+id/top_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="14dp"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="@{()->viewModel.onClickBack()}"
-                android:paddingVertical="14dp"
-                android:paddingStart="24dp"
-                android:src="@drawable/ic_back"
+            <com.upf.memorytrace_android.ui.BackButton
+                android:layout_width="12.6dp"
+                android:layout_height="24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                editButtonColor="@{diaryDetail.isModifiable}"
+                isVisible="@{diaryDetail.isMine}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:enabled="@{viewModel.enableUpdate}"
-                android:onClick="@{()->viewModel.updateDiary()}"
-                android:paddingVertical="14dp"
-                android:paddingEnd="24dp"
+                android:onClick="@{() -> viewModel.updateDiary()}"
                 android:text="@string/update"
-                android:textColor="@drawable/selector_text_enable_white"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:overScrollMode="never"
@@ -56,9 +59,10 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> viewModel.toggleBottomLayout()}"
                 android:paddingHorizontal="24dp"
                 android:paddingTop="8dp"
-                android:paddingBottom="32dp">
+                android:paddingBottom="48dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/polaroid_layout"
@@ -81,11 +85,12 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
-                        <ImageView
+                        <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
-                            android:src="@{viewModel.img}" />
+                            android:src="@{diaryDetail.imageUrl}" />
+
                     </androidx.cardview.widget.CardView>
 
                     <TextView
@@ -94,7 +99,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/default_padding_24"
-                        android:text="@{viewModel.title}"
+                        android:text="@{diaryDetail.title}"
                         app:layout_constraintTop_toBottomOf="@id/img_view"
                         tools:text="다봉이랑 맛있는 거 먹었다!" />
 
@@ -109,7 +114,7 @@
                             style="@style/DateTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{viewModel.date}"
+                            android:text="@{diaryDetail.date}"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
@@ -137,9 +142,10 @@
                                 style="@style/NameTextView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@{viewModel.nickname}"
+                                android:text="@{diaryDetail.nickname}"
                                 tools:text="진유진진진진진진진진" />
                         </LinearLayout>
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -149,11 +155,58 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="13dp"
-                    android:text="@{viewModel.content}"
+                    android:text="@{diaryDetail.content}"
                     app:layout_constraintTop_toBottomOf="@id/polaroid_layout"
                     tools:text="테스트" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </ScrollView>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bottom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/systemGray02"
+            android:onClick="@{() -> viewModel.showCommentList()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_padding_24"
+                android:src="@drawable/ic_comment"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_comment_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="6dp"
+                android:text="@{String.valueOf(diaryDetail.commentCount)}"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/image_comment"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="2" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ProgressBar
+            isVisible="@{viewModel.uiState}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

@@ -129,7 +129,7 @@
         <item name="android:background">@android:color/transparent</item>
         <item name="android:windowCloseOnTouchOutside">true</item>
     </style>
-  
+
     <style name="LoginButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -140,8 +140,7 @@
         <item name="android:background">@drawable/rect_white_rounded</item>
     </style>
 
-    <style name="buttonBarButtonStyle" parent="Widget.AppCompat.Button.Borderless.Colored">
-    </style>
+    <style name="buttonBarButtonStyle" parent="Widget.AppCompat.Button.Borderless.Colored"></style>
 
     <style name="buttonBarButtonStyle.Negative">
         <item name="android:textColor">@color/gray04</item>
@@ -197,5 +196,36 @@
 
     <style name="DialogConfirm" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
         <item name="android:textColor">@color/red</item>
+    </style>
+
+    <style name="CommentItem" />
+
+    <style name="CommentItem.Title">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/systemBlue</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CommentItem.Content">
+        <item name="android:textSize">14dp</item>
+    </style>
+
+    <style name="CommentItem.Bottoms">
+        <item name="android:textSize">10dp</item>
+        <item name="android:textColor">@color/gray04</item>
+    </style>
+
+    <style name="CommentItem.Bottoms.Button">
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:paddingVertical">8dp</item>
+        <item name="android:paddingHorizontal">5dp</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="LoadingProgressBar">
+        <item name="android:indeterminateTint">@color/lightGray</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
     </style>
 </resources>

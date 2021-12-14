@@ -82,11 +82,6 @@ interface MemoryTraceService {
         @Query("size") size: Int
     ): BaseResponse<DiaryListModel>
 
-    @GET("/diary/{did}")
-    suspend fun fetchDiary(
-        @Path("did") did: Int
-    ): BaseResponse<DiaryDetailModel>
-
     @Multipart
     @POST("/diary")
     suspend fun createDiary(
