@@ -2,6 +2,7 @@ package com.upf.memorytrace_android.ui.mypage
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
@@ -66,7 +67,8 @@ internal class MypageFragment : BaseFragment<MypageViewModel, FragmentMypageBind
         }
         observe(viewModel.showOssPage){ startActivity(Intent(requireActivity(), OssLicensesMenuActivity::class.java)) }
         observe(viewModel.sendEmail){
-            startActivity(Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:help.duck.z@gmail.com")))
+            val content = "[문의정보]\n닉네임 : ${viewModel.name.value}\n가입정보 : ${viewModel.sns.value}\n버전정보 : ${viewModel.version.value}(${Build.VERSION.SDK_INT})\n\n"
+            startActivity(Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:help.duck.z@gmail.com?body="+Uri.encode(content))))
         }
     }
 }
