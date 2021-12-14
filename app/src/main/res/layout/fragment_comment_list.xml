@@ -10,8 +10,6 @@
             name="viewModel"
             type="com.upf.memorytrace_android.ui.diary.comment.presenter.CommentListViewModel" />
 
-        <import type="com.upf.memorytrace_android.ui.UiState" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

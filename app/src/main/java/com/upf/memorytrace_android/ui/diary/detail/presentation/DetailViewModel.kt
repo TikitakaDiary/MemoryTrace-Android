@@ -22,7 +22,7 @@ class DetailViewModel @Inject constructor(
     sealed class Event {
         object CommentList: Event()
         data class EditDiary(val diaryDetailDTO: DiaryDetailDTO): Event()
-        data class Toast(val content: String): Event()
+        object EditNotAvailable: Event()
     }
 
     private val _isShowBottomLayout = MutableStateFlow(true)
@@ -57,7 +57,7 @@ class DetailViewModel @Inject constructor(
             if (diaryDetail.isModifiable) {
                 _uiEvent.event = Event.EditDiary(DiaryDetailDTO.from(diaryDetail))
             } else {
-                _uiEvent.event = Event.Toast("일기장 수정은 작성 후 30분 내에만 가능해요!")
+                _uiEvent.event = Event.EditNotAvailable
             }
         }
     }

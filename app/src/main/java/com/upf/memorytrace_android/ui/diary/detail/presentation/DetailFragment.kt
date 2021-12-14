@@ -1,5 +1,6 @@
 package com.upf.memorytrace_android.ui.diary.detail.presentation
 
+import android.animation.AnimatorInflater
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -81,8 +82,8 @@ class DetailFragment : BindingFragment<FragmentDetailBinding>(R.layout.fragment_
                                 findNavController().navigate(this)
                             }
                     }
-                    is DetailViewModel.Event.Toast -> {
-                        Toast.makeText(this@DetailFragment.context, event.content, Toast.LENGTH_SHORT).show()
+                    is DetailViewModel.Event.EditNotAvailable -> {
+                        Toast.makeText(this@DetailFragment.context, getString(R.string.diary_detail_edit_not_available), Toast.LENGTH_SHORT).show()
                     }
                 }
             }

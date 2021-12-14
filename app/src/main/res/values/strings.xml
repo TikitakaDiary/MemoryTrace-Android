@@ -94,6 +94,8 @@
     <string name="mypage_term_service_label">서비스 이용약관</string>
     <string name="mypage_term_privacy_label">개인정보처리방침</string>
 
+    <string name="diary_detail_edit_not_available">일기장 수정은 작성 후 30분 내에만 가능해요!</string>
+
     <string name="comment_title">댓글</string>
     <string name="comment_no_comment">작성된 댓글이 없습니다.\n첫번째 댓글을 남겨보세요!</string>
     <string name="comment_hint">댓글을 남겨보세요</string>
