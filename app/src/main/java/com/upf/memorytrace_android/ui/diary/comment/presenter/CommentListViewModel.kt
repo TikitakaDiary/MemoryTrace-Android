@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.upf.memorytrace_android.ui.UiState
 import com.upf.memorytrace_android.ui.diary.comment.domain.Comment
-import com.upf.memorytrace_android.ui.diary.comment.domain.DeleteCommentUseCase
-import com.upf.memorytrace_android.ui.diary.comment.domain.FetchCommentUseCase
-import com.upf.memorytrace_android.ui.diary.comment.domain.PostCommentUseCase
+import com.upf.memorytrace_android.ui.diary.comment.domain.usecase.DeleteCommentUseCase
+import com.upf.memorytrace_android.ui.diary.comment.domain.usecase.FetchCommentUseCase
+import com.upf.memorytrace_android.ui.diary.comment.domain.usecase.PostCommentUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

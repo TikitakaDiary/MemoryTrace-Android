@@ -1,6 +1,8 @@
-package com.upf.memorytrace_android.ui.diary.comment.domain
+package com.upf.memorytrace_android.ui.diary.comment.domain.usecase
 
 import com.upf.memorytrace_android.ui.UiState
+import com.upf.memorytrace_android.ui.diary.comment.domain.Comment
+import com.upf.memorytrace_android.ui.diary.comment.domain.CommentRepository
 import javax.inject.Inject
 
 class FetchCommentUseCase @Inject constructor(
