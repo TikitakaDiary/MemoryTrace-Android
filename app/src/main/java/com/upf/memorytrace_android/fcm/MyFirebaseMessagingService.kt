@@ -22,11 +22,7 @@ import kotlinx.coroutines.launch
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        if (remoteMessage.data.isNotEmpty()) {
-//            val message = remoteMessage.data["bid"]
-            sendNotification(remoteMessage.data)
-        }
-
+        sendNotification(remoteMessage)
     }
 
     override fun onNewToken(token: String) {
@@ -39,16 +35,15 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
     }
 
-    private fun sendNotification(data: Map<String, String>) {
+    private fun sendNotification(remoteMessage: RemoteMessage) {
 
         //todo: navigation으로 어떻게 넘기는지 확인
         //bid, bgcolor, nickname, stickerImg, modifiedDate, title
-        //todo: 댓글기능이 추가되면 해당 로직을 제거한다.
-        val did = data["did"]
-        if (did != null) return
 
         try {
-            MemoryTraceConfig.bid = data["bid"]?.toInt() ?: throw java.lang.Exception()
+            MemoryTraceConfig.bid = remoteMessage.data["bid"]?.toInt() ?: -1
+            MemoryTraceConfig.did = remoteMessage.data["did"]?.toInt() ?: -1
+
             val intent = Intent(this, MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             val pendingIntent = PendingIntent.getActivity(
@@ -60,8 +55,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
             val notificationBuilder = NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.mipmap.ic_duckz)
-                .setContentTitle(getString(R.string.app_name))
-                .setContentText(getString(R.string.fcm_new_diary))
+                .setContentTitle(remoteMessage.notification?.title)
+                .setContentText(remoteMessage.notification?.body)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent)
