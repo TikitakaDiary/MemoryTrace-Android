@@ -32,8 +32,6 @@ object MemoryTraceConfig {
         MemoryTraceApplication.getApplication()
             .getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE)
 
-
-
     var uid: Int
         get() = pref.getInt(UID, 0)
         set(value) = pref.edit { putInt(UID, value) }
@@ -60,14 +58,6 @@ object MemoryTraceConfig {
         set(value) = pref.edit { putString(PROFILE_IMG, value) }
 
     var isLoggedIn: Boolean = !nickname.isNullOrBlank() && !token.isNullOrBlank()
-
-    var bid: Int
-        get() = pref.getInt(BID, -1)
-        set(value) = pref.edit { putInt(BID, value) }
-
-    var did: Int
-        get() = pref.getInt(DID, -1)
-        set(value) = pref.edit { putInt(DID, value) }
 
     var saveDebugKey: Boolean?
         get() = pref.getBoolean(SAVE_DEBUG_KEY, false)
