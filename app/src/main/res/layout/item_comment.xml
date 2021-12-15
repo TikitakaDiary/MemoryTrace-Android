@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data>
+
+        <variable
+            name="comment"
+            type="com.upf.memorytrace_android.ui.diary.comment.domain.Comment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/default_padding_24"
+        android:paddingTop="9dp"
+        android:paddingBottom="1dp">
+
+        <View
+            android:id="@+id/comment_padding_left"
+            isVisible="@{comment.isReply()}"
+            android:layout_width="24dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/comment_nickname"
+            style="@style/CommentItem.Title"
+            deleteTranslucent="@{comment.isDelete}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{comment.nickname}"
+            app:layout_constraintStart_toEndOf="@id/comment_padding_left"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="닉네임" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/comment_content"
+            style="@style/CommentItem.Content"
+            commentContent="@{comment}"
+            deleteTranslucent="@{comment.isDelete}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/comment_nickname"
+            app:layout_constraintTop_toBottomOf="@id/comment_nickname"
+            tools:text="내용이 들어갈 자리입니다." />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/comment_time"
+            style="@style/CommentItem.Bottoms"
+            deleteTranslucent="@{comment.isDelete}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingEnd="5dp"
+            android:text="@{comment.createdDate}"
+            app:layout_constraintStart_toStartOf="@id/comment_nickname"
+            app:layout_constraintTop_toBottomOf="@id/comment_content"
+            tools:text="1시간 전" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/comment_reply_button"
+            style="@style/CommentItem.Bottoms.Button"
+            isVisible="@{!comment.isReply}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/comment_reply_button"
+            android:visibility="gone"
+            app:layout_constraintBaseline_toBaselineOf="@id/comment_time"
+            app:layout_constraintStart_toEndOf="@id/comment_time"
+            tools:visibility="visible" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/comment_delete_button"
+            style="@style/CommentItem.Bottoms.Button"
+            isVisible="@{comment.isMine &amp;&amp; !comment.isDelete}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/comment_delete_button"
+            android:visibility="gone"
+            app:layout_constraintBaseline_toBaselineOf="@id/comment_time"
+            app:layout_constraintStart_toEndOf="@id/comment_reply_button"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

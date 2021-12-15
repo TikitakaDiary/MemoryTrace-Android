@@ -8,147 +8,208 @@
         android:id="@+id/splashFragment"
         android:name="com.upf.memorytrace_android.ui.splash.SplashFragment"
         android:label="SplashFragment">
+
         <action
             android:id="@+id/action_splashFragment_to_loginFragment"
             app:destination="@id/loginFragment"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
+
         <action
             android:id="@+id/action_splashFragment_to_bookListFragment"
             app:destination="@id/bookListFragment"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_splashFragment_to_diaryFragment"
-            app:destination="@id/diaryFragment"
-            app:popUpTo="@id/splashFragment"
-            app:popUpToInclusive="true" />
+
     </fragment>
 
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.upf.memorytrace_android.ui.login.LoginFragment"
         android:label="LoginFragment">
+
         <action
             android:id="@+id/action_loginFragment_to_bookListFragment"
             app:destination="@id/bookListFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
+
         <action
             android:id="@+id/action_loginFragment_to_writeFragment"
             app:destination="@id/writeFragment" />
 
     </fragment>
+
     <fragment
         android:id="@+id/writeFragment"
         android:name="com.upf.memorytrace_android.ui.diary.write.WriteFragment"
         android:label="WriteFragment">
+
         <action
             android:id="@+id/action_writeFragment_to_cropFragment"
             app:destination="@id/cropFragment" />
+
         <argument
             android:name="bid"
             android:defaultValue="-1"
             app:argType="integer" />
+
+        <argument
+            android:name="diary"
+            app:argType="com.upf.memorytrace_android.ui.diary.write.DiaryDetailDTO"
+            app:nullable="true" />
+
     </fragment>
+
     <fragment
         android:id="@+id/bookListFragment"
         android:name="com.upf.memorytrace_android.ui.book.list.BookListFragment"
         android:label="BookListFragment">
+
         <action
             android:id="@+id/action_bookListFragment_to_createBookFragment"
             app:destination="@id/createBookFragment" />
+
         <action
             android:id="@+id/action_bookListFragment_to_mypageFragment"
             app:destination="@id/mypageFragment" />
+
         <action
             android:id="@+id/action_bookListFragment_to_diaryFragment"
             app:destination="@id/diaryFragment" />
+
     </fragment>
+
     <fragment
         android:id="@+id/createBookFragment"
         android:name="com.upf.memorytrace_android.ui.book.create.CreateBookFragment"
         android:label="CreateBookFragment">
+
         <argument
             android:name="bid"
             android:defaultValue="-1"
             app:argType="integer" />
+
     </fragment>
+
     <fragment
         android:id="@+id/mypageFragment"
         android:name="com.upf.memorytrace_android.ui.mypage.MypageFragment"
         android:label="MypageFragment">
+
         <action
             android:id="@+id/action_mypageFragment_to_makersFragment"
             app:destination="@id/makersFragment" />
+
         <action
             android:id="@+id/action_mypageFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+
         <action
             android:id="@+id/action_mypageFragment_to_nameEditFragment"
             app:destination="@id/nameEditFragment" />
+
         <action
             android:id="@+id/action_mypageFragment_to_termsFragment"
             app:destination="@id/termsFragment" />
+
     </fragment>
+
     <fragment
         android:id="@+id/makersFragment"
         android:name="com.upf.memorytrace_android.ui.mypage.makers.MakersFragment"
         android:label="MakersFragment" />
+
     <fragment
         android:id="@+id/nameEditFragment"
         android:name="com.upf.memorytrace_android.ui.mypage.nameedit.NameEditFragment"
         android:label="NameEditFragment" />
+
     <fragment
         android:id="@+id/cropFragment"
         android:name="com.upf.memorytrace_android.ui.diary.write.image.CropFragment"
         android:label="CropFragment">
+
         <argument
             android:name="imageUri"
             app:argType="android.net.Uri"
             app:nullable="true" />
+
         <argument
             android:name="bitmap"
             app:argType="android.graphics.Bitmap"
             app:nullable="true" />
+
     </fragment>
+
     <fragment
         android:id="@+id/diaryFragment"
         android:name="com.upf.memorytrace_android.ui.diary.list.DiaryFragment"
         android:label="DiaryFragment">
+
         <action
             android:id="@+id/action_diaryFragment_to_writeFragment"
             app:destination="@id/writeFragment" />
+
         <argument
             android:name="bid"
             android:defaultValue="-1"
             app:argType="integer" />
+
         <action
             android:id="@+id/action_diaryFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+
         <action
             android:id="@+id/action_diaryFragment_to_bookSettingFragment"
             app:destination="@id/bookSettingFragment" />
+
     </fragment>
+
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.upf.memorytrace_android.ui.diary.detail.DetailFragment"
+        android:name="com.upf.memorytrace_android.ui.diary.detail.presentation.DetailFragment"
         android:label="DetailFragment">
+
         <argument
-            android:name="did"
+            android:name="diaryId"
             android:defaultValue="-1"
             app:argType="integer" />
+
+        <action
+            android:id="@+id/action_detailFragment_to_writeFragment"
+            app:destination="@id/writeFragment" />
+
+        <action
+            android:id="@+id/action_detailFragment_to_commentListFragment"
+            app:destination="@id/commentListFragment"
+            app:enterAnim="@anim/slide_in_up"
+            app:popExitAnim="@anim/slide_out_bottom" />
+
     </fragment>
+
+    <fragment
+        android:id="@+id/commentListFragment"
+        android:name="com.upf.memorytrace_android.ui.diary.comment.presenter.CommentListFragment"
+        android:label="CommentListFragment" >
+        <argument
+            android:name="diaryId"
+            app:argType="integer" />
+    </fragment>
+
     <fragment
         android:id="@+id/bookSettingFragment"
         android:name="com.upf.memorytrace_android.ui.book.setting.BookSettingFragment"
         android:label="BookSettingFragment">
+
         <action
             android:id="@+id/action_bookSettingFragment_to_memberSettingFragment"
             app:destination="@id/memberSettingFragment" />
+
         <action
             android:id="@+id/action_bookSettingFragment_to_createBookFragment"
             app:destination="@id/createBookFragment" />
+
         <action
             android:id="@+id/action_bookSettingFragment_to_bookListFragment"
             app:destination="@id/bookListFragment"
@@ -159,25 +220,31 @@
             android:name="bid"
             android:defaultValue="-1"
             app:argType="integer" />
+
     </fragment>
 
     <fragment
         android:id="@+id/memberSettingFragment"
         android:name="com.upf.memorytrace_android.ui.book.setting.member.MemberSettingFragment"
         android:label="MemberSettingFragment">
+
         <argument
             android:name="bid"
             android:defaultValue="-1"
             app:argType="integer" />
+
     </fragment>
 
     <fragment
         android:id="@+id/termsFragment"
         android:name="com.upf.memorytrace_android.ui.mypage.terms.TermsFragment"
         android:label="TermsFragment">
+
         <argument
             android:name="terms"
             android:defaultValue="-1"
             app:argType="integer" />
+
     </fragment>
+
 </navigation>

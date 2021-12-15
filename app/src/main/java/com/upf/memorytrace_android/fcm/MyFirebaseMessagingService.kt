@@ -9,26 +9,21 @@ import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.core.os.bundleOf
+import androidx.navigation.NavDeepLinkBuilder
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.api.repository.UserRepository
 import com.upf.memorytrace_android.ui.main.MainActivity
-import com.upf.memorytrace_android.util.MemoryTraceConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        /*
-        키는 bid, bgcolor, nickname, stickerImg, modifiedDate, title 이렇게 있습니다
-         */
-        if (remoteMessage.data.isNotEmpty()) {
-            val message = remoteMessage.data["bid"]
-            sendNotification(message!!)
-        }
-
+        sendNotification(remoteMessage)
     }
 
     override fun onNewToken(token: String) {
@@ -41,46 +36,79 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
     }
 
-    private fun sendNotification(bid: String) {
+    private fun sendNotification(remoteMessage: RemoteMessage) {
 
         //todo: navigation으로 어떻게 넘기는지 확인
-        try{
-            MemoryTraceConfig.bid = bid.toInt()
-        }catch (e:Exception){
+        //bid, bgcolor, nickname, stickerImg, modifiedDate, title
 
+        try {
+            val bid = remoteMessage.data["bid"]?.toInt()
+            val did = remoteMessage.data["did"]?.toInt()
+            val isComment = remoteMessage.data["isComment"]
+            var pendingIntent: PendingIntent? = null
+
+            isComment?.let {
+                if (isComment == "true") {
+                    did?.let {
+                        val bundle = bundleOf("diaryId" to did)
+                        pendingIntent =
+                            NavDeepLinkBuilder(this)
+                                .setComponentName(MainActivity::class.java)
+                                .setGraph(R.navigation.nav)
+                                .setDestination(R.id.detailFragment)
+                                .setArguments(bundle)
+                                .createPendingIntent()
+                    }
+                } else {
+                    bid?.let {
+                        val bundle = bundleOf("bid" to bid)
+                        pendingIntent =
+                            NavDeepLinkBuilder(this)
+                                .setGraph(R.navigation.nav)
+                                .setDestination(R.id.diaryFragment)
+                                .setArguments(bundle)
+                                .createPendingIntent()
+                    }
+                }
+            }
+
+            if (pendingIntent == null) {
+                val intent = Intent(this, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                pendingIntent = PendingIntent.getActivity(
+                    this, 0 /* Request code */, intent,
+                    PendingIntent.FLAG_ONE_SHOT
+                )
+            }
+
+            val channelId = getString(R.string.default_notification_channel_id)
+            val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+            val notificationBuilder = NotificationCompat.Builder(this, channelId)
+                .setSmallIcon(R.mipmap.ic_duckz)
+                .setContentTitle(remoteMessage.notification?.title)
+                .setContentText(remoteMessage.notification?.body)
+                .setAutoCancel(true)
+                .setSound(defaultSoundUri)
+                .setContentIntent(pendingIntent)
+
+            val notificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+            // Since android Oreo notification channel is needed.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val channel = NotificationChannel(
+                    channelId,
+                    "덕지 알림",
+                    NotificationManager.IMPORTANCE_DEFAULT
+                )
+                notificationManager.createNotificationChannel(channel)
+            }
+
+            notificationManager.notify(0 /* ID of notification */, notificationBuilder.build())
+        } catch (e: Exception) {
+            FirebaseCrashlytics.getInstance().recordException(e)
+            return
         }
-        
-        val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        val pendingIntent = PendingIntent.getActivity(
-            this, 0 /* Request code */, intent,
-            PendingIntent.FLAG_ONE_SHOT
-        )
-
-        val channelId = getString(R.string.default_notification_channel_id)
-        val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-        val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.ic_google)
-            .setContentTitle(getString(R.string.app_name))
-            .setContentText(getString(R.string.fcm_new_diary))
-            .setAutoCancel(true)
-            .setSound(defaultSoundUri)
-            .setContentIntent(pendingIntent)
-
-        val notificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        // Since android Oreo notification channel is needed.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                channelId,
-                "Channel human readable title",
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
-            notificationManager.createNotificationChannel(channel)
-        }
-
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build())
     }
 
     companion object {

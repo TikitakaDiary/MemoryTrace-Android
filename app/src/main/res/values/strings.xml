@@ -27,10 +27,13 @@
     <string name="diary_your_turn">Your turn!</string>
     <string name="diary_empty">작성한 일기가 없습니다. 😥</string>
 
-    <string name="crop_title">사진 편집</string>
+    <string name="crop_title">수정</string>
     <string name="crop_finish">완료</string>
 
     <string name="by">by&#160;</string>
+    
+    <string name="write_unmodifiable_image_dialog_message">수정시, 부착한 스티커와 사진 모두\n리셋 됩니다. 그래도 편집하시겠습니까?</string>
+    <string name="modify_image">편집하기</string>
 
     <!--    일기장-->
     <string name="book_list_title">%s님의\n교환일기장 목록</string>
@@ -90,5 +93,19 @@
 
     <string name="mypage_term_service_label">서비스 이용약관</string>
     <string name="mypage_term_privacy_label">개인정보처리방침</string>
+
+    <string name="diary_detail_edit_not_available">일기장 수정은 작성 후 30분 내에만 가능해요!</string>
+
+    <string name="comment_title">댓글</string>
+    <string name="comment_no_comment">작성된 댓글이 없습니다.\n첫번째 댓글을 남겨보세요!</string>
+    <string name="comment_hint">댓글을 남겨보세요</string>
+    <string name="comment_send">등록</string>
+    <string name="comment_delete_dialog_title">댓글 삭제</string>
+    <string name="comment_delete_dialog_content">해당 댓글을 삭제하시겠습니까?\n삭제한 댓글은 되돌릴 수 없습니다.</string>
+    <string name="comment_delete_dialog_positive">삭제하기</string>
+    <string name="comment_replying">%s님께 댓글 남기는 중</string>
+    <string name="comment_deleted">삭제된 댓글입니다.</string>
+    <string name="comment_reply_button">답글달기</string>
+    <string name="comment_delete_button">삭제</string>
 
 </resources>

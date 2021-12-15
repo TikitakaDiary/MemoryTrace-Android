@@ -34,20 +34,3 @@ data class DiaryModel(
     @SerializedName("createdDate")
     val createdDate: String
 )
-
-data class DiaryDetailModel(
-    @SerializedName("did")
-    val id: Int,
-    @SerializedName("nickname")
-    val nickname: String,
-    @SerializedName("title")
-    val title: String,
-    @SerializedName("img")
-    val img: String,
-    @SerializedName("content")
-    val content: String,
-    @SerializedName("template")
-    val template: Int,
-    @SerializedName("createdDate")
-    val createdDate: String
-)

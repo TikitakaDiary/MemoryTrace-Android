@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
 
         <variable
             name="viewModel"
@@ -18,14 +19,14 @@
             android:id="@+id/top_layout"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:paddingHorizontal="24dp"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_back"
+                android:layout_height="match_parent"
                 android:onClick="@{()->viewModel.onClickExit()}"
+                android:paddingHorizontal="24dp"
+                android:src="@drawable/ic_back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -44,6 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{()->viewModel.saveDiary()}"
+                android:paddingHorizontal="24dp"
                 android:text="@string/write_delivery"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -88,7 +90,7 @@
                         android:background="@color/lightGray"
                         android:gravity="center"
                         android:onClick="@{()->viewModel.showSelectImgDialog()}"
-                        android:visibility="@{viewModel.color == null &amp;&amp; viewModel.bitmap == null}">
+                        android:visibility="@{viewModel.color == null &amp;&amp; viewModel.bitmap == null &amp;&amp; viewModel.cantEditableImageUrl == null}">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -96,17 +98,19 @@
                             android:src="@drawable/ic_plus" />
                     </LinearLayout>
 
+                    <ImageView
+                        android:id="@+id/image"
+                        android:src="@{viewModel.bitmap}"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="@{viewModel.bitmap != null || viewModel.cantEditableImageUrl != null}" />
+
                     <View
                         android:id="@+id/color_view"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:visibility="@{viewModel.color != null}" />
 
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@{viewModel.bitmap}"
-                        android:visibility="@{viewModel.bitmap != null}" />
                 </com.xiaopo.flying.sticker.StickerView>
             </androidx.cardview.widget.CardView>
 
@@ -222,13 +226,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:background="@color/systemGray01"
-                android:paddingHorizontal="24dp"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="gone">
 
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:onClick="@{()->viewModel.dismissColorDialog()}"
+                    android:paddingHorizontal="24dp"
                     android:src="@drawable/ic_x"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -248,6 +253,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="@{()->viewModel.saveColor()}"
+                    android:paddingHorizontal="24dp"
                     android:text="@string/save"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -280,7 +286,7 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:indeterminateTint="@color/lightGray"
-            android:visibility="gone"
+            android:visibility="@{viewModel.showLoading?View.VISIBLE:View.GONE}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

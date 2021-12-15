@@ -7,6 +7,8 @@ import com.upf.memorytrace_android.api.util.interceptor.AuthHeaderInterceptor
 import com.upf.memorytrace_android.api.util.interceptor.StatusInterceptor
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -17,9 +19,10 @@ import javax.inject.Singleton
 
 
 @Module
+@InstallIn(SingletonComponent::class)
 class NetworkModule {
-    val connectTimeout: Long = 60
-    val readTimeout: Long = 60
+    private val connectTimeout: Long = 60
+    private val readTimeout: Long = 60
 
     private val baseUrl = BuildConfig.BASE_URL
 
@@ -31,12 +34,9 @@ class NetworkModule {
             .connectTimeout(connectTimeout, TimeUnit.SECONDS)
             .readTimeout(readTimeout, TimeUnit.SECONDS)
         if (BuildConfig.DEBUG) {
-            okHttpClientBuilder.addNetworkInterceptor(HttpLoggingInterceptor(object :
-                HttpLoggingInterceptor.Logger {
-                override fun log(message: String) {
-                    Log.d("http", message)
-                }
-            }).setLevel(HttpLoggingInterceptor.Level.BODY))
+            okHttpClientBuilder.addNetworkInterceptor(HttpLoggingInterceptor { message ->
+                Log.d("http", message)
+            }.setLevel(HttpLoggingInterceptor.Level.BODY))
         }
         okHttpClientBuilder.addInterceptor(AuthHeaderInterceptor())
         okHttpClientBuilder.addInterceptor(StatusInterceptor())
@@ -59,6 +59,5 @@ class NetworkModule {
     @Singleton
     fun provideMemoryTraceApi(@Named("MemoryTrace") retrofit: Retrofit): MemoryTraceService =
         retrofit.create(MemoryTraceService::class.java)
-
 
 }

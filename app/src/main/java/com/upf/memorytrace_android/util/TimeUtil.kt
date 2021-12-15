@@ -25,5 +25,5 @@ object TimeUtil {
         return SimpleDateFormat(dateFormat, Locale.getDefault()).format(date)
     }
 
-    fun convertStringToDate(format: String, date: String) = SimpleDateFormat(format).parse(date)
+    fun convertStringToDate(format: String, date: String): Date? = SimpleDateFormat(format, Locale.KOREA).parse(date)
 }

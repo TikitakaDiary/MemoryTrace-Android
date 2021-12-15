@@ -90,7 +90,7 @@ internal class DiaryViewModel : BaseViewModel() {
     }
 
     fun onClickWriteDiary() {
-        navDirections.value = DiaryFragmentDirections.actionDiaryFragmentToWriteFragment(bid)
+        navDirections.value = DiaryFragmentDirections.actionDiaryFragmentToWriteFragment(bid, null)
     }
 
     fun onClickDiaryDetail(did: Int) {

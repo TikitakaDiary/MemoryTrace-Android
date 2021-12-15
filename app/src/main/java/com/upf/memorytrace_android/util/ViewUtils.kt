@@ -3,6 +3,7 @@ package com.upf.memorytrace_android.util
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.os.SystemClock
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -110,3 +111,17 @@ fun showDialog(
         }.create().show()
 }
 
+//중복 클릭 방지 시간 설정 ( 해당 시간 이후에 다시 클릭 가능 )
+private val MIN_CLICK_INTERVAL = 300
+private var mLastClickTime: Long = 0
+
+fun isSingleClick(): Boolean {
+    val currentClickTime = SystemClock.uptimeMillis()
+    val elapsedTime = currentClickTime - mLastClickTime
+    mLastClickTime = currentClickTime
+    // 중복클릭 아닌 경우
+    if (elapsedTime > MIN_CLICK_INTERVAL) {
+        return true
+    }
+    return false
+}
