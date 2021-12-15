@@ -17,6 +17,7 @@ object MemoryTraceConfig {
     private const val SIGNUP_DATE = "signup_date"
     private const val PROFILE_IMG = "profile_img"
     private const val BID = "bid"
+    private const val DID = "did"
 
     private const val SAVE_DEBUG_KEY = "save_debug_key"
 
@@ -63,6 +64,10 @@ object MemoryTraceConfig {
     var bid: Int
         get() = pref.getInt(BID, -1)
         set(value) = pref.edit { putInt(BID, value) }
+
+    var did: Int
+        get() = pref.getInt(DID, -1)
+        set(value) = pref.edit { putInt(DID, value) }
 
     var saveDebugKey: Boolean?
         get() = pref.getBoolean(SAVE_DEBUG_KEY, false)
