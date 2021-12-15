@@ -9,13 +9,14 @@ import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.core.os.bundleOf
+import androidx.navigation.NavDeepLinkBuilder
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.api.repository.UserRepository
 import com.upf.memorytrace_android.ui.main.MainActivity
-import com.upf.memorytrace_android.util.MemoryTraceConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -41,15 +42,44 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         //bid, bgcolor, nickname, stickerImg, modifiedDate, title
 
         try {
-            MemoryTraceConfig.bid = remoteMessage.data["bid"]?.toInt() ?: -1
-            MemoryTraceConfig.did = remoteMessage.data["did"]?.toInt() ?: -1
+            val bid = remoteMessage.data["bid"]?.toInt()
+            val did = remoteMessage.data["did"]?.toInt()
+            val isComment = remoteMessage.data["isComment"]
+            var pendingIntent: PendingIntent? = null
 
-            val intent = Intent(this, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            val pendingIntent = PendingIntent.getActivity(
-                this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT
-            )
+            isComment?.let {
+                if (isComment == "true") {
+                    did?.let {
+                        val bundle = bundleOf("diaryId" to did)
+                        pendingIntent =
+                            NavDeepLinkBuilder(this)
+                                .setComponentName(MainActivity::class.java)
+                                .setGraph(R.navigation.nav)
+                                .setDestination(R.id.detailFragment)
+                                .setArguments(bundle)
+                                .createPendingIntent()
+                    }
+                } else {
+                    bid?.let {
+                        val bundle = bundleOf("bid" to bid)
+                        pendingIntent =
+                            NavDeepLinkBuilder(this)
+                                .setGraph(R.navigation.nav)
+                                .setDestination(R.id.diaryFragment)
+                                .setArguments(bundle)
+                                .createPendingIntent()
+                    }
+                }
+            }
+
+            if (pendingIntent == null) {
+                val intent = Intent(this, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                pendingIntent = PendingIntent.getActivity(
+                    this, 0 /* Request code */, intent,
+                    PendingIntent.FLAG_ONE_SHOT
+                )
+            }
 
             val channelId = getString(R.string.default_notification_channel_id)
             val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)

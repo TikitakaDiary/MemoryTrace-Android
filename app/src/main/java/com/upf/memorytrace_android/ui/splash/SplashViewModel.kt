@@ -12,14 +12,6 @@ internal class SplashViewModel : BaseViewModel() {
             delay(1500L)
             navDirections.value = if (!MemoryTraceConfig.isLoggedIn) {
                 SplashFragmentDirections.actionSplashFragmentToLoginFragment()
-            } else if (MemoryTraceConfig.did != -1) {
-                val did = MemoryTraceConfig.did
-                MemoryTraceConfig.did = -1
-                SplashFragmentDirections.actionSplashFragmentToDetailFragment(did)
-            } else if (MemoryTraceConfig.bid != -1) {
-                val bid = MemoryTraceConfig.bid
-                MemoryTraceConfig.bid = -1
-                SplashFragmentDirections.actionSplashFragmentToDiaryFragment(bid)
             } else {
                 if (MemoryTraceConfig.saveDebugKey == false)
                     MemoryTraceConfig.setCrashlyticsCustomKeys()
