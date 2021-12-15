@@ -50,7 +50,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             isComment?.let {
                 if (isComment == "true") {
                     did?.let {
-                        val bundle = bundleOf("did" to did)
+                        val bundle = bundleOf("diaryId" to did)
                         pendingIntent =
                             NavDeepLinkBuilder(this)
                                 .setComponentName(MainActivity::class.java)
