@@ -1,11 +1,13 @@
 package com.upf.memorytrace_android.ui.diary.write
 
 import android.os.Parcelable
+import androidx.annotation.Keep
 import com.upf.memorytrace_android.ui.diary.detail.domain.DiaryDetail
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class DiaryDetailDTO(
+@Keep
+class DiaryDetailDTO(
     val diaryId: Int,
     val title: String,
     val content: String,
