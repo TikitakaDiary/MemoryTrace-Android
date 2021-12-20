@@ -38,6 +38,10 @@
             android:id="@+id/action_loginFragment_to_writeFragment"
             app:destination="@id/writeFragment" />
 
+        <action
+            android:id="@+id/action_loginFragment_to_termsFragment"
+            app:destination="@+id/termsFragment" />
+
     </fragment>
 
     <fragment
