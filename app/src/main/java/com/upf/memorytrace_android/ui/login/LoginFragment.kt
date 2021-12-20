@@ -15,6 +15,8 @@ import com.kakao.sdk.user.UserApiClient
 import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.ui.base.BaseFragment
 import com.upf.memorytrace_android.databinding.FragmentLoginBinding
+import com.upf.memorytrace_android.extension.setOnDebounceClickListener
+import com.upf.memorytrace_android.util.showDialog
 
 
 internal class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>() {
@@ -27,12 +29,12 @@ internal class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding
     }
 
     private fun initViews() {
-        binding.btnKakaoLogin.setOnClickListener {
-            loginWithKakao()
+        binding.btnKakaoLogin.setOnDebounceClickListener {
+            showAgreeDialog { loginWithKakao() }
         }
 
-        binding.btnGoogleLogin.setOnClickListener {
-            loginWithGoogle()
+        binding.btnGoogleLogin.setOnDebounceClickListener {
+            showAgreeDialog { loginWithGoogle() }
         }
     }
 
@@ -115,6 +117,20 @@ internal class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
                 }
             }
+    }
+
+    private fun showAgreeDialog(
+        onAgree: () -> Unit
+    ) {
+        context?.let {
+            showDialog(
+                it,
+                "개인정보 수집/이용 약관 동의",
+                "계속 하시면 개인정보 수집 및 이용 약관에 동의하는 것으로 간주합니다.\n로그인 하시겠습니까?",
+                "확인",
+                onAgree
+            )
+        }
     }
 
 
