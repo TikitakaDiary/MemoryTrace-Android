@@ -32,4 +32,18 @@ internal class LoginViewModel : BaseViewModel() {
             }
         }
     }
+
+    fun showTermsOfServiceFragment() {
+        showTermsFragment(1)
+    }
+
+    fun showTermsOfPrivacyFragment() {
+        showTermsFragment(2)
+    }
+
+    private fun showTermsFragment(terms: Int) {
+        if (terms != 1 && terms != 2) return
+        navDirections.value =
+            LoginFragmentDirections.actionLoginFragmentToTermsFragment(terms)
+    }
 }

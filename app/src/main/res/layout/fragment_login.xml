@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -8,12 +9,13 @@
             type="com.upf.memorytrace_android.ui.login.LoginViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/default_padding_24">
 
         <TextView
+            android:id="@+id/logo_duckz"
             style="@style/GmarketBold24"
             android:layout_width="wrap_content"
             android:text="@string/duck_z"
@@ -21,6 +23,34 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_term_service"
+            onDebounceClick="@{() -> viewModel.showTermsOfServiceFragment()}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:padding="3dp"
+            android:text="이용약관"
+            android:textColor="@color/gray04"
+            app:layout_constraintBottom_toTopOf="@id/btn_kakao_login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/logo_duckz"
+            app:layout_constraintVertical_bias="0.665" />
+
+        <Button
+            onDebounceClick="@{() -> viewModel.showTermsOfPrivacyFragment()}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:padding="3dp"
+            android:text="개인정보 처리 방침"
+            android:textColor="@color/gray04"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_term_service" />
 
         <LinearLayout
             android:id="@+id/btn_kakao_login"
