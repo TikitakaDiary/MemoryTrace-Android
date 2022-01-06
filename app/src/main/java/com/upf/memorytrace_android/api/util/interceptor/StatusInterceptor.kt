@@ -11,7 +11,8 @@ import java.io.IOException
 class StatusInterceptor : Interceptor {
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
-        val response = chain.proceed(chain.request())
+        val request = chain.request()
+        val response = chain.proceed(request)
         //todo: 더 좋은 방법을 찾아볼 것(https://github.com/square/okhttp/issues/1240#issuecomment-330813274)
         val body = response.peekBody(Long.MAX_VALUE)
         val gson = GsonBuilder().registerTypeAdapter(
@@ -20,12 +21,14 @@ class StatusInterceptor : Interceptor {
         ).create()
         val data: BaseResponse<*> = gson.fromJson(body.string(), BaseResponse::class.java)
         if (!data.isSuccess) {
-            FirebaseCrashlytics.getInstance().log(data.responseMessage)
-            FirebaseCrashlytics.getInstance().recordException(StatusError(data))
+            val logMessage = "${data.responseMessage}, url : ${request.url}, body : ${request.body}"
+            FirebaseCrashlytics.getInstance().run {
+                log(logMessage)
+                recordException(StatusError(data))
+            }
             if (data.responseMessage.isBlank()) throw IOException()
             throw StatusError(data)
         }
         return response
     }
-
 }
