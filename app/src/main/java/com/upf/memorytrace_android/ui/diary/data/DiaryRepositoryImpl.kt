@@ -15,7 +15,7 @@ class DiaryRepositoryImpl @Inject constructor(
 
     override suspend fun fetchDiary(diaryId: Int): DiaryDetail {
         return withContext(Dispatchers.IO) {
-            diaryService.fetchDiary(diaryId).getOrThrow().toEntry(MemoryTraceConfig.uid)!!
+            diaryService.fetchDiary(diaryId).data!!.toEntry(MemoryTraceConfig.uid)!!
         }
     }
 }
