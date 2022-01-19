@@ -16,7 +16,7 @@
 
         <include
             android:id="@+id/layout_date"
-            layout="@layout/view_diary_date"
+            layout="@layout/item_diary_date"
             app:date="@{item.date}" />
 
         <androidx.recyclerview.widget.RecyclerView

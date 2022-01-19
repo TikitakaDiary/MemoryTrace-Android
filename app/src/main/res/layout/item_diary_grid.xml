@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.upf.memorytrace_android.ui.diary.list.DiaryViewModel" />
+            type="com.upf.memorytrace_android.ui.diary.list.presentation.DiaryListViewModel" />
 
         <variable
             name="item"

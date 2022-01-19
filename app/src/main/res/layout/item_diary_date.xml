@@ -22,5 +22,7 @@
             android:text="@{date}"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="2021.06" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

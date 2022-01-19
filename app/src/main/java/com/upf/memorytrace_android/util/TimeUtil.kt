@@ -25,5 +25,14 @@ object TimeUtil {
         return SimpleDateFormat(dateFormat, Locale.getDefault()).format(date)
     }
 
+    fun getYearAndDate(date: Date): String {
+        val dateFormat = "yyyy.MM"
+        return SimpleDateFormat(dateFormat, Locale.getDefault()).format(date)
+    }
+
+    fun getMonth(date: Date): Int {
+        return GregorianCalendar().apply { time = date }.get(Calendar.MONTH)
+    }
+
     fun convertStringToDate(format: String, date: String): Date? = SimpleDateFormat(format, Locale.KOREA).parse(date)
 }

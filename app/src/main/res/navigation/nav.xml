@@ -148,7 +148,7 @@
 
     <fragment
         android:id="@+id/diaryFragment"
-        android:name="com.upf.memorytrace_android.ui.diary.list.DiaryFragment"
+        android:name="com.upf.memorytrace_android.ui.diary.list.presentation.DiaryListFragment"
         android:label="DiaryFragment">
 
         <action

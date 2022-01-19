@@ -3,7 +3,12 @@ package com.upf.memorytrace_android.ui.diary.list
 import androidx.annotation.DrawableRes
 import com.upf.memorytrace_android.R
 
-internal enum class DiaryListType(@DrawableRes val iconRes: Int) {
+enum class DiaryListType(@DrawableRes val iconRes: Int) {
     GRID(R.drawable.ic_frame),
-    FRAME(R.drawable.ic_grid)
+    FRAME(R.drawable.ic_grid);
+
+    fun change(): DiaryListType = when(this) {
+        GRID -> FRAME
+        FRAME -> GRID
+    }
 }

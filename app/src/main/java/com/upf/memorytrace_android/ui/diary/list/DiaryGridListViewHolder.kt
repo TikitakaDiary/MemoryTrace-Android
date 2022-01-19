@@ -3,15 +3,16 @@ package com.upf.memorytrace_android.ui.diary.list
 import com.upf.memorytrace_android.ui.base.BaseViewHolder
 import com.upf.memorytrace_android.databinding.ItemDiaryGridListBinding
 import com.upf.memorytrace_android.ui.diary.list.item.DiaryMonthItem
+import com.upf.memorytrace_android.ui.diary.list.presentation.DiaryListViewModel
 
 internal class DiaryGridListViewHolder(
     binding: ItemDiaryGridListBinding,
-    viewModel: DiaryViewModel
+    listViewModel: DiaryListViewModel
 ) : BaseViewHolder<DiaryMonthItem>(binding) {
     private val gridAdapter = DiaryGridAdapter()
 
     init {
-        gridAdapter.setViewHolderViewModel(viewModel)
+//        gridAdapter.setViewHolderViewModel(listViewModel)
         binding.gridRv.adapter = gridAdapter
     }
 
