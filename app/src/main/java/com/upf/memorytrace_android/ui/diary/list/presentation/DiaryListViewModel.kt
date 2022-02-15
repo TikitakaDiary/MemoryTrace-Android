@@ -108,7 +108,7 @@ class DiaryListViewModel @Inject constructor(
         }
     }
 
-    fun onClickWriteDiary() {
+    fun writeDiary() {
         _uiEvent.event = Event.WriteDiary(uiState.value.bookId)
     }
 

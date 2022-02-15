@@ -5,16 +5,20 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.databinding.FragmentDiaryBinding
 import com.upf.memorytrace_android.extension.observeEvent
 import com.upf.memorytrace_android.extension.repeatOnStart
+import com.upf.memorytrace_android.ui.SingleItemAdapter
 import com.upf.memorytrace_android.ui.base.BindingFragment
 import com.upf.memorytrace_android.ui.diary.list.presentation.adapter.DiaryAdapter
 import com.upf.memorytrace_android.ui.diary.list.presentation.adapter.DiaryGridAdapter
 import com.upf.memorytrace_android.ui.diary.list.presentation.adapter.DiaryLinearAdapter
+import com.upf.memorytrace_android.ui.diary.list.presentation.viewholder.MyTurnHeaderViewHolder
+import com.upf.memorytrace_android.ui.diary.list.presentation.viewholder.OtherTurnHeaderViewHolder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -27,12 +31,25 @@ class DiaryListFragment : BindingFragment<FragmentDiaryBinding>(R.layout.fragmen
 
     private val diaryLinearAdapter: DiaryLinearAdapter by lazy { DiaryLinearAdapter() }
     private val diaryGridAdapter: DiaryGridAdapter by lazy { DiaryGridAdapter() }
+    private val myTurnHeaderAdapter: SingleItemAdapter<MyTurnHeaderViewHolder> by lazy {
+        MyTurnHeaderViewHolder.createAdapter { diaryListViewModel.writeDiary() }
+    }
+    private val otherTurnHeaderAdapter: SingleItemAdapter<OtherTurnHeaderViewHolder> by lazy {
+        OtherTurnHeaderViewHolder.createAdapter { /**Todo: 재촉하기**/ }
+    }
+
+
     private val diaryLinearLayoutManager: LinearLayoutManager by lazy { LinearLayoutManager(context) }
     private val diaryGridLayoutManager: GridLayoutManager by lazy {
         GridLayoutManager(context, GRID_SPAN_COUNT).apply {
             spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
-                    val viewType = diaryGridAdapter.getItemViewType(position)
+                    // Header
+                    if (position == 0) {
+                        return GRID_SPAN_COUNT
+                    }
+                    // Header 를 제외한 itemViewType 산정
+                    val viewType = diaryGridAdapter.getItemViewType(position - 1)
                     return if (viewType == DiaryAdapter.VIEW_TYPE_DATE) {
                         GRID_SPAN_COUNT
                     } else {
@@ -43,6 +60,10 @@ class DiaryListFragment : BindingFragment<FragmentDiaryBinding>(R.layout.fragmen
         }
     }
 
+    // Header 는 기본 값이 없음
+    private var currentHeaderAdapter: SingleItemAdapter<*>? = null
+    private var currentDiaryAdapter: DiaryAdapter<*> = diaryLinearAdapter
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -51,8 +72,7 @@ class DiaryListFragment : BindingFragment<FragmentDiaryBinding>(R.layout.fragmen
         binding.viewModel = diaryListViewModel
 
         with(binding.recyclerviewDiaries) {
-            adapter = diaryLinearAdapter
-            setOnScrollChangeListener { v, _, _, _, _ ->
+            setOnScrollChangeListener { _, _, _, _, _ ->
                 val offset = computeVerticalScrollOffset()
                 val range = computeVerticalScrollRange() - computeVerticalScrollExtent()
                 if (range == 0 || offset >= range - 10) {
@@ -64,20 +84,33 @@ class DiaryListFragment : BindingFragment<FragmentDiaryBinding>(R.layout.fragmen
         repeatOnStart {
             launch {
                 diaryListViewModel.uiState.collect {
-                    val oldAdapter = binding.recyclerviewDiaries.adapter as DiaryAdapter<*>
+                    if (it.isLoading || it.errorMessage.isNotEmpty()) return@collect
 
-                    if (it.listType == DiaryListType.LINEAR && oldAdapter is DiaryGridAdapter) {
-                        binding.recyclerviewDiaries.adapter = diaryLinearAdapter.apply {
-                            submitList(it.diaries)
-                        }
-                        binding.recyclerviewDiaries.layoutManager = diaryLinearLayoutManager
-                    } else if (it.listType == DiaryListType.GRID && oldAdapter is DiaryLinearAdapter) {
-                        binding.recyclerviewDiaries.adapter = diaryGridAdapter.apply {
-                            submitList(it.diaries)
-                        }
-                        binding.recyclerviewDiaries.layoutManager = diaryGridLayoutManager
+                    val oldHeaderAdapter = currentHeaderAdapter
+                    val newHeaderAdapter = if (it.isMyTurn) {
+                        myTurnHeaderAdapter
                     } else {
-                        oldAdapter.submitList(it.diaries)
+                        otherTurnHeaderAdapter
+                    }
+                    currentHeaderAdapter = newHeaderAdapter
+
+                    val oldDiaryAdapter = currentDiaryAdapter
+                    val newDiaryAdapter =
+                        if (it.listType == DiaryListType.LINEAR && oldDiaryAdapter is DiaryGridAdapter) {
+                            binding.recyclerviewDiaries.layoutManager = diaryLinearLayoutManager
+                            diaryLinearAdapter
+                        } else if (it.listType == DiaryListType.GRID && oldDiaryAdapter is DiaryLinearAdapter) {
+                            binding.recyclerviewDiaries.layoutManager = diaryGridLayoutManager
+                            diaryGridAdapter
+                        } else {
+                            oldDiaryAdapter
+                        }
+                    newDiaryAdapter.submitList(it.diaries)
+                    currentDiaryAdapter = newDiaryAdapter
+
+                    if (oldDiaryAdapter != newDiaryAdapter || oldHeaderAdapter != newHeaderAdapter) {
+                        binding.recyclerviewDiaries.adapter =
+                            ConcatAdapter(newHeaderAdapter, newDiaryAdapter)
                     }
                 }
             }
