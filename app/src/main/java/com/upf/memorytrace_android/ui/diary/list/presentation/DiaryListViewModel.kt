@@ -91,6 +91,7 @@ class DiaryListViewModel @Inject constructor(
                             hasNext = it.hasNext,
                             page = uiModel.page + 1,
                             isMyTurn = MemoryTraceConfig.uid == it.whoseTurn,
+                            isForce = force,
                             isLoading = false,
                         )
                     }

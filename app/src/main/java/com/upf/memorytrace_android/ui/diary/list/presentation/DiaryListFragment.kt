@@ -108,7 +108,11 @@ class DiaryListFragment : BindingFragment<FragmentDiaryBinding>(R.layout.fragmen
                     newDiaryAdapter.submitList(it.diaries)
                     currentDiaryAdapter = newDiaryAdapter
 
-                    if (oldDiaryAdapter != newDiaryAdapter || oldHeaderAdapter != newHeaderAdapter) {
+                    // onViewCreated() 가 호출되면서 초기화(force)되는 데이터는 항상 어댑터 재생성
+                    if (it.isForce ||
+                        oldDiaryAdapter != newDiaryAdapter ||
+                        oldHeaderAdapter != newHeaderAdapter
+                    ) {
                         binding.recyclerviewDiaries.adapter =
                             ConcatAdapter(newHeaderAdapter, newDiaryAdapter)
                     }

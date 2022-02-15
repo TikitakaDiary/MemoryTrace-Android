@@ -9,5 +9,6 @@ data class DiaryListUiState(
     val hasNext: Boolean = true,
     val isMyTurn: Boolean = false,
     val isLoading: Boolean = true,
+    val isForce: Boolean = false,
     val errorMessage: String = ""
 )
