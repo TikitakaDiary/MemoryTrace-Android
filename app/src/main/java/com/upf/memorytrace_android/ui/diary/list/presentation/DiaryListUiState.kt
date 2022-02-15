@@ -10,5 +10,6 @@ data class DiaryListUiState(
     val isMyTurn: Boolean = false,
     val isLoading: Boolean = true,
     val isForce: Boolean = false,
+    val isFailure: Boolean = false,
     val errorMessage: String = ""
 )

@@ -12,6 +12,8 @@ import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.databinding.FragmentDiaryBinding
 import com.upf.memorytrace_android.extension.observeEvent
 import com.upf.memorytrace_android.extension.repeatOnStart
+import com.upf.memorytrace_android.ui.BindingAdapters.isVisibleIfTrue
+import com.upf.memorytrace_android.ui.BindingAdapters.showToastMessage
 import com.upf.memorytrace_android.ui.SingleItemAdapter
 import com.upf.memorytrace_android.ui.base.BindingFragment
 import com.upf.memorytrace_android.ui.diary.list.presentation.adapter.DiaryAdapter
@@ -84,7 +86,17 @@ class DiaryListFragment : BindingFragment<FragmentDiaryBinding>(R.layout.fragmen
         repeatOnStart {
             launch {
                 diaryListViewModel.uiState.collect {
-                    if (it.isLoading || it.errorMessage.isNotEmpty()) return@collect
+                    binding.progressbar.isVisibleIfTrue(
+                        it.isLoading.also { isLoading -> if (isLoading) return@collect }
+                    )
+                    if (it.isFailure) {
+                        binding.root.showToastMessage(
+                            it.errorMessage.takeIf { message ->
+                                message.isNotEmpty()
+                            } ?: getString(R.string.unknown_error)
+                        )
+                        return@collect
+                    }
 
                     val oldHeaderAdapter = currentHeaderAdapter
                     val newHeaderAdapter = if (it.isMyTurn) {

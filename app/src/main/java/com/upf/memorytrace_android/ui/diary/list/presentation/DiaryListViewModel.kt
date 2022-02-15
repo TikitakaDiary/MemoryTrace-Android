@@ -4,8 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.upf.memorytrace_android.databinding.EventLiveData
 import com.upf.memorytrace_android.databinding.MutableEventLiveData
-import com.upf.memorytrace_android.extension.logError
-import com.upf.memorytrace_android.log.ExceptionLogger
 import com.upf.memorytrace_android.onFailure
 import com.upf.memorytrace_android.onSuccess
 import com.upf.memorytrace_android.ui.diary.list.domain.FetchDiariesUseCase
@@ -21,7 +19,6 @@ import javax.inject.Inject
 @HiltViewModel
 class DiaryListViewModel @Inject constructor(
     private val fetchDiariesUseCase: FetchDiariesUseCase,
-    private val exceptionLogger: ExceptionLogger
 ) : ViewModel() {
 
     sealed class Event {
@@ -96,12 +93,11 @@ class DiaryListViewModel @Inject constructor(
                     }
                 }
                 .onFailure {
-                    exceptionLogger.logException(it)
-                    logError(it)
                     _uiState.emit(
                         uiModel.copy(
                             isLoading = false,
-                            errorMessage = it.message ?: ""
+                            isFailure = true,
+                            errorMessage = it
                         )
                     )
                 }

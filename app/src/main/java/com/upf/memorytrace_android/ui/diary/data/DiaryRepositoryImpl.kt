@@ -1,7 +1,9 @@
 package com.upf.memorytrace_android.ui.diary.data
 
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.upf.memorytrace_android.ApiResult
 import com.upf.memorytrace_android.api.util.MemoryTraceUtils
+import com.upf.memorytrace_android.api.util.StatusError
 import com.upf.memorytrace_android.ui.diary.data.remote.DiaryService
 import com.upf.memorytrace_android.ui.diary.data.remote.toEntity
 import com.upf.memorytrace_android.ui.diary.data.remote.toEntry
@@ -29,8 +31,12 @@ class DiaryRepositoryImpl @Inject constructor(
                 ApiResult.Success(
                     MemoryTraceUtils.apiService().fetchDiaries(bookId, page, size).data!!.toEntity()
                 )
+            } catch (e: StatusError) {
+                FirebaseCrashlytics.getInstance().recordException(e)
+                ApiResult.Failure(e.responseMessage)
             } catch (e: Exception) {
-                ApiResult.Failure(e)
+                FirebaseCrashlytics.getInstance().recordException(e)
+                ApiResult.Failure(e.message?: "")
             }
         }
     }
