@@ -12,7 +12,6 @@ import com.upf.memorytrace_android.databinding.FragmentDiaryBinding
 import com.upf.memorytrace_android.extension.observeEvent
 import com.upf.memorytrace_android.extension.repeatOnStart
 import com.upf.memorytrace_android.ui.base.BindingFragment
-import com.upf.memorytrace_android.ui.diary.list.DiaryListType
 import com.upf.memorytrace_android.ui.diary.list.presentation.adapter.DiaryAdapter
 import com.upf.memorytrace_android.ui.diary.list.presentation.adapter.DiaryGridAdapter
 import com.upf.memorytrace_android.ui.diary.list.presentation.adapter.DiaryLinearAdapter

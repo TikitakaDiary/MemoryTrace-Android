@@ -1,4 +1,4 @@
-package com.upf.memorytrace_android.ui.diary.list
+package com.upf.memorytrace_android.ui.diary.list.presentation
 
 import androidx.annotation.DrawableRes
 import com.upf.memorytrace_android.R
