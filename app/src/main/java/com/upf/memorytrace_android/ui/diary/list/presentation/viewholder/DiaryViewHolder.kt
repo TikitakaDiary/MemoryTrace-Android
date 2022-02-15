@@ -6,6 +6,7 @@ import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.databinding.ItemDiaryDateBinding
+import com.upf.memorytrace_android.databinding.ItemDiaryGridBinding
 import com.upf.memorytrace_android.databinding.ItemDiaryLinearBinding
 import com.upf.memorytrace_android.extension.setOnDebounceClickListener
 import com.upf.memorytrace_android.ui.diary.list.presentation.DiaryListItem
@@ -37,6 +38,24 @@ abstract class DiaryViewHolder(
     ) : DiaryViewHolder(parent, R.layout.item_diary_linear) {
 
         private val binding = ItemDiaryLinearBinding.bind(itemView).apply {
+            root.setOnDebounceClickListener {
+                onClick.invoke(adapterPosition)
+            }
+        }
+
+        override fun bind(item: DiaryListItem) {
+            if (item is DiaryListItem.DiaryItem) {
+                binding.diary = item
+            }
+        }
+    }
+
+    class DiaryGridViewHolder(
+        parent: ViewGroup,
+        onClick: (position: Int) -> Unit
+    ) : DiaryViewHolder(parent, R.layout.item_diary_grid) {
+
+        private val binding = ItemDiaryGridBinding.bind(itemView).apply {
             root.setOnDebounceClickListener {
                 onClick.invoke(adapterPosition)
             }

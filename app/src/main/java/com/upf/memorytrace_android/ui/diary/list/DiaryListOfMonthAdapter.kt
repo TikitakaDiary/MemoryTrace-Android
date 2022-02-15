@@ -39,7 +39,7 @@ internal class DiaryListOfMonthAdapter
     }
 
     override fun getItemViewType(position: Int): Int = when (listType) {
-        DiaryListType.FRAME -> R.layout.item_diary_frame_list
+        DiaryListType.LINEAR -> R.layout.item_diary_frame_list
         DiaryListType.GRID -> R.layout.item_diary_grid_list
     }
 
@@ -50,7 +50,7 @@ internal class DiaryListOfMonthAdapter
     private fun createViewHolder(
         binding: ViewDataBinding
     ) = when (listType) {
-        DiaryListType.FRAME -> DiaryFrameListViewHolder(
+        DiaryListType.LINEAR -> DiaryFrameListViewHolder(
             binding as ItemDiaryFrameListBinding,
             listViewModel as DiaryListViewModel
         )

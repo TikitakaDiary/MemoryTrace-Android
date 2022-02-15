@@ -9,6 +9,7 @@ import com.upf.memorytrace_android.extension.logError
 import com.upf.memorytrace_android.log.ExceptionLogger
 import com.upf.memorytrace_android.onFailure
 import com.upf.memorytrace_android.onSuccess
+import com.upf.memorytrace_android.ui.diary.list.DiaryListType
 import com.upf.memorytrace_android.ui.diary.list.domain.FetchDiariesUseCase
 import com.upf.memorytrace_android.util.MemoryTraceConfig
 import com.upf.memorytrace_android.util.TimeUtil
@@ -37,6 +38,9 @@ class DiaryListViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(DiaryListUiState())
     val uiState: StateFlow<DiaryListUiState> = _uiState
 
+    private val fetchSize: Int
+        get() = if (uiState.value.listType == DiaryListType.LINEAR) 10 else 30
+
     fun initializeDiaryList(bookId: Int) {
         _uiState.update { it.copy(bookId = bookId) }
         loadDiaryList(true)
@@ -49,7 +53,7 @@ class DiaryListViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
 
-            fetchDiariesUseCase(uiModel.bookId, uiModel.page + 1, 10)
+            fetchDiariesUseCase(uiModel.bookId, uiModel.page + 1, fetchSize)
                 .onSuccess {
                     val currentDiaryList = uiModel.diaries.toMutableList()
 

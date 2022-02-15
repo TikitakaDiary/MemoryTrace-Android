@@ -1,6 +1,5 @@
 package com.upf.memorytrace_android.ui.diary.list.presentation.adapter
 
-import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -31,17 +30,11 @@ abstract class DiaryAdapter<VH : DiaryViewHolder>
         holder.bind(getItem(position))
     }
 
-    override fun getItemCount(): Int {
-        val count = super.getItemCount()
-        Log.d("TESTT", "count : $count")
-        return count
-    }
-
     abstract fun onCreateViewHolder(parent: ViewGroup): VH
 
     companion object {
-        private const val VIEW_TYPE_DATE = 0
-        private const val VIEW_TYPE_ITEM = 1
+        const val VIEW_TYPE_DATE = 0
+        const val VIEW_TYPE_ITEM = 1
 
         private val diffUtil = object : DiffUtil.ItemCallback<DiaryListItem>() {
 

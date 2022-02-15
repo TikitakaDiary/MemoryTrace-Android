@@ -5,10 +5,10 @@ import com.upf.memorytrace_android.R
 
 enum class DiaryListType(@DrawableRes val iconRes: Int) {
     GRID(R.drawable.ic_frame),
-    FRAME(R.drawable.ic_grid);
+    LINEAR(R.drawable.ic_grid);
 
     fun change(): DiaryListType = when(this) {
-        GRID -> FRAME
-        FRAME -> GRID
+        GRID -> LINEAR
+        LINEAR -> GRID
     }
 }
