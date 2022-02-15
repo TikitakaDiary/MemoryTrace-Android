@@ -9,7 +9,7 @@ class DiaryGridAdapter: DiaryAdapter<DiaryViewHolder.DiaryGridViewHolder>() {
         return DiaryViewHolder.DiaryGridViewHolder(parent) { position ->
             val item = getItem(position)
             if (item is DiaryListItem.DiaryItem) {
-                item.onItemClick.invoke(item.diaryId)
+                item.onItemClick.invoke()
             }
         }
     }

@@ -10,7 +10,7 @@ class DiaryLinearAdapter: DiaryAdapter<DiaryViewHolder.DiaryLinearViewHolder>() 
         return DiaryViewHolder.DiaryLinearViewHolder(parent) { position ->
             val item = getItem(position)
             if (item is DiaryListItem.DiaryItem) {
-                item.onItemClick.invoke(item.diaryId)
+                item.onItemClick.invoke()
             }
         }
     }

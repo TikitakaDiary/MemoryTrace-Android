@@ -79,10 +79,9 @@ class DiaryListViewModel @Inject constructor(
                         // DiaryItem 삽입
                         currentDiaryList.add(
                             currentItem.toPresentEntity(
-                                this@DiaryListViewModel::onClickDiaryDetail
+                                onItemClick = { onClickDiaryDetail(currentItem.diaryId) }
                             )
                         )
-
                     }
                     _uiState.update { uiModel ->
                         uiModel.copy(
@@ -102,7 +101,7 @@ class DiaryListViewModel @Inject constructor(
                     _uiState.emit(
                         uiModel.copy(
                             isLoading = false,
-                            errorMessage = it.message?: ""
+                            errorMessage = it.message ?: ""
                         )
                     )
                 }
@@ -111,10 +110,6 @@ class DiaryListViewModel @Inject constructor(
 
     fun writeDiary() {
         _uiEvent.event = Event.WriteDiary(uiState.value.bookId)
-    }
-
-    fun onClickDiaryDetail(diaryId: Int) {
-        _uiEvent.event = Event.DiaryDetail(diaryId)
     }
 
     fun onClickSetting() {
@@ -127,5 +122,9 @@ class DiaryListViewModel @Inject constructor(
                 listType = it.listType.change()
             )
         }
+    }
+
+    private fun onClickDiaryDetail(diaryId: Int) {
+        _uiEvent.event = Event.DiaryDetail(diaryId)
     }
 }
