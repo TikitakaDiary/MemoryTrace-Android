@@ -1,6 +1,7 @@
 package com.upf.memorytrace_android.api
 
 import com.upf.memorytrace_android.api.model.*
+import com.upf.memorytrace_android.ui.diary.data.remote.DiaryListResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -80,7 +81,7 @@ interface MemoryTraceService {
         @Path("bid") id: Int,
         @Query("page") page: Int,
         @Query("size") size: Int
-    ): BaseResponse<DiaryListModel>
+    ): BaseResponse<DiaryListResponse>
 
     @Multipart
     @POST("/diary")

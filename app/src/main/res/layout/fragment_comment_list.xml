@@ -78,7 +78,7 @@
 
         <LinearLayout
             android:id="@+id/comment_reply_layout"
-            isVisible="@{viewModel.currentReplying != null}"
+            isVisibleIfTrue="@{viewModel.currentReplying != null}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/systemGray02"

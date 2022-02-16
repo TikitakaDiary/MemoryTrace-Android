@@ -27,8 +27,16 @@ object BindingAdapters {
     }
 
     @JvmStatic
-    @BindingAdapter("isVisible")
-    fun View.isVisible(isVisible: Boolean) {
+    @BindingAdapter("showToastMessage")
+    fun View.showToastMessage(message: String) {
+        if (message.isNotEmpty()) {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("isVisibleIfTrue")
+    fun View.isVisibleIfTrue(isVisible: Boolean) {
         this.isVisible = isVisible
     }
 
