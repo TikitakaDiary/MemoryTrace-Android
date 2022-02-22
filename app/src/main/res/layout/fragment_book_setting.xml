@@ -21,11 +21,10 @@
             android:layout_height="?attr/actionBarSize"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
+            <com.upf.memorytrace_android.ui.BackButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:onClick="@{()->viewModel.onClickBack()}"
-                android:paddingRight="24dp"
+                android:paddingEnd="24dp"
                 android:src="@drawable/ic_back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +51,7 @@
                 style="@style/MypageItem"
                 android:text="@string/member_setting_section_title" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 style="@style/ImageView"
                 android:layout_alignParentEnd="true"
                 android:src="@drawable/ic_right_arrow" />
@@ -61,13 +60,13 @@
         <RelativeLayout
             android:id="@+id/btn_edit_book"
             style="@style/MypageItemLayout"
-            android:onClick="@{()->viewModel.onClickUpdateBook()}">
+            android:onClick="@{()->viewModel.onClickEditBook()}">
 
             <TextView
                 style="@style/MypageItem"
                 android:text="@string/update_book_section_title" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 style="@style/ImageView"
                 android:layout_alignParentEnd="true"
                 android:src="@drawable/ic_right_arrow" />
@@ -76,7 +75,7 @@
         <RelativeLayout
             android:id="@+id/btn_leave_book"
             style="@style/MypageItemLayout"
-            android:onClick="@{()->viewModel.onclickLeaveBook()}">
+            android:onClick="@{()->viewModel.onClickLeaveBook()}">
 
             <TextView
                 style="@style/MypageItem"

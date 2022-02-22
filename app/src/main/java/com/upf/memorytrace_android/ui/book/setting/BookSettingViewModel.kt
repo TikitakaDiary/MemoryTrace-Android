@@ -1,64 +1,69 @@
 package com.upf.memorytrace_android.ui.book.setting
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.upf.memorytrace_android.api.repository.BookRepository
-import com.upf.memorytrace_android.api.util.NetworkState
-import com.upf.memorytrace_android.ui.base.BaseViewModel
-import com.upf.memorytrace_android.util.BackDirections
-import com.upf.memorytrace_android.util.LiveEvent
-import kotlinx.coroutines.flow.collect
+import com.upf.memorytrace_android.api.util.onFailure
+import com.upf.memorytrace_android.api.util.onSuccess
+import com.upf.memorytrace_android.databinding.EventLiveData
+import com.upf.memorytrace_android.databinding.MutableEventLiveData
+import com.upf.memorytrace_android.ui.book.setting.domain.LeaveBookUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-internal class BookSettingViewModel : BaseViewModel() {
+@HiltViewModel
+class BookSettingViewModel @Inject constructor(
+    private val leaveBookUseCase: LeaveBookUseCase
+) : ViewModel() {
 
-    private var bid: Int = -1
-    val showLeaveDialog = LiveEvent<Unit?>()
+    sealed class Event {
+        object Leave: Event()
+        object LeaveDone: Event()
+        data class ShowMember(val bookId: Int): Event()
+        data class EditBook(val bookId: Int): Event()
+        data class Error(val message: String): Event()
+        object WrongAccess: Event()
+    }
 
-    init {
-        viewModelScope.launch {
-            navArgs<BookSettingFragmentArgs>()
-                .collect {
-                    bid = it.bid
-                    if (bid < 0) {
-                        toast.value = ERROR_ARGS
-                        onClickBack()
-                    }
-                }
+    private var bookId: Int = -1
+
+    private val _uiEvent = MutableEventLiveData<Event>()
+    val uiEvent: EventLiveData<Event>
+        get() = _uiEvent
+
+    fun setBookId(bookId: Int) {
+        if (bookId < 0) {
+            _uiEvent.event = Event.WrongAccess
+        } else {
+            this.bookId = bookId
         }
     }
 
     fun onClickMember() {
-        navDirections.value =
-            BookSettingFragmentDirections.actionBookSettingFragmentToMemberSettingFragment(bid)
+        _uiEvent.event = Event.ShowMember(bookId)
     }
 
-    fun onClickUpdateBook() {
-        navDirections.value =
-            BookSettingFragmentDirections.actionBookSettingFragmentToCreateBookFragment(bid)
+    fun onClickEditBook() {
+        _uiEvent.event = Event.EditBook(bookId)
     }
 
-    fun onclickLeaveBook() {
-        showLeaveDialog.call()
+    fun onClickLeaveBook() {
+        _uiEvent.event = Event.Leave
     }
 
     fun leaveBook() {
         viewModelScope.launch {
-            val response = BookRepository.leaveBook(bid)
-            when (response) {
-                is NetworkState.Success -> {
-                    navDirections.value =
-                        BookSettingFragmentDirections.actionBookSettingFragmentToBookListFragment()
-                }
-                is NetworkState.Failure -> toast.value = response.message
+            withContext(Dispatchers.IO) {
+                leaveBookUseCase(bookId)
+            }.onSuccess {
+                _uiEvent.event = Event.LeaveDone
+            }.onFailure {
+                _uiEvent.event = it.takeIf { it.isNotEmpty() }?.let { message ->
+                    Event.Error(message)
+                }?: Event.WrongAccess
             }
         }
-    }
-
-    fun onClickBack() {
-        navDirections.postValue(BackDirections())
-    }
-
-    companion object {
-        private const val ERROR_ARGS = "잘못된 접근입니다. 다시 시도해주세요."
     }
 }

@@ -1,8 +1,8 @@
 package com.upf.memorytrace_android.ui.diary.data
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.upf.memorytrace_android.ApiResult
 import com.upf.memorytrace_android.api.util.MemoryTraceUtils
+import com.upf.memorytrace_android.api.util.NetworkState
 import com.upf.memorytrace_android.api.util.StatusError
 import com.upf.memorytrace_android.ui.diary.data.remote.DiaryService
 import com.upf.memorytrace_android.ui.diary.data.remote.toEntity
@@ -25,18 +25,18 @@ class DiaryRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun fetchDiaries(bookId: Int, page: Int, size: Int): ApiResult<DiaryList> {
+    override suspend fun fetchDiaries(bookId: Int, page: Int, size: Int): NetworkState<DiaryList> {
         return withContext(Dispatchers.IO) {
             try {
-                ApiResult.Success(
+                NetworkState.Success(
                     MemoryTraceUtils.apiService().fetchDiaries(bookId, page, size).data!!.toEntity()
                 )
             } catch (e: StatusError) {
                 FirebaseCrashlytics.getInstance().recordException(e)
-                ApiResult.Failure(e.responseMessage)
+                NetworkState.Failure(e.responseMessage)
             } catch (e: Exception) {
                 FirebaseCrashlytics.getInstance().recordException(e)
-                ApiResult.Failure(e.message?: "")
+                NetworkState.Failure(e.message?: "")
             }
         }
     }
