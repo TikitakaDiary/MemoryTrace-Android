@@ -42,10 +42,46 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rect_white_rounded_12"
+            android:backgroundTint="@color/systemGray02"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="16dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_img_duck_24" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/book_setting_invitation_desc"
+                android:textSize="14dp" />
+
+            <Button
+                onDebounceClick="@{() -> viewModel.onClickCopyInvitationCode()}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/rect_white_rounded_22"
+                android:text="@string/book_setting_invitation_button"
+                android:textColor="@color/systemGray01"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
         <RelativeLayout
             android:id="@+id/btn_member"
             style="@style/MypageItemLayout"
-            android:onClick="@{()->viewModel.onClickMember()}">
+            onDebounceClick="@{() -> viewModel.onClickMember()}"
+            android:layout_marginTop="4dp">
 
             <TextView
                 style="@style/MypageItem"
@@ -60,7 +96,7 @@
         <RelativeLayout
             android:id="@+id/btn_edit_book"
             style="@style/MypageItemLayout"
-            android:onClick="@{()->viewModel.onClickEditBook()}">
+            onDebounceClick="@{() -> viewModel.onClickEditBook()}">
 
             <TextView
                 style="@style/MypageItem"
@@ -75,7 +111,7 @@
         <RelativeLayout
             android:id="@+id/btn_leave_book"
             style="@style/MypageItemLayout"
-            android:onClick="@{()->viewModel.onClickLeaveBook()}">
+            onDebounceClick="@{() -> viewModel.onClickLeaveBook()}">
 
             <TextView
                 style="@style/MypageItem"

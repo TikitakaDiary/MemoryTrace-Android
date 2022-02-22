@@ -7,6 +7,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.databinding.FragmentBookSettingBinding
+import com.upf.memorytrace_android.extension.copyToClipboard
 import com.upf.memorytrace_android.extension.observeEvent
 import com.upf.memorytrace_android.extension.toast
 import com.upf.memorytrace_android.ui.base.BindingFragment
@@ -63,6 +64,10 @@ class BookSettingFragment :
                         .actionBookSettingFragmentToBookListFragment().run {
                             findNavController().navigate(this)
                         }
+                }
+                is BookSettingViewModel.Event.CopyInvitationCode -> {
+                    context?.copyToClipboard("invite_code", event.invitationCode)
+                    toast(getString(R.string.toast_copy_invitation_code))
                 }
             }
         }

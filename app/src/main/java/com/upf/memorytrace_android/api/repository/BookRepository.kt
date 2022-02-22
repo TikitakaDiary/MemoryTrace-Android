@@ -60,6 +60,7 @@ object BookRepository {
         }
     }
 
+    @Deprecated("더이상 사용하지 않습니다.", ReplaceWith("com.upf.memorytrace_android.ui.book.domain.BookRepository#fetchBook()"))
     suspend fun fetchBook(bid: Int): NetworkState<Book> {
         return try {
             val response = MemoryTraceUtils.apiService().fetchBook(bid)

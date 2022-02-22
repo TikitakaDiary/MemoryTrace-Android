@@ -6,6 +6,7 @@ import com.upf.memorytrace_android.api.util.onFailure
 import com.upf.memorytrace_android.api.util.onSuccess
 import com.upf.memorytrace_android.databinding.EventLiveData
 import com.upf.memorytrace_android.databinding.MutableEventLiveData
+import com.upf.memorytrace_android.ui.book.domain.FetchBookUseCase
 import com.upf.memorytrace_android.ui.book.setting.domain.LeaveBookUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BookSettingViewModel @Inject constructor(
-    private val leaveBookUseCase: LeaveBookUseCase
+    private val leaveBookUseCase: LeaveBookUseCase,
+    private val fetchBookUseCase: FetchBookUseCase
 ) : ViewModel() {
 
     sealed class Event {
@@ -25,6 +27,7 @@ class BookSettingViewModel @Inject constructor(
         data class EditBook(val bookId: Int): Event()
         data class Error(val message: String): Event()
         object WrongAccess: Event()
+        data class CopyInvitationCode(val invitationCode: String): Event()
     }
 
     private var bookId: Int = -1
@@ -51,6 +54,20 @@ class BookSettingViewModel @Inject constructor(
 
     fun onClickLeaveBook() {
         _uiEvent.event = Event.Leave
+    }
+
+    fun onClickCopyInvitationCode() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                fetchBookUseCase(bookId)
+            }.onSuccess {
+                _uiEvent.event = Event.CopyInvitationCode(it.inviteCode)
+            }.onFailure {
+                _uiEvent.event = it.takeIf { it.isNotEmpty() }?.let { message ->
+                    Event.Error(message)
+                }?: Event.WrongAccess
+            }
+        }
     }
 
     fun leaveBook() {

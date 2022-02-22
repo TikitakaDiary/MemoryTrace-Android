@@ -108,6 +108,11 @@
     <string name="comment_reply_button">답글달기</string>
     <string name="comment_delete_button">삭제</string>
 
+    <string name="book_setting_invitation_desc">일기를 같이 쓰고싶은 친구를 초대하세요!</string>
+    <string name="book_setting_invitation_button">초대코드 복사하기</string>
+
     <string name="unknown_error">예상하지 못한 오류가 발생하였습니다. 잠시 후 다시 시도해 주세요.</string>
     <string name="wrong_access">잘못된 접근입니다. 다시 시도해주세요.</string>
+
+    <string name="toast_copy_invitation_code">초대코드가 복사되었습니다.</string>
 </resources>
