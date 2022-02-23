@@ -8,6 +8,7 @@ import com.upf.memorytrace_android.api.util.NetworkState
 import com.upf.memorytrace_android.api.util.StatusError
 import okhttp3.MultipartBody
 
+@Deprecated("더이상 static 으로 사용하지 않습니다.", ReplaceWith("com.upf.memorytrace_android.ui.book.domain.DiaryRepository"))
 object BookRepository {
 
     const val PAGE_SIZE = 50
@@ -59,23 +60,11 @@ object BookRepository {
         }
     }
 
+    @Deprecated("더이상 사용하지 않습니다.", ReplaceWith("com.upf.memorytrace_android.ui.book.domain.BookRepository#fetchBook()"))
     suspend fun fetchBook(bid: Int): NetworkState<Book> {
         return try {
             val response = MemoryTraceUtils.apiService().fetchBook(bid)
             NetworkState.Success(response.data as Book)
-        } catch (e: StatusError) {
-            NetworkState.Failure(e.responseMessage)
-        } catch (e: Exception) {
-            FirebaseCrashlytics.getInstance().recordException(e)
-            NetworkState.Failure(ERROR)
-        }
-    }
-
-
-    suspend fun leaveBook(bid: Int): NetworkState<String> {
-        return try {
-            MemoryTraceUtils.apiService().leaveBook(bid)
-            NetworkState.Success(SUCCESS)
         } catch (e: StatusError) {
             NetworkState.Failure(e.responseMessage)
         } catch (e: Exception) {

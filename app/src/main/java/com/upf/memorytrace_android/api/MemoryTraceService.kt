@@ -43,12 +43,6 @@ interface MemoryTraceService {
         @Path("bid") bid: Int
     ): BaseResponse<Book>
 
-    @PUT("book/exit/{bid}")
-    suspend fun leaveBook(
-        @Path("bid") bid: Int
-    ): BaseResponse<*>
-
-
     /**
      * 초대코드로 일기장 입장
      */

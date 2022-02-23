@@ -21,11 +21,10 @@
             android:layout_height="?attr/actionBarSize"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
+            <com.upf.memorytrace_android.ui.BackButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:onClick="@{()->viewModel.onClickBack()}"
-                android:paddingRight="24dp"
+                android:paddingEnd="24dp"
                 android:src="@drawable/ic_back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -43,16 +42,52 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rect_white_rounded_12"
+            android:backgroundTint="@color/systemGray02"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="16dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_img_duck_24" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/book_setting_invitation_desc"
+                android:textSize="14dp" />
+
+            <Button
+                onDebounceClick="@{() -> viewModel.onClickCopyInvitationCode()}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/rect_white_rounded_22"
+                android:text="@string/book_setting_invitation_button"
+                android:textColor="@color/systemGray01"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
         <RelativeLayout
             android:id="@+id/btn_member"
             style="@style/MypageItemLayout"
-            android:onClick="@{()->viewModel.onClickMember()}">
+            onDebounceClick="@{() -> viewModel.onClickMember()}"
+            android:layout_marginTop="4dp">
 
             <TextView
                 style="@style/MypageItem"
                 android:text="@string/member_setting_section_title" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 style="@style/ImageView"
                 android:layout_alignParentEnd="true"
                 android:src="@drawable/ic_right_arrow" />
@@ -61,13 +96,13 @@
         <RelativeLayout
             android:id="@+id/btn_edit_book"
             style="@style/MypageItemLayout"
-            android:onClick="@{()->viewModel.onClickUpdateBook()}">
+            onDebounceClick="@{() -> viewModel.onClickEditBook()}">
 
             <TextView
                 style="@style/MypageItem"
                 android:text="@string/update_book_section_title" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 style="@style/ImageView"
                 android:layout_alignParentEnd="true"
                 android:src="@drawable/ic_right_arrow" />
@@ -76,7 +111,7 @@
         <RelativeLayout
             android:id="@+id/btn_leave_book"
             style="@style/MypageItemLayout"
-            android:onClick="@{()->viewModel.onclickLeaveBook()}">
+            onDebounceClick="@{() -> viewModel.onClickLeaveBook()}">
 
             <TextView
                 style="@style/MypageItem"

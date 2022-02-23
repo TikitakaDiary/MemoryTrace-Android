@@ -2,10 +2,10 @@ package com.upf.memorytrace_android.ui.diary.list.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.upf.memorytrace_android.api.util.onFailure
+import com.upf.memorytrace_android.api.util.onSuccess
 import com.upf.memorytrace_android.databinding.EventLiveData
 import com.upf.memorytrace_android.databinding.MutableEventLiveData
-import com.upf.memorytrace_android.onFailure
-import com.upf.memorytrace_android.onSuccess
 import com.upf.memorytrace_android.ui.diary.list.domain.FetchDiariesUseCase
 import com.upf.memorytrace_android.util.MemoryTraceConfig
 import com.upf.memorytrace_android.util.TimeUtil
