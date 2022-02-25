@@ -6,38 +6,38 @@
 
         <variable
             name="viewModel"
-            type="com.upf.memorytrace_android.ui.diary.list.DiaryViewModel" />
+            type="com.upf.memorytrace_android.ui.diary.list.presentation.DiaryListViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        showToastMessage="@{viewModel.uiState.errorMessage}"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingHorizontal="@dimen/default_padding_24">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/top_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="24dp"
             android:paddingVertical="14dp"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
+            <com.upf.memorytrace_android.ui.BackButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_arrow_back"
-                android:onClick="@{()->viewModel.onClickBack()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{()->viewModel.onclickSetting()}"
+                android:onClick="@{() -> viewModel.onClickSetting()}"
                 android:src="@drawable/ic_setting"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,7 +45,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="false"
-            android:paddingHorizontal="24dp"
             android:paddingVertical="16dp"
             app:layout_constraintTop_toBottomOf="@id/top_layout">
 
@@ -57,94 +56,62 @@
                 android:layout_marginEnd="112dp"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="@{viewModel.title}"
+                android:text="@{viewModel.uiState.title}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/type_iv"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="해당 교환일기장\n제목" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/type_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{()->viewModel.changeListType()}"
-                android:src="@{viewModel.listType.iconRes}"
+                android:onClick="@{() -> viewModel.changeListType()}"
+                android:src="@{viewModel.uiState.listType.iconRes}"
                 app:layout_constraintBottom_toBottomOf="@id/title_tv"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:src="@drawable/ic_grid" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/nested_sv"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_diaries"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:clipToPadding="false"
             android:overScrollMode="never"
+            android:paddingBottom="20dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title_layout">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingHorizontal="24dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="15dp"
-                    android:background="@drawable/bg_diary_write_button"
-                    android:gravity="center"
-                    android:onClick="@{()->viewModel.onClickWriteDiary()}"
-                    android:orientation="horizontal"
-                    android:paddingVertical="20dp"
-                    android:visibility="@{viewModel.myTurn}"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_plus" />
-
-                    <TextView
-                        style="@style/GmarketMedium20"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:text="@string/diary_your_turn" />
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:overScrollMode="never"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_diary_frame_list" />
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_layout"
+            tools:listitem="@layout/item_diary_linear" />
 
         <TextView
             style="@style/NotoRegular16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/diary_empty"
-            android:visibility="@{viewModel.diaryOfMonthList.size() == 0}"
-            app:layout_constraintTop_toTopOf="@id/nested_sv"
-            app:layout_constraintBottom_toBottomOf="@id/nested_sv"
+            android:visibility="@{viewModel.uiState.diaries.size() == 0}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/title_layout" />
 
         <ProgressBar
             android:id="@+id/progressbar"
+            isVisibleIfTrue="@{viewModel.uiState.loading}"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:indeterminateTint="@color/lightGray"
-            android:visibility="@{viewModel.isLoading()}"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

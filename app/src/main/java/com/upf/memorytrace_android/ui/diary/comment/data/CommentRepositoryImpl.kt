@@ -13,7 +13,7 @@ class CommentRepositoryImpl @Inject constructor(
 ): CommentRepository {
 
     override suspend fun fetchComments(diaryId: Int): List<Comment> {
-        return commentService.fetCommentList(diaryId).getOrThrow().flatMap {
+        return commentService.fetCommentList(diaryId).data!!.flatMap {
             mutableListOf<Comment>().apply {
                 val userId = MemoryTraceConfig.uid
                 add(it.toEntity(userId == it.userId))

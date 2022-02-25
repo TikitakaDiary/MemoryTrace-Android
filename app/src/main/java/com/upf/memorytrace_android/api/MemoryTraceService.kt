@@ -1,6 +1,7 @@
 package com.upf.memorytrace_android.api
 
 import com.upf.memorytrace_android.api.model.*
+import com.upf.memorytrace_android.ui.diary.data.remote.DiaryListResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -42,12 +43,6 @@ interface MemoryTraceService {
         @Path("bid") bid: Int
     ): BaseResponse<Book>
 
-    @PUT("book/exit/{bid}")
-    suspend fun leaveBook(
-        @Path("bid") bid: Int
-    ): BaseResponse<*>
-
-
     /**
      * 초대코드로 일기장 입장
      */
@@ -80,7 +75,7 @@ interface MemoryTraceService {
         @Path("bid") id: Int,
         @Query("page") page: Int,
         @Query("size") size: Int
-    ): BaseResponse<DiaryListModel>
+    ): BaseResponse<DiaryListResponse>
 
     @Multipart
     @POST("/diary")

@@ -20,7 +20,7 @@
 
         <View
             android:id="@+id/comment_padding_left"
-            isVisible="@{comment.isReply()}"
+            isVisibleIfTrue="@{comment.isReply()}"
             android:layout_width="24dp"
             android:layout_height="0dp"
             android:visibility="gone"
@@ -68,7 +68,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/comment_reply_button"
             style="@style/CommentItem.Bottoms.Button"
-            isVisible="@{!comment.isReply}"
+            isVisibleIfTrue="@{!comment.isReply}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/comment_reply_button"
@@ -80,7 +80,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/comment_delete_button"
             style="@style/CommentItem.Bottoms.Button"
-            isVisible="@{comment.isMine &amp;&amp; !comment.isDelete}"
+            isVisibleIfTrue="@{comment.isMine &amp;&amp; !comment.isDelete}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/comment_delete_button"

@@ -2,20 +2,14 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
-            name="viewModel"
-            type="com.upf.memorytrace_android.ui.diary.list.DiaryViewModel" />
-
-        <variable
-            name="item"
-            type="com.upf.memorytrace_android.ui.diary.list.item.DiaryItem" />
+            name="diary"
+            type="com.upf.memorytrace_android.ui.diary.list.presentation.DiaryListItem.DiaryItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{()->viewModel.onClickDiaryDetail(item.id)}"
         android:padding="2.5dp">
 
         <androidx.cardview.widget.CardView
@@ -29,11 +23,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@{item.img}" />
+                android:src="@{diary.imageUrl}" />
         </androidx.cardview.widget.CardView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

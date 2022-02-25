@@ -22,16 +22,4 @@ open class BaseResponse<out T>(
             return Gson().fromJson(jsonObject, BaseResponse::class.java)
         }
     }
-
-    fun getOrThrow(): T {
-        if (isSuccess) {
-            if (data == null) {
-                throw Throwable("success : $responseMessage")
-            } else {
-                return data
-            }
-        } else {
-            throw IllegalAccessException(responseMessage)
-        }
-    }
 }

@@ -20,6 +20,8 @@ internal class MypageViewModel : BaseViewModel() {
     val showOssPage = LiveEvent<Unit?>()
     val sendEmail = LiveEvent<Unit?>()
 
+    val uid = MemoryTraceConfig.uid
+
     init {
         name.value = MemoryTraceConfig.nickname
         sns.value = MemoryTraceConfig.sns
