@@ -97,6 +97,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0-alpha01"
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation "com.android.billingclient:billing:4.0.0"
 
     // ViewPager2
     implementation "androidx.viewpager2:viewpager2:$viewpager2_version"
