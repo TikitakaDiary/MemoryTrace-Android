@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.upf.memorytrace_android.MemoryTraceApplication
-import java.time.format.SignStyle
+import java.util.*
 
 object MemoryTraceConfig {
     private const val PREFERENCE = "MemoryTrace.preference"
@@ -18,6 +18,8 @@ object MemoryTraceConfig {
     private const val PROFILE_IMG = "profile_img"
     private const val BID = "bid"
     private const val DID = "did"
+    private const val SPONSOR_POPUP_COUNT = "sponsorPopupCount"
+    private const val LAST_SHOW_SPONSOR_POPUP_DATE = "lastShowSponsorPopupDate"
 
     private const val SAVE_DEBUG_KEY = "save_debug_key"
 
@@ -62,6 +64,24 @@ object MemoryTraceConfig {
     var saveDebugKey: Boolean?
         get() = pref.getBoolean(SAVE_DEBUG_KEY, false)
         set(value) = pref.edit { putBoolean(SAVE_DEBUG_KEY, value ?: false) }
+
+    var sponsorPopupCount: Int
+        get() = pref.getInt(SPONSOR_POPUP_COUNT, 0)
+        set(value) = pref.edit { putInt(SPONSOR_POPUP_COUNT, value) }
+
+    var lastShowSponsorPopupDate: Date?
+        get() = pref.getString(LAST_SHOW_SPONSOR_POPUP_DATE, null)?.let {
+            TimeUtil.stringToDate(
+                TimeUtil.FORMAT_yyyy_MM_dd_B_HH_mm_ss,
+                it
+            )
+        }
+        set(value) = pref.edit {
+            putString(
+                LAST_SHOW_SPONSOR_POPUP_DATE,
+                value?.let { TimeUtil.dateToString(TimeUtil.FORMAT_yyyy_MM_dd_B_HH_mm_ss, it) }
+            )
+        }
 
     fun clear() {
         pref.edit { clear() }

@@ -22,11 +22,35 @@
           }
         },
         {
+          "client_id": "319121424343-70m4tc3883lu406khdvqog6l1i35229g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.upf.memorytrace_android",
+            "certificate_hash": "2249d6d5b775b4f0b8ab462b6a8cdedd18f1b096"
+          }
+        },
+        {
+          "client_id": "319121424343-97groispubon22aa0imehmke8uv97cen.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.upf.memorytrace_android",
+            "certificate_hash": "6911c77039e8146c0d14a9a5e127b6708603296d"
+          }
+        },
+        {
           "client_id": "319121424343-di4omj6glurlj8r1s9bj6joanm7m91ju.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.upf.memorytrace_android",
             "certificate_hash": "1255238453b7c0eebe922222931a64a4a793d0bf"
+          }
+        },
+        {
+          "client_id": "319121424343-ebtkmc0dgloulv38t78bm638ftfardoj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.upf.memorytrace_android",
+            "certificate_hash": "636de1108966afaa16789bd232ee23d673cfcd58"
           }
         },
         {
