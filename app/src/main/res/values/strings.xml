@@ -125,4 +125,8 @@
     <string name="sponsor_title">덕지를 잘 이용하고 계신가요?</string>
     <string name="sponsor_desc">덕지를 잘 쓰고 계시다면 \n서비스 유지를 위해 커피 한잔 값을 후원해 주세요!</string>
     <string name="sponsor_button">덕지팀에게 커피 한 잔 사주기</string>
+    <string name="sponsor_select_price_title">후원금액 선택하기</string>
+    <string name="sponsor_price_900">900원</string>
+    <string name="sponsor_price_1900">1,900원</string>
+    <string name="sponsor_price_3900">3,900원</string>
 </resources>

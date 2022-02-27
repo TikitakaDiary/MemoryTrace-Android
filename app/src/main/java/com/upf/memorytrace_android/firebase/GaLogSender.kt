@@ -7,7 +7,8 @@ import com.google.firebase.ktx.Firebase
 
 object GaLogSender {
 
-    const val GA_EVENT_SHOW_SPONSOR_POPUP = "show_sponsor_popup"
+    const val EVENT_SHOW_SPONSOR_POPUP = "show_sponsor_popup"
+    const val EVENT_SHOW_SPONSOR_SELECT_PRICE_POPUP = "show_sponsor_select_price_popup"
 
     fun sendEvent(eventName: String, param: Bundle? = null) {
         Firebase.analytics.logEvent(eventName, param)
