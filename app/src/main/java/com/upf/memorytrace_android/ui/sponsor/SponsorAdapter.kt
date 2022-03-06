@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.upf.memorytrace_android.databinding.ItemSponsorBinding
 import com.upf.memorytrace_android.extension.setOnDebounceClickListener
 
-class SponsorAdapter : ListAdapter<SponsorItemUiState, SponsorAdapter.SponsorViewHolder>(diffUtil) {
+class SponsorAdapter(
+    private val onClick: () -> Unit
+) : ListAdapter<SponsorItemUiState, SponsorAdapter.SponsorViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SponsorViewHolder {
         return SponsorViewHolder(
@@ -17,7 +19,10 @@ class SponsorAdapter : ListAdapter<SponsorItemUiState, SponsorAdapter.SponsorVie
                 parent,
                 false
             )
-        ) { getItem(it).onClick() }
+        ) {
+            onClick.invoke()
+            getItem(it).onClick()
+        }
     }
 
     override fun onBindViewHolder(holder: SponsorViewHolder, position: Int) {

@@ -1,12 +1,14 @@
 package com.upf.memorytrace_android.ui.sponsor
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.databinding.DialogSponsorPopupBinding
 import com.upf.memorytrace_android.extension.*
 import com.upf.memorytrace_android.firebase.GaLogSender
@@ -52,7 +54,11 @@ class SponsorPopupDialogFragment : BottomSheetDialogFragment() {
             launch {
                 viewModel.uiState.map { it.isLoading }
                     .distinctCollect {
-                        //Todo: 프로그래스 다이얼로그 띄우기
+                        if (it) {
+                            childFragmentManager.showAllowingStateLoss("loading") {
+                                SponsorLoadingDialogFragment()
+                            }
+                        }
                     }
             }
             launch {
@@ -65,20 +71,40 @@ class SponsorPopupDialogFragment : BottomSheetDialogFragment() {
                         }
                     }
             }
-            launch {
-                viewModel.uiState.map { it.event }
-                    .distinctCollect {
-                        //Todo: 에러 표시
+        }
+
+        observeEvent(viewModel.billingState) { state ->
+            when (state) {
+                is BillingState.Done -> {
+                    if (state.failedPurchase.isNotEmpty()) {
+                        toast(getString(R.string.sponsor_error_fail_consume))
                     }
-            }
-            launch {
-                viewModel.billingState
-                    .distinctCollect {
-                        if (it is BillingState.Done) {
-                            dismissAllowingStateLoss()
-                        }
-                    }
+                    toast(getString(R.string.sponsor_thank_you))
+                    dismissAllowingStateLoss()
+                }
+                is BillingState.ReadyToBilling -> {
+                    val activity = activity ?: return@observeEvent
+                    val responseCode =
+                        state.billingClient.launchBillingFlow(
+                            activity,
+                            state.flowParams
+                        ).responseCode
+                    Log.d(javaClass.simpleName, "launchBillingFlow(): $responseCode")
+                }
             }
         }
+
+        observeEvent(viewModel.error) { error ->
+            when (error) {
+                is SponsorError.BillingError -> toast(error.message)
+                is SponsorError.NoSkuDetailsError -> toast(getString(R.string.sponsor_error_no_sku))
+                is SponsorError.BillingDisconnectError -> toast(getString(R.string.sponsor_error_disconnect))
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.checkPurchases()
     }
 }

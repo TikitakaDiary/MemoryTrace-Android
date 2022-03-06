@@ -7,8 +7,7 @@ import com.android.billingclient.api.SkuDetails
 
 data class SponsorUiState(
     val sponsorItems: List<SponsorItemUiState> = emptyList(),
-    val isLoading: Boolean = false,
-    val event: SponsorError? = null,
+    val isLoading: Boolean = false
 )
 
 data class SponsorItemUiState(
@@ -16,20 +15,19 @@ data class SponsorItemUiState(
     val onClick: () -> Unit = {}
 )
 
-enum class SponsorError {
-
-}
-
 fun SkuDetails.toUiState(onClick: () -> Unit) = SponsorItemUiState(price = price, onClick = onClick)
 
 sealed class BillingState {
-    object None: BillingState()
-
     data class ReadyToBilling(
         val billingClient: BillingClient,
         val flowParams: BillingFlowParams
     ): BillingState()
 
     data class Done(val failedPurchase: List<Purchase> = emptyList()): BillingState()
-    data class Failure(val statusCode: Int): BillingState()
+}
+
+sealed class SponsorError {
+    data class BillingError(val message: String): SponsorError()
+    object NoSkuDetailsError: SponsorError()
+    object BillingDisconnectError: SponsorError()
 }
