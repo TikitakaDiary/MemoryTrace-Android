@@ -8,6 +8,8 @@ import com.upf.memorytrace_android.databinding.EventLiveData
 import com.upf.memorytrace_android.databinding.MutableEventLiveData
 import com.upf.memorytrace_android.ui.diary.list.domain.FetchDiariesUseCase
 import com.upf.memorytrace_android.ui.diary.list.domain.FetchPinchInfoUseCase
+import com.upf.memorytrace_android.ui.diary.list.domain.PinchInfo
+import com.upf.memorytrace_android.ui.diary.list.domain.PinchUseCase
 import com.upf.memorytrace_android.util.MemoryTraceConfig
 import com.upf.memorytrace_android.util.TimeUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,14 +22,15 @@ import javax.inject.Inject
 @HiltViewModel
 class DiaryListViewModel @Inject constructor(
     private val fetchDiariesUseCase: FetchDiariesUseCase,
-    private val fetchPinchInfoUseCase: FetchPinchInfoUseCase
+    private val fetchPinchInfoUseCase: FetchPinchInfoUseCase,
+    private val pinchUseCase: PinchUseCase
 ) : ViewModel() {
 
     sealed class Event {
         data class WriteDiary(val bookId: Int) : Event()
         data class DiaryDetail(val diaryId: Int) : Event()
         data class Setting(val bookId: Int) : Event()
-        data class Error(val errorMessage: String): Event()
+        data class Error(val errorMessage: String) : Event()
     }
 
     private val _uiEvent = MutableEventLiveData<Event>()
@@ -49,31 +52,6 @@ class DiaryListViewModel @Inject constructor(
     fun initializeDiaryList(bookId: Int) {
         this.bookId = bookId
         loadDiaryList(true)
-    }
-
-    private fun fetchPinchInfo() {
-        viewModelScope.launch {
-            _pinchInfoUiState.update { it.copy(isLoading = true) }
-            fetchPinchInfoUseCase(bookId)
-                .onSuccess {
-                    _pinchInfoUiState.update { uiModel ->
-                        uiModel.copy(
-                            isLoading = false,
-                            turnUserName = it.turnUserName,
-                            pinchCount = it.pinchCount,
-                            onPinchClick = { pinch() }
-                        )
-                    }
-                }.onFailure {
-                    _pinchInfoUiState.update { uiModel ->
-                        uiModel.copy(
-                            isLoading = false,
-                            isError = true
-                        )
-                    }
-                    _uiEvent.event = Event.Error(it)
-                }
-        }
     }
 
     fun loadDiaryList(force: Boolean = false) {
@@ -159,8 +137,49 @@ class DiaryListViewModel @Inject constructor(
         }
     }
 
+    private fun fetchPinchInfo() {
+        viewModelScope.launch {
+            _pinchInfoUiState.update { it.copy(isLoading = true) }
+            fetchPinchInfoUseCase(bookId)
+                .onSuccess {
+                    it.onSuccess()
+                }.onFailure {
+                    onPinchInfoFailure(it)
+                }
+        }
+    }
+
     private fun pinch() {
-        //Todo: 재촉하기
+        viewModelScope.launch {
+            _pinchInfoUiState.update { it.copy(isLoading = true) }
+            pinchUseCase(bookId)
+                .onSuccess {
+                    it.onSuccess()
+                }.onFailure {
+                    onPinchInfoFailure(it)
+                }
+        }
+    }
+
+    private fun PinchInfo.onSuccess() {
+        _pinchInfoUiState.update { uiModel ->
+            uiModel.copy(
+                isLoading = false,
+                turnUserName = turnUserName,
+                pinchCount = pinchCount,
+                onPinchClick = { pinch() }
+            )
+        }
+    }
+
+    private fun onPinchInfoFailure(errorMessage: String) {
+        _pinchInfoUiState.update { uiModel ->
+            uiModel.copy(
+                isLoading = false,
+                isError = true
+            )
+        }
+        _uiEvent.event = Event.Error(errorMessage)
     }
 
     private fun onClickDiaryDetail(diaryId: Int) {

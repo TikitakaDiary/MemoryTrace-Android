@@ -25,8 +25,7 @@ class OtherTurnHeaderViewHolder(
 
     fun bind(pinchInfoUiState: PinchInfoUiState?) {
         val data = pinchInfoUiState ?: return
-
-        binding.root.isVisible = data.isError.not().also { if (it) return }
+        if (data.isError) return
 
         pinchInfoUiState.isLoading.run {
             binding.rootOtherTurn.isInvisible = this

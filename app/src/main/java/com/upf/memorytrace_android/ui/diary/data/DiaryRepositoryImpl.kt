@@ -37,7 +37,7 @@ class DiaryRepositoryImpl @Inject constructor(
                 NetworkState.Failure(e.responseMessage)
             } catch (e: Exception) {
                 FirebaseCrashlytics.getInstance().recordException(e)
-                NetworkState.Failure(e.message?: "")
+                NetworkState.Failure(e.message ?: "")
             }
         }
     }
@@ -53,7 +53,22 @@ class DiaryRepositoryImpl @Inject constructor(
                 NetworkState.Failure(e.responseMessage)
             } catch (e: Exception) {
                 FirebaseCrashlytics.getInstance().recordException(e)
-                NetworkState.Failure(e.message?: "")
+                NetworkState.Failure(e.message ?: "")
+            }
+        }
+    }
+
+    override suspend fun pinch(bookId: Int): NetworkState<Unit> {
+        return withContext(Dispatchers.IO) {
+            try {
+                diaryService.pinch(bookId)
+                NetworkState.Success(Unit)
+            } catch (e: StatusError) {
+                FirebaseCrashlytics.getInstance().recordException(e)
+                NetworkState.Failure(e.responseMessage)
+            } catch (e: Exception) {
+                FirebaseCrashlytics.getInstance().recordException(e)
+                NetworkState.Failure(e.message ?: "")
             }
         }
     }

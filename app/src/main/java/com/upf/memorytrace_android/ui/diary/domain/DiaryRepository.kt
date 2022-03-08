@@ -11,4 +11,6 @@ interface DiaryRepository {
     suspend fun fetchDiaries(bookId: Int, page: Int, size: Int): NetworkState<DiaryList>
 
     suspend fun fetchPinchInfo(bookId: Int): NetworkState<PinchInfo>
+
+    suspend fun pinch(bookId: Int): NetworkState<Unit>
 }
