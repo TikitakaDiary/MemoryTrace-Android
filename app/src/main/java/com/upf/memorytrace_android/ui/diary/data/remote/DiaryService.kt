@@ -8,4 +8,7 @@ interface DiaryService {
 
     @GET("/diary/{did}")
     suspend fun fetchDiary(@Path("did") did: Int): BaseResponse<DiaryDetailResponse>
+
+    @GET("/pinch/{bookId}")
+    suspend fun fetchPinchInfo(@Path("bookId") bookId: Int): BaseResponse<PinchInfoResponse>
 }

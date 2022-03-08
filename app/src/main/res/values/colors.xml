@@ -23,6 +23,7 @@
     <color name="lightGray">#B1B1B1</color>
     <color name="darkGray">#696969</color>
 
+    <color name="gray00">#323232</color>
     <color name="gray01">#333333</color>
     <color name="gray69">#696969</color>
     <color name="gray03">#828282</color>

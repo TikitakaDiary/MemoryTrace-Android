@@ -1,15 +1,22 @@
 package com.upf.memorytrace_android.ui.diary.list.presentation
 
 data class DiaryListUiState(
-    val bookId: Int = -1,
     val title: String = "",
+    val isLoading: Boolean = true,
+    val listContents: DiaryListContentUiState = DiaryListContentUiState()
+)
+
+data class DiaryListContentUiState(
     val listType: DiaryListType = DiaryListType.LINEAR,
     val diaries: List<DiaryListItem> = listOf(),
-    val page: Int = 0,
-    val hasNext: Boolean = true,
     val isMyTurn: Boolean = false,
+    val isForce: Boolean = false
+)
+
+data class PinchInfoUiState(
     val isLoading: Boolean = true,
-    val isForce: Boolean = false,
-    val isFailure: Boolean = false,
-    val errorMessage: String = ""
+    val turnUserName: String = "",
+    val pinchCount: Int = 0,
+    val onPinchClick: () -> Unit = {},
+    val isError: Boolean = false
 )

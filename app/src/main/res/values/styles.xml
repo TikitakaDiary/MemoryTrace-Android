@@ -83,7 +83,7 @@
     <!-- 일기 작성-->
     <style name="WriteTitleEditText" parent="Widget.AppCompat.EditText">
         <item name="android:fontFamily">@font/gmarket_sans_ttf_bold</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">18dp</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:textColor">@color/gray01</item>
@@ -91,7 +91,7 @@
     </style>
 
     <style name="WriteContentEditText" parent="Widget.AppCompat.EditText">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">16dp</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:textColor">@color/gray05</item>
@@ -100,21 +100,21 @@
 
     <style name="WriteStickerListTitleTextView" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/gmarket_sans_ttf_bold</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">14dp</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:textColor">@color/gray06</item>
     </style>
 
     <style name="DateTextView" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/gmarket_sans_ttf_medium</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">14dp</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:textColor">@color/gray03</item>
     </style>
 
     <style name="NameTextView" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/gmarket_sans_ttf_medium</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">14dp</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:textColor">@color/systemBlue</item>
         <item name="android:maxLines">1</item>
@@ -138,6 +138,16 @@
         <item name="android:orientation">horizontal</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/rect_white_rounded</item>
+    </style>
+
+    <style name="BlueButton" parent="TextAppearance.AppCompat.Button">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@color/selector_button</item>
+        <item name="android:fontFamily">@font/gmarket_sans_ttf_bold</item>
+        <item name="android:textSize">12dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
     </style>
 
     <style name="buttonBarButtonStyle" parent="Widget.AppCompat.Button.Borderless.Colored"></style>
