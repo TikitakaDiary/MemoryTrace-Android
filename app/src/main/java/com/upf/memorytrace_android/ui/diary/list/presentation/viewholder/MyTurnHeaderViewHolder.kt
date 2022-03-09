@@ -21,7 +21,7 @@ class MyTurnHeaderViewHolder(
     companion object {
         fun createAdapter(
             onHeaderClick: () -> Unit
-        ) = object: SingleItemAdapter<MyTurnHeaderViewHolder> (){
+        ) = object: SingleItemAdapter<Unit, MyTurnHeaderViewHolder> (){
             override fun onCreateViewHolder(
                 parent: ViewGroup,
                 viewType: Int

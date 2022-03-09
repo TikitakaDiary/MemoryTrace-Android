@@ -115,4 +115,10 @@
     <string name="wrong_access">잘못된 접근입니다. 다시 시도해주세요.</string>
 
     <string name="toast_copy_invitation_code">초대코드가 복사되었습니다.</string>
+
+    <string name="header_other_turn_title">%s님 ✍ 작성중!</string>
+    <string name="header_othder_turn_desc">본인차례가 되면 작성할 수 있어요</string>
+    <string name="header_othder_turn_pinch_count">오늘 재촉 가능 횟수</string>
+    <string name="header_othder_turn_pinch">재촉하기</string>
+    <string name="pinch_success_toast">%s님이 일기를 쓰도록 재촉했어요!</string>
 </resources>

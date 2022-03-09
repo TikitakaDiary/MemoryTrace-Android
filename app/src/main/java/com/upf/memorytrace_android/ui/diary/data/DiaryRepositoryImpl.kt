@@ -10,6 +10,7 @@ import com.upf.memorytrace_android.ui.diary.data.remote.toEntry
 import com.upf.memorytrace_android.ui.diary.detail.domain.DiaryDetail
 import com.upf.memorytrace_android.ui.diary.list.domain.DiaryList
 import com.upf.memorytrace_android.ui.diary.domain.DiaryRepository
+import com.upf.memorytrace_android.ui.diary.list.domain.PinchInfo
 import com.upf.memorytrace_android.util.MemoryTraceConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -36,7 +37,38 @@ class DiaryRepositoryImpl @Inject constructor(
                 NetworkState.Failure(e.responseMessage)
             } catch (e: Exception) {
                 FirebaseCrashlytics.getInstance().recordException(e)
-                NetworkState.Failure(e.message?: "")
+                NetworkState.Failure(e.message ?: "")
+            }
+        }
+    }
+
+    override suspend fun fetchPinchInfo(bookId: Int): NetworkState<PinchInfo> {
+        return withContext(Dispatchers.IO) {
+            try {
+                NetworkState.Success(
+                    diaryService.fetchPinchInfo(bookId).data!!.toEntity()
+                )
+            } catch (e: StatusError) {
+                FirebaseCrashlytics.getInstance().recordException(e)
+                NetworkState.Failure(e.responseMessage)
+            } catch (e: Exception) {
+                FirebaseCrashlytics.getInstance().recordException(e)
+                NetworkState.Failure(e.message ?: "")
+            }
+        }
+    }
+
+    override suspend fun pinch(bookId: Int): NetworkState<Unit> {
+        return withContext(Dispatchers.IO) {
+            try {
+                diaryService.pinch(bookId)
+                NetworkState.Success(Unit)
+            } catch (e: StatusError) {
+                FirebaseCrashlytics.getInstance().recordException(e)
+                NetworkState.Failure(e.responseMessage)
+            } catch (e: Exception) {
+                FirebaseCrashlytics.getInstance().recordException(e)
+                NetworkState.Failure(e.message ?: "")
             }
         }
     }

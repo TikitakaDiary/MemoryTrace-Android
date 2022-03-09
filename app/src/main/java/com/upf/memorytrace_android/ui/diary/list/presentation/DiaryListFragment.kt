@@ -12,8 +12,8 @@ import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.databinding.FragmentDiaryBinding
 import com.upf.memorytrace_android.extension.observeEvent
 import com.upf.memorytrace_android.extension.repeatOnStart
+import com.upf.memorytrace_android.extension.toast
 import com.upf.memorytrace_android.ui.BindingAdapters.isVisibleIfTrue
-import com.upf.memorytrace_android.ui.BindingAdapters.showToastMessage
 import com.upf.memorytrace_android.ui.SingleItemAdapter
 import com.upf.memorytrace_android.ui.base.BindingFragment
 import com.upf.memorytrace_android.ui.diary.list.presentation.adapter.DiaryAdapter
@@ -23,6 +23,8 @@ import com.upf.memorytrace_android.ui.diary.list.presentation.viewholder.MyTurnH
 import com.upf.memorytrace_android.ui.diary.list.presentation.viewholder.OtherTurnHeaderViewHolder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -33,13 +35,12 @@ class DiaryListFragment : BindingFragment<FragmentDiaryBinding>(R.layout.fragmen
 
     private val diaryLinearAdapter: DiaryLinearAdapter by lazy { DiaryLinearAdapter() }
     private val diaryGridAdapter: DiaryGridAdapter by lazy { DiaryGridAdapter() }
-    private val myTurnHeaderAdapter: SingleItemAdapter<MyTurnHeaderViewHolder> by lazy {
+    private val myTurnHeaderAdapter: SingleItemAdapter<Unit, MyTurnHeaderViewHolder> by lazy {
         MyTurnHeaderViewHolder.createAdapter { diaryListViewModel.writeDiary() }
     }
-    private val otherTurnHeaderAdapter: SingleItemAdapter<OtherTurnHeaderViewHolder> by lazy {
-        OtherTurnHeaderViewHolder.createAdapter { /**Todo: 재촉하기**/ }
+    private val otherTurnHeaderAdapter: SingleItemAdapter<PinchInfoUiState, OtherTurnHeaderViewHolder> by lazy {
+        OtherTurnHeaderViewHolder.createAdapter()
     }
-
 
     private val diaryLinearLayoutManager: LinearLayoutManager by lazy { LinearLayoutManager(context) }
     private val diaryGridLayoutManager: GridLayoutManager by lazy {
@@ -63,7 +64,7 @@ class DiaryListFragment : BindingFragment<FragmentDiaryBinding>(R.layout.fragmen
     }
 
     // Header 는 기본 값이 없음
-    private var currentHeaderAdapter: SingleItemAdapter<*>? = null
+    private var currentHeaderAdapter: SingleItemAdapter<*, *>? = null
     private var currentDiaryAdapter: DiaryAdapter<*> = diaryLinearAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -85,80 +86,98 @@ class DiaryListFragment : BindingFragment<FragmentDiaryBinding>(R.layout.fragmen
 
         repeatOnStart {
             launch {
-                diaryListViewModel.uiState.collect {
-                    binding.progressbar.isVisibleIfTrue(
-                        it.isLoading.also { isLoading -> if (isLoading) return@collect }
-                    )
-                    if (it.isFailure) {
-                        binding.root.showToastMessage(
-                            it.errorMessage.takeIf { message ->
-                                message.isNotEmpty()
-                            } ?: getString(R.string.unknown_error)
-                        )
-                        return@collect
+                diaryListViewModel.diaryListUiState
+                    .map { it.isLoading }
+                    .distinctUntilChanged()
+                    .collect {
+                        binding.progressbar.isVisibleIfTrue(it)
                     }
-
-                    val oldHeaderAdapter = currentHeaderAdapter
-                    val newHeaderAdapter = if (it.isMyTurn) {
-                        myTurnHeaderAdapter
-                    } else {
-                        otherTurnHeaderAdapter
+            }
+            launch {
+                diaryListViewModel.diaryListUiState
+                    .map { it.listContents }
+                    .distinctUntilChanged { old, new -> old == new }
+                    .collect {
+                        it.render()
                     }
-                    currentHeaderAdapter = newHeaderAdapter
+            }
+            launch {
+                diaryListViewModel.pinchInfoUiState
+                    .distinctUntilChanged { old, new -> old == new }
+                    .collect {
+                        otherTurnHeaderAdapter.setItem(it)
+                    }
+            }
 
-                    val oldDiaryAdapter = currentDiaryAdapter
-                    val newDiaryAdapter =
-                        if (it.listType == DiaryListType.LINEAR && oldDiaryAdapter is DiaryGridAdapter) {
-                            binding.recyclerviewDiaries.layoutManager = diaryLinearLayoutManager
-                            diaryLinearAdapter
-                        } else if (it.listType == DiaryListType.GRID && oldDiaryAdapter is DiaryLinearAdapter) {
-                            binding.recyclerviewDiaries.layoutManager = diaryGridLayoutManager
-                            diaryGridAdapter
-                        } else {
-                            oldDiaryAdapter
+            diaryListViewModel.run {
+                observeEvent(uiEvent) { event ->
+                    when (event) {
+                        is DiaryListViewModel.Event.Setting -> {
+                            DiaryListFragmentDirections
+                                .actionDiaryFragmentToBookSettingFragment(event.bookId)
+                                .run {
+                                    findNavController().navigate(this)
+                                }
+
                         }
-                    newDiaryAdapter.submitList(it.diaries)
-                    currentDiaryAdapter = newDiaryAdapter
-
-                    // onViewCreated() 가 호출되면서 초기화(force)되는 데이터는 항상 어댑터 재생성
-                    if (it.isForce ||
-                        oldDiaryAdapter != newDiaryAdapter ||
-                        oldHeaderAdapter != newHeaderAdapter
-                    ) {
-                        binding.recyclerviewDiaries.adapter =
-                            ConcatAdapter(newHeaderAdapter, newDiaryAdapter)
+                        is DiaryListViewModel.Event.DiaryDetail -> {
+                            DiaryListFragmentDirections
+                                .actionDiaryFragmentToDetailFragment(event.diaryId)
+                                .run {
+                                    findNavController().navigate(this)
+                                }
+                        }
+                        is DiaryListViewModel.Event.WriteDiary -> {
+                            DiaryListFragmentDirections
+                                .actionDiaryFragmentToWriteFragment(event.bookId, null)
+                                .run {
+                                    findNavController().navigate(this)
+                                }
+                        }
+                        is DiaryListViewModel.Event.Error -> {
+                            toast(event.errorMessage.takeIf { message ->
+                                message.isNotEmpty()
+                            } ?: getString(R.string.unknown_error))
+                        }
+                        is DiaryListViewModel.Event.SuccessPinch -> {
+                            toast(getString(R.string.pinch_success_toast, event.turnUserName))
+                        }
                     }
                 }
             }
         }
+    }
 
-        diaryListViewModel.run {
-            observeEvent(uiEvent) { event ->
-                when (event) {
-                    is DiaryListViewModel.Event.Setting -> {
-                        DiaryListFragmentDirections
-                            .actionDiaryFragmentToBookSettingFragment(event.bookId)
-                            .run {
-                                findNavController().navigate(this)
-                            }
+    private fun DiaryListContentUiState.render() {
+        val oldHeaderAdapter = currentHeaderAdapter
+        val newHeaderAdapter = if (isMyTurn) {
+            myTurnHeaderAdapter
+        } else {
+            otherTurnHeaderAdapter
+        }
+        currentHeaderAdapter = newHeaderAdapter
 
-                    }
-                    is DiaryListViewModel.Event.DiaryDetail -> {
-                        DiaryListFragmentDirections
-                            .actionDiaryFragmentToDetailFragment(event.diaryId)
-                            .run {
-                                findNavController().navigate(this)
-                            }
-                    }
-                    is DiaryListViewModel.Event.WriteDiary -> {
-                        DiaryListFragmentDirections
-                            .actionDiaryFragmentToWriteFragment(event.bookId, null)
-                            .run {
-                                findNavController().navigate(this)
-                            }
-                    }
-                }
+        val oldDiaryAdapter = currentDiaryAdapter
+        val newDiaryAdapter =
+            if (listType == DiaryListType.LINEAR && oldDiaryAdapter is DiaryGridAdapter) {
+                binding.recyclerviewDiaries.layoutManager = diaryLinearLayoutManager
+                diaryLinearAdapter
+            } else if (listType == DiaryListType.GRID && oldDiaryAdapter is DiaryLinearAdapter) {
+                binding.recyclerviewDiaries.layoutManager = diaryGridLayoutManager
+                diaryGridAdapter
+            } else {
+                oldDiaryAdapter
             }
+        newDiaryAdapter.submitList(diaries)
+        currentDiaryAdapter = newDiaryAdapter
+
+        // onViewCreated() 가 호출되면서 초기화(force)되는 데이터는 항상 어댑터 재생성
+        if (isForce ||
+            oldDiaryAdapter != newDiaryAdapter ||
+            oldHeaderAdapter != newHeaderAdapter
+        ) {
+            binding.recyclerviewDiaries.adapter =
+                ConcatAdapter(newHeaderAdapter, newDiaryAdapter)
         }
     }
 
