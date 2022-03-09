@@ -139,6 +139,9 @@ class DiaryListFragment : BindingFragment<FragmentDiaryBinding>(R.layout.fragmen
                                 message.isNotEmpty()
                             } ?: getString(R.string.unknown_error))
                         }
+                        is DiaryListViewModel.Event.SuccessPinch -> {
+                            toast(getString(R.string.pinch_success_toast, event.turnUserName))
+                        }
                     }
                 }
             }

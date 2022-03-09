@@ -120,4 +120,5 @@
     <string name="header_othder_turn_desc">본인차례가 되면 작성할 수 있어요</string>
     <string name="header_othder_turn_pinch_count">오늘 재촉 가능 횟수</string>
     <string name="header_othder_turn_pinch">재촉하기</string>
+    <string name="pinch_success_toast">%s님이 일기를 쓰도록 재촉했어요!</string>
 </resources>

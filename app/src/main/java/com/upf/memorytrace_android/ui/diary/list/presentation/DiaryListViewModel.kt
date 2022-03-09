@@ -31,6 +31,7 @@ class DiaryListViewModel @Inject constructor(
         data class DiaryDetail(val diaryId: Int) : Event()
         data class Setting(val bookId: Int) : Event()
         data class Error(val errorMessage: String) : Event()
+        data class SuccessPinch(val turnUserName: String): Event()
     }
 
     private val _uiEvent = MutableEventLiveData<Event>()
@@ -160,6 +161,7 @@ class DiaryListViewModel @Inject constructor(
             _pinchInfoUiState.update { it.copy(isLoading = true) }
             pinchUseCase(bookId)
                 .onSuccess {
+                    _uiEvent.event = Event.SuccessPinch(it.turnUserName)
                     it.onSuccess()
                 }.onFailure {
                     onPinchInfoFailure(it)
