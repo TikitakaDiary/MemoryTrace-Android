@@ -51,19 +51,25 @@ class DiaryListViewModel @Inject constructor(
 
     fun initializeDiaryList(bookId: Int) {
         this.bookId = bookId
+        page = 0
+        hasNext = true
         loadDiaryList(true)
     }
 
     fun loadDiaryList(force: Boolean = false) {
         val uiModel = diaryListUiState.value
-        if ((force.not() && uiModel.isLoading) || hasNext.not()) return
+        if (force.not() && (uiModel.isLoading || hasNext.not())) return
 
         viewModelScope.launch {
             _diaryListUiState.update { it.copy(isLoading = true) }
 
             fetchDiariesUseCase(bookId, ++page, fetchSize)
                 .onSuccess {
-                    val currentDiaryList = uiModel.listContents.diaries.toMutableList()
+                    val currentDiaryList = if (force) {
+                        mutableListOf()
+                    } else {
+                        uiModel.listContents.diaries.toMutableList()
+                    }
 
                     it.diaryList.forEach { currentItem ->
                         // 조건에 따라 DateItem 삽입
