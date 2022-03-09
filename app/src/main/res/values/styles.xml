@@ -55,6 +55,11 @@
         <item name="android:textSize">@dimen/font_14</item>
     </style>
 
+    <style name="GmarketMedium12" parent="Content">
+        <item name="android:fontFamily">@font/gmarket_sans_ttf_medium</item>
+        <item name="android:textSize">@dimen/font_12</item>
+    </style>
+
     <style name="NotoBold16" parent="Content">
         <item name="android:fontFamily">@font/noto_sans_kr_bold</item>
         <item name="android:textSize">@dimen/font_16</item>
@@ -237,5 +242,22 @@
         <item name="android:indeterminateTint">@color/lightGray</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
+    </style>
+    
+    <style name="TermsAgree"/>
+    <style name="TermsAgree.Button">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingHorizontal">46dp</item>
+        <item name="android:paddingVertical">14.5dp</item>
+    </style>
+    <style name="TermsAgree.Button.Positive">
+        <item name="android:background">@drawable/selector_color_blue</item>
+        <item name="android:textColor">@color/selector_color_white</item>
+    </style>
+    <style name="TermsAgree.Button.Negative">
+        <item name="android:background">@drawable/rect_gray04_rounded</item>
+        <item name="android:textColor">@color/systemBlack</item>
     </style>
 </resources>

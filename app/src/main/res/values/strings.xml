@@ -121,4 +121,12 @@
     <string name="header_othder_turn_pinch_count">오늘 재촉 가능 횟수</string>
     <string name="header_othder_turn_pinch">재촉하기</string>
     <string name="pinch_success_toast">%s님이 일기를 쓰도록 재촉했어요!</string>
+
+    <string name="terms_agree_desc">duck-z 서비스의 이용을 위한\n최초 1회의 약관 동의와 개인 정보 수집에\n대한 동의가 필요합니다.</string>
+    <string name="terms_agree_service">duck-z <u>이용약관 동의</u></string>
+    <string name="terms_agree_privacy">duck-z <u>개인정보 수집 동의</u></string>
+    <string name="terms_agree_all">이용약관, 개인정보 수집에 모두 동의합니다</string>
+    <string name="terms_agree_need"> (필수)</string>
+    <string name="terms_agree_agree">동의</string>
+    <string name="terms_agree_disagree">동의안함</string>
 </resources>

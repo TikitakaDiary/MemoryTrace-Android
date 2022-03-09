@@ -39,8 +39,8 @@
             app:destination="@id/writeFragment" />
 
         <action
-            android:id="@+id/action_loginFragment_to_termsFragment"
-            app:destination="@+id/termsFragment" />
+            android:id="@+id/action_loginFragment_to_termsAgreeFragment"
+            app:destination="@+id/termsAgreeFragment" />
 
     </fragment>
 
@@ -250,5 +250,26 @@
             app:argType="integer" />
 
     </fragment>
+    <fragment
+        android:id="@+id/termsAgreeFragment"
+        android:name="com.upf.memorytrace_android.ui.login.presenter.TermsAgreeFragment"
+        android:label="TermsAgreeFragment">
+        <action
+            android:id="@+id/action_termsAgreeFragment_to_bookListFragment"
+            app:destination="@id/bookListFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
 
+        <action
+            android:id="@+id/action_termsAgreeFragment_to_writeFragment"
+            app:destination="@id/writeFragment" />
+
+        <action
+            android:id="@+id/action_termsAgreeFragment_to_termsFragment"
+            app:destination="@+id/termsFragment" />
+        <argument
+            android:name="user"
+            app:argType="com.upf.memorytrace_android.api.model.User"
+            app:nullable="true" />
+    </fragment>
 </navigation>

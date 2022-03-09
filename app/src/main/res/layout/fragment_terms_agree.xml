@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.upf.memorytrace_android.ui.login.presenter.TermsAgreeViewModel" />
+
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:paddingHorizontal="@dimen/default_padding_24"
+            android:paddingVertical="14dp"
+            android:src="@drawable/ic_close" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/logo_duckz"
+                style="@style/GmarketBold24"
+                android:gravity="center"
+                android:text="@string/duck_z" />
+
+            <TextView
+                style="@style/GmarketMedium12"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:lineSpacingExtra="6sp"
+                android:text="@string/terms_agree_desc"
+                android:textColor="@color/gray04" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_service"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/default_padding_24">
+
+            <TextView
+                style="@style/GmarketMedium14"
+                android:layout_width="wrap_content"
+                onDebounceClick="@{() -> viewModel.showTermsOfServiceFragment()}"
+                android:layout_height="wrap_content"
+                android:text="@string/terms_agree_service" />
+
+            <TextView
+                style="@style/GmarketMedium14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/terms_agree_need"
+                android:textColor="@color/blue" />
+
+            <CheckBox
+                android:id="@+id/checkbox_service"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/selector_checkbox_signup"
+                android:button="@null" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_privacy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="24dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/default_padding_24">
+
+            <TextView
+                style="@style/GmarketMedium14"
+                onDebounceClick="@{() -> viewModel.showTermsOfPrivacyFragment()}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/terms_agree_privacy" />
+
+            <TextView
+                style="@style/GmarketMedium14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/terms_agree_need"
+                android:textColor="@color/blue" />
+
+            <CheckBox
+                android:id="@+id/checkbox_privacy"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/selector_checkbox_signup"
+                android:button="@null"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="@dimen/default_padding_24"
+            android:background="@color/systemGray02" />
+
+
+        <LinearLayout
+            android:id="@+id/btn_all"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/default_padding_24">
+
+            <TextView
+                style="@style/GmarketMedium14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/terms_agree_all" />
+
+            <CheckBox
+                android:id="@+id/checkbox_all"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/selector_checkbox_signup"
+                android:button="@null"
+                android:clickable="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="92.5dp"
+            android:layout_marginBottom="32dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="24dp">
+
+            <TextView
+                android:id="@+id/btn_disagree"
+                style="@style/TermsAgree.Button.Negative"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginRight="16dp"
+                android:layout_weight="1"
+                android:text="@string/terms_agree_disagree"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/btn_agree"
+                style="@style/TermsAgree.Button.Positive"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:text="@string/terms_agree_agree"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

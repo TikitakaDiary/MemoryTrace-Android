@@ -1,6 +1,11 @@
 package com.upf.memorytrace_android.api.model
 
+import android.os.Parcelable
+import androidx.annotation.Keep
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
+@Keep
 data class User(
     var uid: Int = -1,
     var nickname: String = "",
@@ -11,6 +16,6 @@ data class User(
     var snsType: String = "",
     var createdDate: String = "",
     var token: String = ""
-)
+):Parcelable
 
 data class UserName(var nickname: String = "")
