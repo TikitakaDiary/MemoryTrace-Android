@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -16,6 +17,7 @@ import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.ui.base.BaseFragment
 import com.upf.memorytrace_android.databinding.FragmentLoginBinding
 import com.upf.memorytrace_android.extension.setOnDebounceClickListener
+import com.upf.memorytrace_android.ui.diary.detail.presentation.DetailFragmentDirections
 import com.upf.memorytrace_android.util.showDialog
 
 
@@ -35,6 +37,10 @@ internal class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding
 
         binding.btnGoogleLogin.setOnDebounceClickListener {
             showAgreeDialog { loginWithGoogle() }
+        }
+
+        binding.logoDuckz.setOnClickListener {
+            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToTermsAgreeFragment(null))
         }
     }
 
