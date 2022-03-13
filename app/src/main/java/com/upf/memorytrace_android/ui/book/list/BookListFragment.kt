@@ -9,7 +9,6 @@ import com.upf.memorytrace_android.databinding.FragmentBookListBinding
 import com.upf.memorytrace_android.extension.observe
 import com.upf.memorytrace_android.extension.observeEvent
 import com.upf.memorytrace_android.extension.showAllowingStateLoss
-import com.upf.memorytrace_android.extension.showIfDebug
 import com.upf.memorytrace_android.ui.base.BaseFragment
 import com.upf.memorytrace_android.ui.sponsor.SponsorPopupDialogFragment
 import com.upf.memorytrace_android.util.MemoryTraceConfig
@@ -25,7 +24,6 @@ internal class BookListFragment : BaseFragment<BookListViewModel, FragmentBookLi
         setupRecyclerView()
         initViewModel()
         viewModel.checkSponsorPopupPeriod()
-        binding.buttonSponsorDebug.showIfDebug()
     }
 
     private fun initDatas() {

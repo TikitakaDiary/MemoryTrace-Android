@@ -35,14 +35,18 @@ class SponsorPopupDialogFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         val binding = DialogSponsorPopupBinding.bind(view)
 
-        with(MemoryTraceConfig) {
-            lastShowSponsorPopupDate = Date()
-            sponsorPopupCount += 1
+        arguments?.getBoolean(IS_COUNTING, true)?.let {
+            if (it) {
+                with(MemoryTraceConfig) {
+                    lastShowSponsorPopupDate = Date()
+                    sponsorPopupCount += 1
+                }
+            }
         }
 
         GaLogSender.sendEvent(
             GaLogSender.EVENT_SHOW_SPONSOR_POPUP, bundleOf(
-                "count" to MemoryTraceConfig.sponsorPopupCount
+                "show_sponsor_select_price_popup" to MemoryTraceConfig.sponsorPopupCount
             )
         )
 
@@ -106,5 +110,16 @@ class SponsorPopupDialogFragment : BottomSheetDialogFragment() {
     override fun onResume() {
         super.onResume()
         viewModel.checkPurchases()
+    }
+
+    companion object {
+
+        private const val IS_COUNTING = "isCounting"
+
+        fun getInstance(isCounting: Boolean = true): SponsorPopupDialogFragment {
+            return SponsorPopupDialogFragment().apply {
+                arguments = bundleOf(IS_COUNTING to isCounting)
+            }
+        }
     }
 }

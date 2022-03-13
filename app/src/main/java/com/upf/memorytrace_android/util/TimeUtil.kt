@@ -55,6 +55,6 @@ object TimeUtil {
 
     fun getDayDiffAbs(from: Date, to: Date): Int {
         val diffSec = abs(from.time - to.time)
-        return (diffSec / (24 * 60 * 60)).toInt()
+        return (diffSec / (1000 * 24 * 60 * 60)).toInt()
     }
 }

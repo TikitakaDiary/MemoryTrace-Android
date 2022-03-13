@@ -177,6 +177,21 @@
                         android:text="@string/mypage_service_label" />
 
                     <RelativeLayout
+                        android:id="@+id/btn_sponsor"
+                        style="@style/MypageItemLayout">
+
+                        <TextView
+                            style="@style/MypageItem"
+                            android:text="@string/mypage_sponsor" />
+
+                        <ImageView
+                            style="@style/ImageView"
+                            android:layout_alignParentEnd="true"
+                            android:src="@drawable/ic_right_arrow" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
                         android:id="@+id/btn_current_version"
                         style="@style/MypageItemLayout">
 
