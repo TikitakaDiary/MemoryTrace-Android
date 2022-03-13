@@ -38,7 +38,7 @@ internal class BookListFragment : BaseFragment<BookListViewModel, FragmentBookLi
             when (it) {
                 BookListViewModel.Event.ShowSponsorPopup -> {
                     childFragmentManager.showAllowingStateLoss("sponsor") {
-                        SponsorPopupDialogFragment()
+                        SponsorPopupDialogFragment.getInstance()
                     }
                 }
             }

@@ -73,7 +73,7 @@ internal class MypageFragment : BaseFragment<MypageViewModel, FragmentMypageBind
         binding.btnSponsor.setOnDebounceClickListener {
             GaLogSender.sendEvent("mypage_click_sponsor")
             childFragmentManager.showAllowingStateLoss("sponsor") {
-                SponsorPopupDialogFragment()
+                SponsorPopupDialogFragment.getInstance(false)
             }
         }
 
