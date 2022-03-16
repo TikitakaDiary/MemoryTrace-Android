@@ -31,7 +31,7 @@ class DiaryListViewModel @Inject constructor(
         data class DiaryDetail(val diaryId: Int) : Event()
         data class Setting(val bookId: Int) : Event()
         data class Error(val errorMessage: String) : Event()
-        data class SuccessPinch(val turnUserName: String): Event()
+        data class SuccessPinch(val turnUserName: String) : Event()
     }
 
     private val _uiEvent = MutableEventLiveData<Event>()
@@ -40,26 +40,39 @@ class DiaryListViewModel @Inject constructor(
     private val _diaryListUiState = MutableStateFlow(DiaryListUiState())
     val diaryListUiState: StateFlow<DiaryListUiState> = _diaryListUiState
 
-    private val _pinchInfoUiState = MutableStateFlow(PinchInfoUiState())
-    val pinchInfoUiState: StateFlow<PinchInfoUiState> = _pinchInfoUiState
+    private val _diaryListTypeUiModel = MutableStateFlow(DiaryListTypeUiModel())
+    val diaryListTypeUiModel: StateFlow<DiaryListTypeUiModel> = _diaryListTypeUiModel
+
+    private val _diaryListContentUiModel = MutableStateFlow(DiaryListContentUiModel())
+    val diaryListContentUiModel: StateFlow<DiaryListContentUiModel> = _diaryListContentUiModel
+
+    private val _diaryHeaderUiModel = MutableStateFlow(DiaryHeaderUiModel())
+    val diaryHeaderUiModel: StateFlow<DiaryHeaderUiModel> = _diaryHeaderUiModel
 
     private val fetchSize: Int
-        get() = if (diaryListUiState.value.listContents.listType == DiaryListType.LINEAR) 10 else 30
+        get() = if (diaryListTypeUiModel.value.listType == DiaryListType.LINEAR) 10 else 30
 
     private var bookId: Int = -1
     private var page: Int = 0
     private var hasNext: Boolean = true
 
-    fun initializeDiaryList(bookId: Int) {
+    private var lastScrollPositionOfLinearList = 0
+    private var lastScrollPositionOfGridList = 0
+
+    fun initializeDiaryList(bookId: Int, force: Boolean) {
         this.bookId = bookId
-        page = 0
-        hasNext = true
-        loadDiaryList(true)
+        loadDiaryList(force)
     }
 
     fun loadDiaryList(force: Boolean = false) {
         val uiModel = diaryListUiState.value
-        if (force.not() && (uiModel.isLoading || hasNext.not())) return
+        if (uiModel.isLoading) return
+        if (force.not() && hasNext.not()) return
+
+        if (force) {
+            page = 0
+            hasNext = true
+        }
 
         viewModelScope.launch {
             _diaryListUiState.update { it.copy(isLoading = true) }
@@ -69,7 +82,7 @@ class DiaryListViewModel @Inject constructor(
                     val currentDiaryList = if (force) {
                         mutableListOf()
                     } else {
-                        uiModel.listContents.diaries.toMutableList()
+                        diaryListContentUiModel.value.diaries.toMutableList()
                     }
 
                     it.diaryList.forEach { currentItem ->
@@ -106,14 +119,24 @@ class DiaryListViewModel @Inject constructor(
                         uiModel.copy(
                             title = it.title,
                             isLoading = false,
-                            listContents = uiModel.listContents.copy(
-                                diaries = currentDiaryList,
-                                isMyTurn = isMyTurn,
-                                isForce = force,
-                            )
                         )
                     }
-                    if (isMyTurn.not()) {
+                    _diaryListContentUiModel.update { uiModel ->
+                        uiModel.copy(
+                            diaries = currentDiaryList,
+                            isMyTurn = isMyTurn,
+                            isForce = force,
+                        )
+                    }
+                    if (isMyTurn) {
+                        _diaryHeaderUiModel.update { header ->
+                            header.copy(
+                                isLoading = false,
+                                isMyTurn = true,
+                                onMyTurnClick = this@DiaryListViewModel::writeDiary
+                            )
+                        }
+                    } else {
                         fetchPinchInfo()
                     }
                 }
@@ -137,16 +160,22 @@ class DiaryListViewModel @Inject constructor(
     }
 
     fun changeListType() = viewModelScope.launch {
-        _diaryListUiState.update {
+        _diaryListTypeUiModel.update {
+            val newListType = it.listType.change()
             it.copy(
-                listContents = it.listContents.copy(listType = it.listContents.listType.change())
+                listType = newListType,
+                scrollPosition = if (newListType == DiaryListType.LINEAR) {
+                    lastScrollPositionOfLinearList
+                } else {
+                    lastScrollPositionOfGridList
+                }
             )
         }
     }
 
     private fun fetchPinchInfo() {
         viewModelScope.launch {
-            _pinchInfoUiState.update { it.copy(isLoading = true) }
+            _diaryHeaderUiModel.update { it.copy(isLoading = true) }
             fetchPinchInfoUseCase(bookId)
                 .onSuccess {
                     it.onSuccess()
@@ -158,7 +187,7 @@ class DiaryListViewModel @Inject constructor(
 
     private fun pinch() {
         viewModelScope.launch {
-            _pinchInfoUiState.update { it.copy(isLoading = true) }
+            _diaryHeaderUiModel.update { it.copy(isLoading = true) }
             pinchUseCase(bookId)
                 .onSuccess {
                     _uiEvent.event = Event.SuccessPinch(it.turnUserName)
@@ -170,8 +199,9 @@ class DiaryListViewModel @Inject constructor(
     }
 
     private fun PinchInfo.onSuccess() {
-        _pinchInfoUiState.update { uiModel ->
+        _diaryHeaderUiModel.update { uiModel ->
             uiModel.copy(
+                isMyTurn = false,
                 isLoading = false,
                 turnUserName = turnUserName,
                 pinchCount = pinchCount,
@@ -181,7 +211,7 @@ class DiaryListViewModel @Inject constructor(
     }
 
     private fun onPinchInfoFailure(errorMessage: String) {
-        _pinchInfoUiState.update { uiModel ->
+        _diaryHeaderUiModel.update { uiModel ->
             uiModel.copy(
                 isLoading = false,
                 isError = true

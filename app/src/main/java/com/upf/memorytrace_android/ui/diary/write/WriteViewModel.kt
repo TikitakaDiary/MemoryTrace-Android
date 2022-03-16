@@ -3,10 +3,13 @@ package com.upf.memorytrace_android.ui.diary.write
 import android.graphics.Bitmap
 import android.net.Uri
 import androidx.annotation.DrawableRes
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.upf.memorytrace_android.api.repository.DiaryRepository
 import com.upf.memorytrace_android.api.util.NetworkState
+import com.upf.memorytrace_android.databinding.EventLiveData
+import com.upf.memorytrace_android.databinding.MutableEventLiveData
 import com.upf.memorytrace_android.ui.base.BaseViewModel
 import com.upf.memorytrace_android.ui.diary.write.image.CameraImageDelegate
 import com.upf.memorytrace_android.util.BackDirections
@@ -43,6 +46,8 @@ internal class WriteViewModel @Inject constructor(
 
     val isSaveDiary = LiveEvent<Unit?>()
     val isExit = LiveEvent<Unit?>()
+
+    val isWriteDone = LiveEvent<Unit>()
 
     private var _imageUrl: Uri? = null
     val imageUri: Uri?
@@ -174,7 +179,7 @@ internal class WriteViewModel @Inject constructor(
                 }
 
                 when (response) {
-                    is NetworkState.Success -> onClickBack()
+                    is NetworkState.Success -> isWriteDone.call()
                     is NetworkState.Failure -> toast.value = response.message
                 }
             }
