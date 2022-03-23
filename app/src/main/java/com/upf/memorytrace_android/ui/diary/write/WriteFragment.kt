@@ -30,6 +30,7 @@ import com.upf.memorytrace_android.databinding.FragmentWriteBinding
 import com.upf.memorytrace_android.extension.observe
 import com.upf.memorytrace_android.extension.applyAdjustPanMode
 import com.upf.memorytrace_android.extension.toast
+import com.upf.memorytrace_android.ui.diary.list.presentation.DiaryListFragment
 import com.upf.memorytrace_android.ui.diary.write.color.ColorAdapter
 import com.upf.memorytrace_android.ui.diary.write.color.ColorItem
 import com.upf.memorytrace_android.ui.diary.write.image.ImageType
@@ -121,6 +122,12 @@ internal class WriteFragment : Fragment() {
                 Glide.with(requireContext())
                     .load(it)
                     .into(binding.image)
+            }
+        }
+        observe(viewModel.isWriteDone) {
+            findNavController().run {
+                previousBackStackEntry?.savedStateHandle?.set(DiaryListFragment.KEY_FORCE_INITIALIZE, true)
+                popBackStack()
             }
         }
 

@@ -67,34 +67,52 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> viewModel.changeListType()}"
-                android:src="@{viewModel.diaryListUiState.listContents.listType.iconRes}"
+                android:src="@{viewModel.diaryListTypeUiModel.listType.iconRes}"
                 app:layout_constraintBottom_toBottomOf="@id/title_tv"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:src="@drawable/ic_grid" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_diaries"
+        <FrameLayout
+            android:id="@+id/framelayout_diaries"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="20dp"
-            android:clipToPadding="false"
-            android:overScrollMode="never"
-            android:paddingBottom="20dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title_layout"
-            tools:listitem="@layout/item_diary_linear" />
+            app:layout_constraintTop_toBottomOf="@id/title_layout">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_diaries_linear"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:paddingBottom="20dp"
+                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_diary_linear" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_diaries_grid"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:paddingBottom="20dp"
+                android:visibility="gone"
+                tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                tools:listitem="@layout/item_diary_linear" />
+
+        </FrameLayout>
 
         <TextView
             style="@style/NotoRegular16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/diary_empty"
-            android:visibility="@{viewModel.diaryListUiState.listContents.diaries.size() == 0}"
+            android:visibility="@{viewModel.diaryListContentUiModel.diaries.size() == 0}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
