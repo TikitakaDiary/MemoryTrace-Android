@@ -5,9 +5,12 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.upf.memorytrace_android.R
-import com.upf.memorytrace_android.ui.base.BaseFragment
 import com.upf.memorytrace_android.databinding.FragmentBookListBinding
 import com.upf.memorytrace_android.extension.observe
+import com.upf.memorytrace_android.extension.observeEvent
+import com.upf.memorytrace_android.extension.showAllowingStateLoss
+import com.upf.memorytrace_android.ui.base.BaseFragment
+import com.upf.memorytrace_android.ui.sponsor.SponsorPopupDialogFragment
 import com.upf.memorytrace_android.util.MemoryTraceConfig
 
 internal class BookListFragment : BaseFragment<BookListViewModel, FragmentBookListBinding>() {
@@ -20,6 +23,7 @@ internal class BookListFragment : BaseFragment<BookListViewModel, FragmentBookLi
         initDatas()
         setupRecyclerView()
         initViewModel()
+        viewModel.checkSponsorPopupPeriod()
     }
 
     private fun initDatas() {
@@ -29,6 +33,15 @@ internal class BookListFragment : BaseFragment<BookListViewModel, FragmentBookLi
     private fun initViewModel() {
         observe(viewModel.bookList) { bookList ->
             bookAdapter.submitList(bookList.map { BookItem(it) })
+        }
+        observeEvent(viewModel.uiEvent) {
+            when (it) {
+                BookListViewModel.Event.ShowSponsorPopup -> {
+                    childFragmentManager.showAllowingStateLoss("sponsor") {
+                        SponsorPopupDialogFragment.getInstance()
+                    }
+                }
+            }
         }
         viewModel.init()
     }

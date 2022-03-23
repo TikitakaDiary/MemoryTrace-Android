@@ -6,11 +6,20 @@ import androidx.lifecycle.viewModelScope
 import com.upf.memorytrace_android.api.model.Book
 import com.upf.memorytrace_android.api.repository.BookRepository
 import com.upf.memorytrace_android.api.util.NetworkState
+import com.upf.memorytrace_android.databinding.EventLiveData
+import com.upf.memorytrace_android.databinding.MutableEventLiveData
 import com.upf.memorytrace_android.ui.base.BaseViewModel
+import com.upf.memorytrace_android.util.MemoryTraceConfig
+import com.upf.memorytrace_android.util.TimeUtil
 import kotlinx.coroutines.launch
 import java.util.*
 
 internal class BookListViewModel : BaseViewModel() {
+
+    enum class Event {
+        ShowSponsorPopup
+    }
+
     private var _bookList: MutableLiveData<List<Book>> = MutableLiveData()
     val bookList: LiveData<List<Book>>
         get() = _bookList
@@ -18,6 +27,10 @@ internal class BookListViewModel : BaseViewModel() {
     private var page: Int = 1
     private var hasNext = true
     val isLoading = MutableLiveData<Boolean>(false)
+
+    private val _uiEvent = MutableEventLiveData<Event>()
+    val uiEvent: EventLiveData<Event>
+        get() = _uiEvent
 
     fun init() {
         page = 1
@@ -49,6 +62,22 @@ internal class BookListViewModel : BaseViewModel() {
 
     }
 
+    fun checkSponsorPopupPeriod() {
+        val lastShowSponsorPopupDate = MemoryTraceConfig.lastShowSponsorPopupDate
+        if (lastShowSponsorPopupDate == null) {
+            MemoryTraceConfig.lastShowSponsorPopupDate = Date()
+            return
+        }
+        val diff = TimeUtil.getDayDiffAbs(Date(), lastShowSponsorPopupDate)
+        if (diff >= PERIOD_SPONSOR_POPUP) {
+            showSponsorPopup()
+        }
+    }
+
+    fun showSponsorPopup() {
+        _uiEvent.event = Event.ShowSponsorPopup
+    }
+
     fun loadMore(visibleItemCount: Int, totalItemCount: Int, firstVisibleItem: Int) {
         if ((firstVisibleItem + visibleItemCount) >= totalItemCount - BookRepository.PAGE_SIZE) {
             fetchBooks()
@@ -67,5 +96,9 @@ internal class BookListViewModel : BaseViewModel() {
 
     fun onClickDiary(did: Int) {
         navDirections.value = BookListFragmentDirections.actionBookListFragmentToDiaryFragment(did)
+    }
+
+    companion object {
+        private const val PERIOD_SPONSOR_POPUP = 28
     }
 }

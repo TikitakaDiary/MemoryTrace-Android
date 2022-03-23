@@ -1,7 +1,10 @@
 package com.upf.memorytrace_android.util
 
+import android.util.Log
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.abs
 
 object TimeUtil {
     const val YYYY_MM_DD_KR = 0
@@ -25,6 +28,19 @@ object TimeUtil {
         return SimpleDateFormat(dateFormat, Locale.getDefault()).format(date)
     }
 
+    fun stringToDate(format: String, date: String): Date? {
+        return try {
+            SimpleDateFormat(format, Locale.KOREA).parse(date)
+        } catch (e: ParseException) {
+            Log.e("TileUtil", "parseError", e)
+            null
+        }
+    }
+
+    fun dateToString(format: String, date: Date): String {
+        return SimpleDateFormat(format, Locale.KOREA).format(date)
+    }
+
     fun getYearAndDate(date: Date): String {
         val dateFormat = "yyyy.MM"
         return SimpleDateFormat(dateFormat, Locale.getDefault()).format(date)
@@ -34,5 +50,11 @@ object TimeUtil {
         return GregorianCalendar().apply { time = date }.get(Calendar.MONTH)
     }
 
-    fun convertStringToDate(format: String, date: String): Date? = SimpleDateFormat(format, Locale.KOREA).parse(date)
+    fun convertStringToDate(format: String, date: String): Date? =
+        SimpleDateFormat(format, Locale.KOREA).parse(date)
+
+    fun getDayDiffAbs(from: Date, to: Date): Int {
+        val diffSec = abs(from.time - to.time)
+        return (diffSec / (1000 * 24 * 60 * 60)).toInt()
+    }
 }
