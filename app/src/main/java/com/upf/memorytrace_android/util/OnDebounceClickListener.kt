@@ -8,7 +8,7 @@ class OnDebounceClickListener(
 ) : View.OnClickListener {
 
     companion object {
-        const val DEFAULT_INTERVAL = 300L
+        const val DEFAULT_INTERVAL = 1000L
     }
 
     private var lastClickedMillis: Long = 0
