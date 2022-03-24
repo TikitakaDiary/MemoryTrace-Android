@@ -1,4 +1,4 @@
-package com.upf.memorytrace_android.ui.sponsor
+package com.upf.memorytrace_android.ui.sponsor.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

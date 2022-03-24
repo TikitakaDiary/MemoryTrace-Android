@@ -36,7 +36,7 @@ class StatusInterceptor : Interceptor {
                 log(logMessage)
                 recordException(StatusError(data))
             }
-            if (data.responseMessage.isBlank()) throw IOException()
+            if (data.responseMessage.isNullOrEmpty()) throw IOException()
             throw StatusError(data)
         }
         return response

@@ -1,4 +1,4 @@
-package com.upf.memorytrace_android.ui.sponsor
+package com.upf.memorytrace_android.ui.sponsor.ui
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.android.billingclient.api.*
 import com.upf.memorytrace_android.databinding.EventLiveData
 import com.upf.memorytrace_android.databinding.MutableEventLiveData
+import com.upf.memorytrace_android.ui.sponsor.domain.PostPurchaseTokenUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SponsorViewModel @Inject constructor(
-    billingClientBuilder: BillingClient.Builder
+    billingClientBuilder: BillingClient.Builder,
+    private val postPurchaseTokenUseCase: PostPurchaseTokenUseCase
 ) : ViewModel(), PurchasesUpdatedListener, PurchasesResponseListener {
 
     private val _uiState = MutableStateFlow(SponsorUiState())
@@ -36,6 +38,8 @@ class SponsorViewModel @Inject constructor(
         .setListener(this)
         .enablePendingPurchases()
         .build()
+
+    private var isConsuming = false
 
     fun startBillingConnection() {
         _uiState.update {
@@ -56,7 +60,7 @@ class SponsorViewModel @Inject constructor(
                             isLoading = false,
                             sponsorItems = getSkuDetailList()
                                 .sortedBy { skuDetails ->
-                                    skuDetails.price.replace(NUMBER_REGEX, "").toInt()
+                                    skuDetails.price.extractNumber()
                                 }
                                 .map { skuDetails ->
                                     skuDetails.toUiState(onClick = { doSponsor(skuDetails) })
@@ -130,6 +134,7 @@ class SponsorViewModel @Inject constructor(
         billingResult: BillingResult,
         purchases: MutableList<Purchase>?
     ) {
+        if (isConsuming) return
         _uiState.update { it.copy(isLoading = true) }
         consumePurchases(billingResult, purchases)
     }
@@ -138,31 +143,47 @@ class SponsorViewModel @Inject constructor(
         billingResult: BillingResult,
         purchases: MutableList<Purchase>
     ) {
-        if (purchases.isEmpty()) return
+        if (isConsuming || purchases.isEmpty()) return
         _uiState.update { it.copy(isLoading = true) }
         consumePurchases(billingResult, purchases)
     }
 
     private fun consumePurchases(billingResult: BillingResult, purchases: MutableList<Purchase>?) {
+        isConsuming = true
         if (billingResult.isSuccess() && purchases != null) {
             viewModelScope.launch {
-                val consumeResults = mutableMapOf<Purchase, Boolean>()
+                val consumeFailList = mutableListOf<Purchase>()
+
                 for (purchase in purchases) {
-                    consumeResults[purchase] = handlePurchase(purchase)
+                    if (handlePurchase(purchase)) {
+                        val price = purchase.getPrice()
+                        if (price == null) {
+                            consumeFailList.add(purchase)
+                        } else {
+                            postPurchaseTokenUseCase(purchase.purchaseToken, price)
+                        }
+                    } else {
+                        consumeFailList.add(purchase)
+                    }
                 }
                 _billingEvent.event =
-                    BillingState.Done(consumeResults.filter { it.value.not() }.keys.toList())
+                    BillingState.Done(consumeFailList)
                 _uiState.update { it.copy(isLoading = false) }
+                isConsuming = false
             }
         } else {
             Log.e(javaClass.simpleName, "onPurchasesUpdated(): ${billingResult.debugMessage}")
             _error.event = SponsorError.BillingError(billingResult.debugMessage)
             _uiState.update { it.copy(isLoading = false) }
+            isConsuming = false
         }
     }
 
     private fun BillingResult.isSuccess() = responseCode == BillingClient.BillingResponseCode.OK
     private fun BillingResult.isFailure() = responseCode != BillingClient.BillingResponseCode.OK
+    private fun Purchase.getPrice(): Int? = skus.getOrNull(0)?.extractNumber()
+
+    private fun String.extractNumber(): Int = replace(NUMBER_REGEX, "").toInt()
 
     companion object {
         private val SKU_LIST = listOf("sponsor_900", "sponsor_1900", "sponsor_3900")

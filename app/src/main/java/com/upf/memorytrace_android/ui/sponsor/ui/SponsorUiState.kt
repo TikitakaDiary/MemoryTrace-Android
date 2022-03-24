@@ -1,4 +1,4 @@
-package com.upf.memorytrace_android.ui.sponsor
+package com.upf.memorytrace_android.ui.sponsor.ui
 
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingFlowParams
@@ -30,4 +30,5 @@ sealed class SponsorError {
     data class BillingError(val message: String): SponsorError()
     object NoSkuDetailsError: SponsorError()
     object BillingDisconnectError: SponsorError()
+    object NoSkuInPurchase: SponsorError()
 }
