@@ -32,6 +32,7 @@ class DiaryListViewModel @Inject constructor(
         data class Setting(val bookId: Int) : Event()
         data class Error(val errorMessage: String) : Event()
         data class SuccessPinch(val turnUserName: String) : Event()
+        object ExceedPinch: Event()
     }
 
     private val _uiEvent = MutableEventLiveData<Event>()
@@ -180,7 +181,9 @@ class DiaryListViewModel @Inject constructor(
                 .onSuccess {
                     it.onSuccess()
                 }.onFailure {
-                    onPinchInfoFailure(it)
+                    onPinchInfoFailure {
+                        _uiEvent.event = Event.Error(it)
+                    }
                 }
         }
     }
@@ -193,7 +196,9 @@ class DiaryListViewModel @Inject constructor(
                     _uiEvent.event = Event.SuccessPinch(it.turnUserName)
                     it.onSuccess()
                 }.onFailure {
-                    onPinchInfoFailure(it)
+                    onPinchInfoFailure {
+                        _uiEvent.event = Event.ExceedPinch
+                    }
                 }
         }
     }
@@ -210,14 +215,14 @@ class DiaryListViewModel @Inject constructor(
         }
     }
 
-    private fun onPinchInfoFailure(errorMessage: String) {
+    private fun onPinchInfoFailure(afterEvent: () -> Unit) {
         _diaryHeaderUiModel.update { uiModel ->
             uiModel.copy(
                 isLoading = false,
                 isError = true
             )
         }
-        _uiEvent.event = Event.Error(errorMessage)
+        afterEvent.invoke()
     }
 
     private fun onClickDiaryDetail(diaryId: Int) {

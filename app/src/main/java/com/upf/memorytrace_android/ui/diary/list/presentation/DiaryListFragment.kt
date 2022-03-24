@@ -152,6 +152,9 @@ class DiaryListFragment : BindingFragment<FragmentDiaryBinding>(R.layout.fragmen
                         is DiaryListViewModel.Event.SuccessPinch -> {
                             toast(getString(R.string.pinch_success_toast, event.turnUserName))
                         }
+                        is DiaryListViewModel.Event.ExceedPinch -> {
+                            toast(getString(R.string.pinch_fail_exceed_toast))
+                        }
                     }
                 }
             }

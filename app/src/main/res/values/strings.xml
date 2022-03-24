@@ -121,7 +121,8 @@
     <string name="header_othder_turn_desc">본인차례가 되면 작성할 수 있어요</string>
     <string name="header_othder_turn_pinch_count">오늘 재촉 가능 횟수</string>
     <string name="header_othder_turn_pinch">재촉하기</string>
-    <string name="pinch_success_toast">%s님이 일기를 쓰도록 재촉했어요!</string>
+    <string name="pinch_success_toast">%s님이 일기를 쓰도록 재촉했어요!👉</string>
+    <string name="pinch_fail_exceed_toast">재촉하기엔 아직 일러요😢</string>
 
     <string name="sponsor_title">덕지를 잘 이용하고 계신가요?</string>
     <string name="sponsor_desc">덕지를 잘 쓰고 계시다면 \n서비스 유지를 위해 커피 한잔 값을 후원해 주세요!</string>
