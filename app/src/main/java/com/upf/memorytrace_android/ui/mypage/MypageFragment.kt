@@ -14,7 +14,7 @@ import com.upf.memorytrace_android.extension.setOnDebounceClickListener
 import com.upf.memorytrace_android.extension.showAllowingStateLoss
 import com.upf.memorytrace_android.extension.toast
 import com.upf.memorytrace_android.firebase.GaLogSender
-import com.upf.memorytrace_android.ui.sponsor.SponsorPopupDialogFragment
+import com.upf.memorytrace_android.ui.sponsor.ui.SponsorPopupDialogFragment
 import com.upf.memorytrace_android.util.MemoryTraceConfig
 import com.upf.memorytrace_android.util.showDialog
 
