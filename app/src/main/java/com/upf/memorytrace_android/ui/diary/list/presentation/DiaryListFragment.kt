@@ -144,13 +144,16 @@ class DiaryListFragment : BindingFragment<FragmentDiaryBinding>(R.layout.fragmen
                                     findNavController().navigate(this)
                                 }
                         }
+                        is DiaryListViewModel.Event.SuccessPinch -> {
+                            toast(getString(R.string.pinch_success_toast, event.turnUserName))
+                        }
+                        is DiaryListViewModel.Event.NoPinchCount -> {
+                            toast(getString(R.string.pinch_no_pinch_count_toast))
+                        }
                         is DiaryListViewModel.Event.Error -> {
                             toast(event.errorMessage.takeIf { message ->
                                 message.isNotEmpty()
                             } ?: getString(R.string.unknown_error))
-                        }
-                        is DiaryListViewModel.Event.SuccessPinch -> {
-                            toast(getString(R.string.pinch_success_toast, event.turnUserName))
                         }
                     }
                 }

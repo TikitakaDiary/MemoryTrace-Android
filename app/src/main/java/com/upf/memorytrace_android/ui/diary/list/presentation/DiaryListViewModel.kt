@@ -32,6 +32,7 @@ class DiaryListViewModel @Inject constructor(
         data class Setting(val bookId: Int) : Event()
         data class Error(val errorMessage: String) : Event()
         data class SuccessPinch(val turnUserName: String) : Event()
+        object NoPinchCount: Event()
     }
 
     private val _uiEvent = MutableEventLiveData<Event>()
@@ -186,6 +187,11 @@ class DiaryListViewModel @Inject constructor(
     }
 
     private fun pinch() {
+        val pinchInfo = diaryHeaderUiModel.value
+        if (pinchInfo.pinchCount < 1) {
+            _uiEvent.event = Event.NoPinchCount
+            return
+        }
         viewModelScope.launch {
             _diaryHeaderUiModel.update { it.copy(isLoading = true) }
             pinchUseCase(bookId)
@@ -204,6 +210,7 @@ class DiaryListViewModel @Inject constructor(
                 isMyTurn = false,
                 isLoading = false,
                 turnUserName = turnUserName,
+                pinchable = pinchable,
                 pinchCount = pinchCount,
                 onPinchClick = { pinch() }
             )

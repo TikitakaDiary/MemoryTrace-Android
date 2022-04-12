@@ -20,6 +20,7 @@ data class DiaryHeaderUiModel(
     val isMyTurn: Boolean = false,
     val isLoading: Boolean = true,
     val turnUserName: String = "",
+    val pinchable: Boolean = false,
     val pinchCount: Int = 0,
     val onPinchClick: () -> Unit = {},
     val onMyTurnClick: () -> Unit = {},
