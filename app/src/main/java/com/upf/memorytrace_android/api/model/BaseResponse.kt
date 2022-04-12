@@ -5,7 +5,7 @@ import java.lang.reflect.Type
 
 open class BaseResponse<out T>(
     val statusCode: String = "",
-    val responseMessage: String = "",
+    val responseMessage: String? = "",
     val data: T? = null
 ) {
     val isSuccess: Boolean

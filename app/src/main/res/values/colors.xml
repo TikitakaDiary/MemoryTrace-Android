@@ -8,6 +8,7 @@
     <color name="systemBlack">#000000</color>
     <color name="systemRed">#FF3B30</color>
     <color name="systemBlue">#2D9CDB</color>
+    <color name="systemBlueAlpha50">#802D9CDB</color>
     <color name="systemGray01">#212121</color>
     <color name="systemGray02">#4f4f4f</color>
 
@@ -23,6 +24,7 @@
     <color name="lightGray">#B1B1B1</color>
     <color name="darkGray">#696969</color>
 
+    <color name="gray00">#323232</color>
     <color name="gray01">#333333</color>
     <color name="gray69">#696969</color>
     <color name="gray03">#828282</color>

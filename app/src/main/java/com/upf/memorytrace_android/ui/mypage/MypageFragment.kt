@@ -10,7 +10,11 @@ import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.ui.base.BaseFragment
 import com.upf.memorytrace_android.databinding.FragmentMypageBinding
 import com.upf.memorytrace_android.extension.observe
+import com.upf.memorytrace_android.extension.setOnDebounceClickListener
+import com.upf.memorytrace_android.extension.showAllowingStateLoss
 import com.upf.memorytrace_android.extension.toast
+import com.upf.memorytrace_android.firebase.GaLogSender
+import com.upf.memorytrace_android.ui.sponsor.ui.SponsorPopupDialogFragment
 import com.upf.memorytrace_android.util.MemoryTraceConfig
 import com.upf.memorytrace_android.util.showDialog
 
@@ -65,6 +69,14 @@ internal class MypageFragment : BaseFragment<MypageViewModel, FragmentMypageBind
                 viewModel.withdrawalUser()
             }
         }
+
+        binding.btnSponsor.setOnDebounceClickListener {
+            GaLogSender.sendEvent("mypage_click_sponsor")
+            childFragmentManager.showAllowingStateLoss("sponsor") {
+                SponsorPopupDialogFragment.getInstance(false)
+            }
+        }
+
         observe(viewModel.showOssPage){ startActivity(Intent(requireActivity(), OssLicensesMenuActivity::class.java)) }
         observe(viewModel.sendEmail){
             val content = "[문의정보]\n닉네임 : ${viewModel.name.value}\nuid : ${viewModel.uid}\n가입정보 : ${viewModel.sns.value}\n버전정보 : ${viewModel.version.value}(${Build.VERSION.SDK_INT})\n\n"

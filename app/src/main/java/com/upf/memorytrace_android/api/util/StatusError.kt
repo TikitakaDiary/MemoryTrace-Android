@@ -5,5 +5,5 @@ import java.io.IOException
 
 class StatusError(response: BaseResponse<*>) : IOException() {
     val statusCode = response.statusCode
-    val responseMessage = response.responseMessage
+    val responseMessage = response.responseMessage ?: ""
 }

@@ -1,16 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="15dp"
-    android:background="@drawable/bg_diary_write_button">
 
-    <TextView
-        android:layout_width="wrap_content"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:paddingVertical="25dp"
-        android:text="Todo: 다른 사람 턴 안내 및 재촉하기" />
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/rect_white_rounded"
+        android:backgroundTint="@color/gray00">
 
-</FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/root_other_turn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="19dp"
+            android:visibility="invisible"
+            tools:visibility="visible">
+
+            <TextView
+                android:id="@+id/title_other_turn"
+                style="@style/GmarketBold18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="혜데이님 ✍ 작성중!" />
+
+            <TextView
+                android:id="@+id/desc_other_turn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/header_othder_turn_desc"
+                android:textColor="@color/gray04"
+                android:textSize="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title_other_turn" />
+
+            <TextView
+                android:id="@+id/pinch_other_turn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/header_othder_turn_pinch_count"
+                android:textColor="@color/gray04"
+                android:textSize="12dp"
+                app:layout_constraintEnd_toStartOf="@id/button_other_turn_pinch"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/desc_other_turn" />
+
+            <LinearLayout
+                android:id="@+id/linearlayout_pinch_count"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="6dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@id/pinch_other_turn"
+                app:layout_constraintEnd_toStartOf="@id/button_other_turn_pinch"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@id/pinch_other_turn"
+                app:layout_constraintTop_toTopOf="@id/pinch_other_turn">
+
+                <!-- 이미지가 들어올 곳 -->
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button_other_turn_pinch"
+                style="@style/BlueButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="6dp"
+                android:text="@string/header_othder_turn_pinch"
+                app:layout_constraintBottom_toBottomOf="@id/pinch_other_turn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/pinch_other_turn"
+                app:layout_constraintTop_toTopOf="@id/pinch_other_turn" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ProgressBar
+            android:id="@+id/progressbar_other_turn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/gray03"
+            tools:visibility="gone" />
+
+    </FrameLayout>
+
+</layout>
