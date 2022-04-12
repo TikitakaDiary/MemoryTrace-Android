@@ -8,6 +8,7 @@
     <color name="systemBlack">#000000</color>
     <color name="systemRed">#FF3B30</color>
     <color name="systemBlue">#2D9CDB</color>
+    <color name="systemBlueAlpha50">#802D9CDB</color>
     <color name="systemGray01">#212121</color>
     <color name="systemGray02">#4f4f4f</color>
 

@@ -2,6 +2,7 @@ package com.upf.memorytrace_android.ui.diary.list.presentation.viewholder
 
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
@@ -52,8 +53,8 @@ abstract class HeaderViewHolder(itemView: View): RecyclerView.ViewHolder(itemVie
 
             binding.titleOtherTurn.text =
                 binding.root.context.getString(R.string.header_other_turn_title, data.turnUserName)
-            binding.linearlayoutPinchCount.renderPinchCount(data.pinchCount)
-            binding.buttonOtherTurnPinch.isEnabled = data.pinchCount > 0
+            binding.linearlayoutPinchCount.renderPinchCount(pinchCount = data.pinchCount)
+            binding.buttonOtherTurnPinch.setButtonTextColor(isEnabled = data.pinchable && data.pinchCount > 0)
         }
 
         private fun LinearLayout.renderPinchCount(pinchCount: Int) {
@@ -66,6 +67,15 @@ abstract class HeaderViewHolder(itemView: View): RecyclerView.ViewHolder(itemVie
                 }
                 addView(duckImageView)
             }
+        }
+
+        private fun Button.setButtonTextColor(isEnabled: Boolean) {
+            val buttonColorRes = if (isEnabled) {
+                R.color.systemBlue
+            } else {
+                R.color.systemBlueAlpha50
+            }
+            setTextColor(context.getColor(buttonColorRes))
         }
 
         companion object {

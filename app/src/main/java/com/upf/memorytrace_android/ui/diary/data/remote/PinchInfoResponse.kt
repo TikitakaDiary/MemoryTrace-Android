@@ -10,6 +10,7 @@ data class PinchInfoResponse(
 )
 
 fun PinchInfoResponse.toEntity() = PinchInfo(
+    pinchable = pinchable,
     turnUserName = turnUserName,
     pinchCount = pinchCount
 )
