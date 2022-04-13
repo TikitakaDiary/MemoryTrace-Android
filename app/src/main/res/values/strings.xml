@@ -122,7 +122,6 @@
     <string name="header_othder_turn_pinch_count">오늘 재촉 가능 횟수</string>
     <string name="header_othder_turn_pinch">재촉하기</string>
     <string name="pinch_success_toast">%s님이 일기를 쓰도록 재촉했어요!</string>
-    <string name="pinch_no_pinch_count_toast">재촉하기는 일기장당 하루 세번만 가능 해요!</string>
 
     <string name="sponsor_title">덕지를 잘 이용하고 계신가요?</string>
     <string name="sponsor_desc">덕지를 잘 쓰고 계시다면 \n서비스 유지를 위해 커피 한잔 값을 후원해 주세요!</string>
