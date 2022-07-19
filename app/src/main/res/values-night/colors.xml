@@ -17,4 +17,5 @@
     <color name="bg08">@color/whiteAlpha8</color>
 
     <color name="statusbarColor">@color/ggray02</color>
+    <color name="tempicon06">@color/systemWhite</color>
 </resources>

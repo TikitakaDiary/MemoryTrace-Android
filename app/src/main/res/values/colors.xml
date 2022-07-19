@@ -21,7 +21,7 @@
     <color name="ggray03">#696969</color>
     <color name="ggray04">#b1b1b1</color>
     <color name="ggray05">#E0E0E0</color>
-    <color name="ggray06">#ffffff</color>
+    <color name="ggray06">#f2f2f2</color>
 
     <color name="tempgray04">#b1b1b1</color>
     <color name="tempgray06">#ffffff</color>
@@ -43,5 +43,6 @@
     <color name="bg07">@color/ggray05</color>
     <color name="bg08">@color/blackAlpha5</color>
 
+    <color name="tempicon06">@color/ggray05</color>
     <color name="statusbarColor">@color/ggray04</color>
 </resources>

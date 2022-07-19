@@ -96,7 +96,7 @@
     <!-- 일기 작성-->
     <style name="WriteTitleEditText" parent="Widget.AppCompat.EditText">
         <item name="android:fontFamily">@font/gmarket_sans_ttf_bold</item>
-        <item name="android:textSize">18dp</item>
+        <item name="android:textSize">@dimen/font_18</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:textColor">@color/ggray01</item>
@@ -104,7 +104,7 @@
     </style>
 
     <style name="WriteContentEditText" parent="Widget.AppCompat.EditText">
-        <item name="android:textSize">16dp</item>
+        <item name="android:textSize">@dimen/font_16</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:textColor">@color/text01</item>
@@ -113,21 +113,21 @@
 
     <style name="WriteStickerListTitleTextView" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/gmarket_sans_ttf_bold</item>
-        <item name="android:textSize">14dp</item>
+        <item name="android:textSize">@dimen/font_14</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:textColor">@color/tempgray06</item>
     </style>
 
     <style name="DateTextView" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/gmarket_sans_ttf_medium</item>
-        <item name="android:textSize">14dp</item>
+        <item name="android:textSize">@dimen/font_14</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:textColor">@color/tempgray04</item>
     </style>
 
     <style name="NameTextView" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/gmarket_sans_ttf_medium</item>
-        <item name="android:textSize">14dp</item>
+        <item name="android:textSize">@dimen/font_14</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:textColor">@color/systemBlue</item>
         <item name="android:maxLines">1</item>
@@ -231,17 +231,17 @@
     <style name="CommentItem" />
 
     <style name="CommentItem.Title">
-        <item name="android:textSize">14dp</item>
+        <item name="android:textSize">@dimen/font_14</item>
         <item name="android:textColor">@color/systemBlue</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="CommentItem.Content">
-        <item name="android:textSize">14dp</item>
+        <item name="android:textSize">@dimen/font_14</item>
     </style>
 
     <style name="CommentItem.Bottoms">
-        <item name="android:textSize">10dp</item>
+        <item name="android:textSize">@dimen/font_10</item>
         <item name="android:textColor">@color/text04</item>
     </style>
 
