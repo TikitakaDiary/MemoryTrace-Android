@@ -17,10 +17,11 @@
         android:src="@drawable/ic_plus" />
 
     <TextView
-        style="@style/GmarketMedium20"
+        style="@style/GmarketBold18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:text="@string/diary_your_turn" />
+        android:text="@string/diary_your_turn"
+        android:textColor="@color/text03" />
 
 </LinearLayout>

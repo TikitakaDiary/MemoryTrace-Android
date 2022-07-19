@@ -63,6 +63,11 @@
         <item name="android:textSize">@dimen/font_14</item>
     </style>
 
+    <style name="GmarketMedium12" parent="Content">
+        <item name="android:fontFamily">@font/gmarket_sans_ttf_medium</item>
+        <item name="android:textSize">@dimen/font_12</item>
+    </style>
+
     <style name="NotoBold16" parent="Content">
         <item name="android:fontFamily">@font/noto_sans_kr_bold</item>
         <item name="android:textSize">@dimen/font_16</item>
@@ -153,7 +158,7 @@
         <item name="android:background">@android:color/transparent</item>
         <item name="android:textColor">@color/selector_button</item>
         <item name="android:fontFamily">@font/gmarket_sans_ttf_bold</item>
-        <item name="android:textSize">12dp</item>
+        <item name="android:textSize">@dimen/font_12</item>
         <item name="android:textStyle">bold</item>
         <item name="android:minWidth">0dp</item>
         <item name="android:minHeight">0dp</item>
