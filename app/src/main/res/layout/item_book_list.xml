@@ -30,7 +30,7 @@
         app:cardElevation="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:backgroundTint="@color/systemGray02">
+        tools:backgroundTint="@color/ggray02">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -44,6 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/title_spacing_16"
+                android:textColor="@color/systemWhite"
                 android:textWithForm="@{item.book.nickname}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -64,6 +65,7 @@
                     android:layout_weight="3"
                     android:gravity="center_vertical"
                     android:text="@{item.book.title}"
+                    android:textColor="@color/systemWhite"
                     tools:text="안녕하세요아녕하신가요ddddddddddddddddd" />
 
                 <ImageView

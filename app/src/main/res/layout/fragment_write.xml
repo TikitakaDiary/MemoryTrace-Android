@@ -26,7 +26,7 @@
                 android:layout_height="match_parent"
                 android:onClick="@{()->viewModel.onClickExit()}"
                 android:paddingHorizontal="24dp"
-                android:src="@drawable/ic_back"
+                android:src="@drawable/ic_arrow_back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/write_create_diary"
-                android:textSize="16sp"
+                android:textSize="@dimen/font_16"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +47,7 @@
                 android:onClick="@{()->viewModel.saveDiary()}"
                 android:paddingHorizontal="24dp"
                 android:text="@string/write_delivery"
-                android:textSize="16sp"
+                android:textSize="@dimen/font_16"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -60,6 +60,7 @@
             android:layout_marginHorizontal="@dimen/default_padding_24"
             android:layout_marginTop="@dimen/default_spacing_8"
             android:background="@drawable/bg_polaroid"
+            android:elevation="5dp"
             android:padding="@dimen/default_padding_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -87,7 +88,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/lightGray"
+                        android:background="@color/ggray04"
                         android:gravity="center"
                         android:onClick="@{()->viewModel.showSelectImgDialog()}"
                         android:visibility="@{viewModel.color == null &amp;&amp; viewModel.bitmap == null &amp;&amp; viewModel.cantEditableImageUrl == null}">
@@ -100,9 +101,9 @@
 
                     <ImageView
                         android:id="@+id/image"
-                        android:src="@{viewModel.bitmap}"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:src="@{viewModel.bitmap}"
                         android:visibility="@{viewModel.bitmap != null || viewModel.cantEditableImageUrl != null}" />
 
                     <View
@@ -122,7 +123,7 @@
                 android:layout_marginTop="@dimen/default_padding_24"
                 android:hint="@string/write_hint_title"
                 android:text="@={viewModel.title}"
-                android:textColorHint="@color/lightGray"
+                android:textColorHint="@color/ggray04"
                 app:layout_constraintTop_toBottomOf="@id/card_view" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -186,7 +187,7 @@
             android:id="@+id/menu_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/systemGray02"
+            android:background="@color/bg05"
             android:padding="12dp"
             android:paddingHorizontal="@dimen/default_padding_24"
             android:paddingVertical="@dimen/default_spacing_8"
@@ -225,7 +226,7 @@
                 android:id="@+id/color_top_layout"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:background="@color/systemGray01"
+                android:background="@color/bg01"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:visibility="gone">
 
@@ -243,7 +244,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/write_select_color_title"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/font_16"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -255,7 +256,7 @@
                     android:onClick="@{()->viewModel.saveColor()}"
                     android:paddingHorizontal="24dp"
                     android:text="@string/save"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/font_16"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -264,7 +265,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/systemGray01"
+                android:background="@color/bg01"
                 android:paddingHorizontal="18dp"
                 android:paddingTop="20dp"
                 android:paddingBottom="43dp"
@@ -283,13 +284,11 @@
 
         <ProgressBar
             android:id="@+id/progressbar"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:indeterminateTint="@color/lightGray"
+            style="@style/LoadingProgressBar"
             android:visibility="@{viewModel.showLoading?View.VISIBLE:View.GONE}"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

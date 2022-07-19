@@ -13,13 +13,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="10dp">
+        android:layout_margin="10dp"
+        android:paddingTop="6dp">
 
         <TextView
-            style="@style/GmarketMedium16"
+            style="@style/GmarketMedium18"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{date}"
+            android:textColor="@color/text04"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="2021.06" />
 

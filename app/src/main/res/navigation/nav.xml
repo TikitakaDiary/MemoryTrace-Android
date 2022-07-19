@@ -114,6 +114,10 @@
             app:destination="@id/nameEditFragment" />
 
         <action
+            android:id="@+id/action_mypageFragment_to_themeChangeFragment"
+            app:destination="@id/themeChangeFragment" />
+
+        <action
             android:id="@+id/action_mypageFragment_to_termsFragment"
             app:destination="@id/termsFragment" />
 
@@ -128,6 +132,11 @@
         android:id="@+id/nameEditFragment"
         android:name="com.upf.memorytrace_android.ui.mypage.nameedit.NameEditFragment"
         android:label="NameEditFragment" />
+
+    <fragment
+        android:id="@+id/themeChangeFragment"
+        android:name="com.upf.memorytrace_android.ui.mypage.themechange.ThemeChangeFragment"
+        android:label="ThemeChangeFragment" />
 
     <fragment
         android:id="@+id/cropFragment"

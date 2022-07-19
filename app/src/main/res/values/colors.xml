@@ -1,36 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
-
+    <!-- raw color-->
     <color name="systemWhite">#FFFFFF</color>
+    <color name="whiteAlpha60">#99FFFFFF</color>
+    <color name="whiteAlpha20">#33FFFFFF</color>
+    <color name="whiteAlpha8">#14FFFFFF</color>
+
     <color name="systemBlack">#000000</color>
-    <color name="systemRed">#FF3B30</color>
+    <color name="blackAlpha40">#66000000</color>
+    <color name="blackAlpha20">#33000000</color>
+    <color name="blackAlpha5">#0D000000</color>
+
     <color name="systemBlue">#2D9CDB</color>
     <color name="systemBlueAlpha50">#802D9CDB</color>
-    <color name="systemGray01">#212121</color>
-    <color name="systemGray02">#4f4f4f</color>
 
-    <color name="red">#D54E4E</color>
-    <color name="orange">#F59728</color>
-    <color name="yellow">#FFD84C</color>
-    <color name="green">#68C459</color>
-    <color name="oceanBlue">#43CAC2</color>
-    <color name="blue">#3578DC</color>
-    <color name="darkBlue">#2A43C7</color>
-    <color name="purple">#8B47D0</color>
-    <color name="pink">#EA7AA6</color>
-    <color name="lightGray">#B1B1B1</color>
-    <color name="darkGray">#696969</color>
+    <color name="systemRed">#FF3B30</color>
 
-    <color name="gray00">#323232</color>
-    <color name="gray01">#333333</color>
-    <color name="gray69">#696969</color>
-    <color name="gray03">#828282</color>
-    <color name="gray04">#BDBDBD</color>
-    <color name="gray05">#E0E0E0</color>
-    <color name="gray06">#F2F2F2</color>
+    <color name="ggray01">#212121</color>
+    <color name="ggray02">#4f4f4f</color>
+    <color name="ggray03">#696969</color>
+    <color name="ggray04">#b1b1b1</color>
+    <color name="ggray05">#E0E0E0</color>
+    <color name="ggray06">#f2f2f2</color>
 
-    <color name="background">#E5E5E5</color>
+    <color name="tempgray04">#b1b1b1</color>
+    <color name="tempgray06">#ffffff</color>
+
+    <!-- day and night color-->
+    <color name="text01">@color/ggray01</color>
+    <color name="text02">@color/systemWhite</color>
+    <color name="text03">@color/ggray02</color>
+    <color name="text04">@color/ggray03</color>
+    <color name="icon01">@color/ggray01</color>
+    <color name="icon03">@color/ggray02</color>
+    <color name="icon05">@color/ggray05</color>
+    <color name="bg01">@color/systemWhite</color>
+    <color name="bg02">@color/systemWhite</color>
+    <color name="bg03">@color/ggray03</color>
+    <color name="bg04">@color/ggray06</color>
+    <color name="bg05">@color/ggray06</color>
+    <color name="bg06">@color/ggray05</color>
+    <color name="bg07">@color/ggray05</color>
+    <color name="bg08">@color/blackAlpha5</color>
+
+    <color name="tempicon06">@color/ggray05</color>
+    <color name="statusbarColor">@color/ggray04</color>
 </resources>

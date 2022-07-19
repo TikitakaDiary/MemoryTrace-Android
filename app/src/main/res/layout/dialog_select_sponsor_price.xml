@@ -10,7 +10,7 @@
         android:layout_width="275dp"
         android:layout_height="wrap_content"
         android:background="@drawable/rect_white_rounded"
-        android:backgroundTint="@color/gray03"
+        android:backgroundTint="@color/bg02"
         android:gravity="center"
         android:orientation="vertical"
         android:paddingHorizontal="20dp"
@@ -18,7 +18,7 @@
         android:paddingBottom="12dp">
 
         <TextView
-            style="@style/GmarketMedium18"
+            style="@style/GmarketBold18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sponsor_select_price_title" />

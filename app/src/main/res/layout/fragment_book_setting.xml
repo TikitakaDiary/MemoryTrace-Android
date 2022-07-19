@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:paddingEnd="24dp"
-                android:src="@drawable/ic_back"
+                android:src="@drawable/ic_arrow_back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/title_for_book_setting"
-                android:textSize="16sp"
+                android:textSize="@dimen/font_16"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@drawable/rect_white_rounded_12"
-            android:backgroundTint="@color/systemGray02"
+            android:backgroundTint="@color/bg08"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingHorizontal="24dp"
@@ -59,21 +59,21 @@
                 android:src="@drawable/ic_img_duck_24" />
 
             <TextView
+                style="@style/GmarketMedium14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/book_setting_invitation_desc"
-                android:textSize="14dp" />
+                android:layout_marginTop="@dimen/default_spacing_8"
+                android:text="@string/book_setting_invitation_desc" />
 
             <Button
+                style="@style/NotoBold14"
                 onDebounceClick="@{() -> viewModel.onClickCopyInvitationCode()}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="@dimen/default_spacing_8"
                 android:background="@drawable/rect_white_rounded_22"
                 android:text="@string/book_setting_invitation_button"
-                android:textColor="@color/systemGray01"
-                android:textStyle="bold" />
+                android:textColor="@color/text02" />
 
         </LinearLayout>
 
@@ -116,6 +116,11 @@
             <TextView
                 style="@style/MypageItem"
                 android:text="@string/leave_book_section_title" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                style="@style/ImageView"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_right_arrow" />
         </RelativeLayout>
 
     </LinearLayout>

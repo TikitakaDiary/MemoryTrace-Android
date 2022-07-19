@@ -23,6 +23,8 @@ object MemoryTraceConfig {
 
     private const val SAVE_DEBUG_KEY = "save_debug_key"
 
+    private const val THEME = "theme"
+
     fun setCrashlyticsCustomKeys() {
         FirebaseCrashlytics.getInstance().setUserId(uid.toString())
         FirebaseCrashlytics.getInstance().setCustomKey(SIGNUP_SNS, sns ?: "")
@@ -82,6 +84,10 @@ object MemoryTraceConfig {
                 value?.let { TimeUtil.dateToString(TimeUtil.FORMAT_yyyy_MM_dd_B_HH_mm_ss, it) }
             )
         }
+
+    var theme: Int
+        get() = pref.getInt(THEME, ThemeUtil.ThemeMode.DARK.ordinal)
+        set(value) = pref.edit { putInt(THEME, value) }
 
     fun clear() {
         pref.edit { clear() }

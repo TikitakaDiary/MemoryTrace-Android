@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="text01">@color/systemWhite</color>
+    <color name="text02">@color/ggray01</color>
+    <color name="text03">@color/ggray05</color>
+    <color name="text04">@color/ggray04</color>
+    <color name="icon01">@color/systemWhite</color>
+    <color name="icon03">@color/ggray05</color>
+    <color name="icon05">@color/ggray03</color>
+    <color name="bg01">@color/ggray01</color>
+    <color name="bg02">@color/ggray03</color>
+    <color name="bg03">@color/systemWhite</color>
+    <color name="bg04">@color/systemWhite</color>
+    <color name="bg05">@color/ggray02</color>
+    <color name="bg06">@color/ggray06</color>
+    <color name="bg07">@color/ggray04</color>
+    <color name="bg08">@color/whiteAlpha8</color>
+
+    <color name="statusbarColor">@color/ggray02</color>
+    <color name="tempicon06">@color/systemWhite</color>
+</resources>

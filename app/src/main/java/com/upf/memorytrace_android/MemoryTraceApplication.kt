@@ -5,6 +5,8 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import com.kakao.sdk.common.KakaoSdk
 import com.upf.memorytrace_android.di.DaggerAppComponent
+import com.upf.memorytrace_android.util.MemoryTraceConfig
+import com.upf.memorytrace_android.util.ThemeUtil
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
@@ -23,6 +25,7 @@ class MemoryTraceApplication : Application() {
         if (BuildConfig.DEBUG) {
             Firebase.analytics.setUserId("Developer")
         }
+        ThemeUtil.applyTheme()
     }
 
     companion object {

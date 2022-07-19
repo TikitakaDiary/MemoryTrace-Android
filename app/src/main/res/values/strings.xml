@@ -10,7 +10,6 @@
     <string name="write_hint_title">제목을 입력하세요</string>
     <string name="write_hint_content">여기를 눌러 다이어리를 작성해보세요!</string>
     <string name="write_delivery">전달</string>
-    <string name="write_my_sticker_list">내 스티커 목록</string>
     <string name="write_select_title">사진 선택</string>
     <string name="write_select_album">사진 앨범</string>
     <string name="write_select_camera">카메라</string>
@@ -75,6 +74,7 @@
     <string name="mypage_open_source">Open Source License</string>
     <string name="mypage_cs_label">사용자 지원</string>
     <string name="mypage_cs">문의하기</string>
+    <string name="mypage_theme">앱 컬러 테마</string>
     <string name="mypage_logout">로그아웃</string>
     <string name="mypage_logout_message">정말 로그아웃 하시겠습니까?</string>
     <string name="mypage_leave">회원탈퇴</string>
@@ -88,6 +88,11 @@
     <string name="mypage_name_edit_hint">변경할 닉네임을 입력해주세요</string>
     <string name="save">저장</string>
     <string name="edit">수정하기</string>
+
+    <string name="mypage_theme_change_light">라이트 모드</string>
+    <string name="mypage_theme_change_dark">다크 모드</string>
+    <string name="mypage_theme_change_default">기기 설정에 따름</string>
+
 
     <string name="default_notification_channel_id">duck-z</string>
     <string name="fcm_new_diary">새로운 일기가 등록되었어요!</string>

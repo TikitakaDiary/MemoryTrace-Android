@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_bottom_sheet_write"
+        android:backgroundTint="@color/bg02"
         android:paddingHorizontal="24dp"
         android:paddingVertical="28dp">
 
@@ -30,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="8dp"
-            android:background="@color/lightGray"
+            android:background="@color/bg07"
             app:layout_constraintTop_toBottomOf="@id/select_img_tv" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -53,7 +54,8 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_album" />
+                    android:src="@drawable/ic_album"
+                    app:tint="@color/text01" />
 
                 <TextView
                     style="@style/NotoRegular16"
@@ -76,7 +78,8 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_camera" />
+                    android:src="@drawable/ic_camera"
+                    app:tint="@color/text01" />
 
                 <TextView
                     style="@style/NotoRegular16"
@@ -99,7 +102,8 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_bg_color" />
+                    android:src="@drawable/ic_bg_color"
+                    app:tint="@color/text01" />
 
                 <TextView
                     style="@style/NotoRegular16"
