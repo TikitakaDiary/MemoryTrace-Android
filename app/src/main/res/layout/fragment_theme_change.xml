@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.upf.memorytrace_android.ui.mypage.themechange.ThemeChangeViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_arrow_back">
+
+            <TextView
+                android:id="@+id/btn_save"
+                style="@style/NotoRegular16"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/default_padding_24"
+                android:text="@string/save" />
+        </androidx.appcompat.widget.Toolbar>
+
+
+        <TextView
+            android:id="@+id/title_tv"
+            style="@style/GmarketBold24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/default_padding_24"
+            android:paddingVertical="@dimen/title_spacing_16"
+            android:text="@string/mypage_theme" />
+
+
+        <RelativeLayout
+            android:id="@+id/btn_light"
+            style="@style/MypageItemLayout"
+            android:onClick="@{()->viewModel.onClickLight()}"
+            android:paddingHorizontal="@dimen/default_padding_24">
+
+            <TextView
+                style="@style/MypageItem"
+                android:text="@string/mypage_theme_change_light" />
+
+            <ImageView
+                android:id="@+id/ic_light"
+                style="@style/ImageView"
+                isVisibleIfTrue="@{viewModel.theme == 1}"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_img_duck_theme" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/btn_dark"
+            style="@style/MypageItemLayout"
+            android:onClick="@{()->viewModel.onClickDark()}"
+            android:paddingHorizontal="@dimen/default_padding_24">
+
+            <TextView
+                style="@style/MypageItem"
+                android:text="@string/mypage_theme_change_dark" />
+
+            <ImageView
+                android:id="@+id/ic_dark"
+                style="@style/ImageView"
+                isVisibleIfTrue="@{viewModel.theme == 2}"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_img_duck_theme" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/btn_default"
+            style="@style/MypageItemLayout"
+            android:onClick="@{()->viewModel.onClickDefault()}"
+            android:paddingHorizontal="@dimen/default_padding_24">
+
+            <TextView
+                style="@style/MypageItem"
+                android:text="@string/mypage_theme_change_default" />
+
+            <ImageView
+                android:id="@+id/ic_default"
+                style="@style/ImageView"
+                isVisibleIfTrue="@{viewModel.theme == 0}"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_img_duck_theme" />
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

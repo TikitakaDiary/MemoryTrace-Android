@@ -163,7 +163,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="@{()->viewModel.onClickSendEmail()}"
                     android:orientation="vertical"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/ed_invite">
@@ -273,7 +272,22 @@
                         android:text="@string/mypage_cs_label" />
 
                     <RelativeLayout
+                        android:id="@+id/btn_theme"
+                        style="@style/MypageItemLayout">
+
+                        <TextView
+                            style="@style/MypageItem"
+                            android:text="@string/mypage_theme" />
+
+                        <ImageView
+                            style="@style/ImageView"
+                            android:layout_alignParentEnd="true"
+                            android:src="@drawable/ic_right_arrow" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
                         android:id="@+id/btn_cs"
+                        android:onClick="@{()->viewModel.onClickSendEmail()}"
                         style="@style/MypageItemLayout">
 
                         <TextView

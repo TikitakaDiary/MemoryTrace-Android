@@ -77,6 +77,10 @@ internal class MypageFragment : BaseFragment<MypageViewModel, FragmentMypageBind
             }
         }
 
+        binding.btnTheme.setOnClickListener {
+            findNavController().navigate(MypageFragmentDirections.actionMypageFragmentToThemeChangeFragment())
+        }
+
         observe(viewModel.showOssPage){ startActivity(Intent(requireActivity(), OssLicensesMenuActivity::class.java)) }
         observe(viewModel.sendEmail){
             val content = "[문의정보]\n닉네임 : ${viewModel.name.value}\nuid : ${viewModel.uid}\n가입정보 : ${viewModel.sns.value}\n버전정보 : ${viewModel.version.value}(${Build.VERSION.SDK_INT})\n\n"
