@@ -175,7 +175,7 @@
     <style name="ExitAlertDialog" parent="Base.Theme.AppCompat.Light.Dialog">
         <item name="fontFamily">@font/noto_sans_kr_regular</item>
         <item name="android:textColor">@color/ggray01</item>
-        <item name="android:textSize">@dimen/font_16</item>
+        <item name="android:textSize">@dimen/font_14</item>
         <item name="buttonBarNegativeButtonStyle">@style/buttonBarButtonStyle.Negative</item>
         <item name="buttonBarPositiveButtonStyle">@style/buttonBarButtonStyle.Positive</item>
     </style>
@@ -215,7 +215,7 @@
         <item name="android:buttonBarNegativeButtonStyle">@style/DialogCancel</item>
         <item name="android:textColor">@color/ggray01</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">@dimen/font_16</item>
+        <item name="android:textSize">@dimen/font_14</item>
         <item name="android:buttonBarPositiveButtonStyle">@style/DialogConfirm</item>
     </style>
 
