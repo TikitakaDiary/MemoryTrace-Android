@@ -19,7 +19,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:navigationIcon="@drawable/ic_back" />
+            app:navigationIcon="@drawable/ic_arrow_back" />
 
 
         <ScrollView
@@ -61,22 +61,22 @@
 
                     <TextView
                         android:id="@+id/tv_name"
-                        style="@style/NotoRegular14"
+                        style="@style/NotoBold14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="37dp"
                         android:paddingBottom="@dimen/item_spacing_12"
                         android:text="@{viewModel.name}"
-                        android:textColor="@color/systemWhite"
                         app:layout_constraintStart_toEndOf="@id/label_name"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="혜데이" />
 
                     <TextView
                         android:id="@+id/btn_name_edit"
-                        style="@style/MypageLabel"
+                        style="@style/NotoBold14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="@string/mypage_name_edit"
-                        android:textColor="@color/systemWhite"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -90,12 +90,11 @@
 
                     <TextView
                         android:id="@+id/tv_sns"
-                        style="@style/NotoRegular14"
+                        style="@style/NotoBold14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingBottom="@dimen/item_spacing_12"
                         android:text="@{viewModel.sns}"
-                        android:textColor="@color/systemWhite"
                         app:layout_constraintStart_toEndOf="@id/label_sns"
                         app:layout_constraintStart_toStartOf="@+id/tv_name"
                         app:layout_constraintTop_toBottomOf="@id/tv_name"
@@ -110,11 +109,10 @@
 
                     <TextView
                         android:id="@+id/tv_date"
-                        style="@style/NotoRegular14"
+                        style="@style/NotoBold14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{viewModel.date}"
-                        android:textColor="@color/systemWhite"
                         app:layout_constraintStart_toEndOf="@id/label_date"
                         app:layout_constraintStart_toStartOf="@+id/tv_sns"
                         app:layout_constraintTop_toBottomOf="@id/tv_sns"
@@ -128,21 +126,23 @@
                     android:layout_marginTop="20dp"
                     android:paddingBottom="@dimen/content_spacing_4"
                     android:text="@string/mypage_invite_code_label"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/rect_info" />
 
                 <EditText
                     android:id="@+id/ed_invite"
                     style="@style/NotoRegular12"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/item_spacing_12"
                     android:background="@drawable/rect_gray_rounded"
                     android:hint="@string/mypage_invite_code_hint"
                     android:paddingVertical="10dp"
                     android:paddingStart="@dimen/item_spacing_12"
-                    android:textColor="@color/systemWhite"
-                    android:textColorHint="@color/lightGray"
+                    android:paddingEnd="70dp"
+                    android:textColorHint="@color/text04"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toStartOf="@id/btn_invite"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/label_invite" />
@@ -156,9 +156,8 @@
                     android:paddingHorizontal="@dimen/default_padding_24"
                     android:paddingVertical="@dimen/default_spacing_8"
                     android:text="@string/mypage_confirm"
-                    android:textColor="@color/systemBlack"
+                    android:textColor="@color/text02"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/ed_invite"
                     app:layout_constraintTop_toBottomOf="@id/label_invite" />
 
                 <LinearLayout
@@ -171,7 +170,7 @@
 
                     <TextView
                         android:id="@+id/label_service"
-                        style="@style/MypageLabel"
+                        style="@style/MypageSectionTitle"
                         android:layout_marginTop="@dimen/section_spacing_40"
                         android:paddingBottom="@dimen/content_spacing_4"
                         android:text="@string/mypage_service_label" />
@@ -268,7 +267,7 @@
 
                     <TextView
                         android:id="@+id/label_cs"
-                        style="@style/MypageLabel"
+                        style="@style/MypageSectionTitle"
                         android:layout_marginTop="@dimen/default_padding_24"
                         android:paddingBottom="@dimen/content_spacing_4"
                         android:text="@string/mypage_cs_label" />
@@ -287,17 +286,27 @@
                             android:src="@drawable/ic_right_arrow" />
                     </RelativeLayout>
 
-                    <TextView
+                    <RelativeLayout
                         android:id="@+id/btn_logout"
-                        style="@style/MypageItemLayout"
-                        android:text="@string/mypage_logout" />
+                        style="@style/MypageItemLayout">
+
+                        <TextView
+                            style="@style/MypageItem"
+                            android:text="@string/mypage_logout" />
+
+                        <ImageView
+                            style="@style/ImageView"
+                            android:layout_alignParentEnd="true"
+                            android:src="@drawable/ic_right_arrow" />
+                    </RelativeLayout>
 
                     <TextView
                         android:id="@+id/btn_leave"
                         style="@style/MypageItemLayout"
                         android:gravity="center"
                         android:text="@string/mypage_leave_confirm"
-                        android:textColor="@color/lightGray" />
+                        android:textColor="@color/text04"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

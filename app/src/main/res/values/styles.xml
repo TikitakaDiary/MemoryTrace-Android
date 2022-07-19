@@ -189,13 +189,19 @@
         <item name="android:textColor">@color/text03</item>
     </style>
 
+    <style name="MypageSectionTitle" parent="NotoRegular12">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text04</item>
+    </style>
+
     <style name="MypageItemLayout" parent="NotoRegular16">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingVertical">@dimen/title_spacing_16</item>
     </style>
 
-    <style name="MypageItem" parent="NotoRegular16">
+    <style name="MypageItem" parent="NotoBold16">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/text01</item>
