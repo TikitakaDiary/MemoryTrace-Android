@@ -12,13 +12,11 @@
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     </style>
 
-    <style name="AppBottomSheetDialogTheme"
-        parent="Theme.Design.Light.BottomSheetDialog">
+    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
     </style>
 
-    <style name="AppModalStyle"
-        parent="Widget.Design.BottomSheet.Modal">
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/rect_white_top_rounded_10</item>
     </style>
 
@@ -177,6 +175,7 @@
     <style name="ExitAlertDialog" parent="Base.Theme.AppCompat.Light.Dialog">
         <item name="fontFamily">@font/noto_sans_kr_regular</item>
         <item name="android:textColor">@color/ggray01</item>
+        <item name="android:textSize">@dimen/font_16</item>
         <item name="buttonBarNegativeButtonStyle">@style/buttonBarButtonStyle.Negative</item>
         <item name="buttonBarPositiveButtonStyle">@style/buttonBarButtonStyle.Positive</item>
     </style>

@@ -10,9 +10,9 @@ object BindingAdapters {
     @BindingAdapter("editButtonColor")
     fun TextView.setEditButtonColor(isModifiable: Boolean) {
         if (isModifiable) {
-            setTextColor(context.getColor(R.color.systemWhite))
+            setTextColor(context.getColor(R.color.icon01))
         } else {
-            setTextColor(context.getColor(R.color.gray69))
+            setTextColor(context.getColor(R.color.icon05))
         }
     }
 }
