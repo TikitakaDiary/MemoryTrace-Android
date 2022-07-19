@@ -2,15 +2,12 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:statusBarColor">#434343</item>
-        <item name="android:windowBackground">@color/systemGray01</item>
-        <item name="android:textColor">@color/systemWhite</item>
+        <item name="android:windowBackground">@color/bg01</item>
+        <item name="android:textColor">@color/text01</item>
         <item name="android:fontFamily">@font/noto_sans_kr_regular</item>
-        <item name="android:colorControlHighlight">@color/colorPrimaryDark</item>
+        <item name="android:colorControlHighlight">@color/whiteAlpha20</item>
+        <item name="android:statusBarColor">@color/statusbarColor</item>
         <item name="android:includeFontPadding">false</item>
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     </style>
@@ -97,30 +94,30 @@
         <item name="android:textSize">18dp</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:background">@android:color/transparent</item>
-        <item name="android:textColor">@color/gray01</item>
-        <item name="android:textColorHint">@color/gray01</item>
+        <item name="android:textColor">@color/ggray01</item>
+        <item name="android:textColorHint">@color/ggray04</item>
     </style>
 
     <style name="WriteContentEditText" parent="Widget.AppCompat.EditText">
         <item name="android:textSize">16dp</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:background">@android:color/transparent</item>
-        <item name="android:textColor">@color/gray05</item>
-        <item name="android:textColorHint">@color/gray05</item>
+        <item name="android:textColor">@color/text01</item>
+        <item name="android:textColorHint">@color/text04</item>
     </style>
 
     <style name="WriteStickerListTitleTextView" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/gmarket_sans_ttf_bold</item>
         <item name="android:textSize">14dp</item>
         <item name="android:letterSpacing">0</item>
-        <item name="android:textColor">@color/gray06</item>
+        <item name="android:textColor">@color/tempgray06</item>
     </style>
 
     <style name="DateTextView" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/gmarket_sans_ttf_medium</item>
         <item name="android:textSize">14dp</item>
         <item name="android:letterSpacing">0</item>
-        <item name="android:textColor">@color/gray03</item>
+        <item name="android:textColor">@color/tempgray04</item>
     </style>
 
     <style name="NameTextView" parent="Widget.AppCompat.TextView">
@@ -149,6 +146,7 @@
         <item name="android:orientation">horizontal</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/rect_white_rounded</item>
+        <item name="android:backgroundTint">@color/bg04</item>
     </style>
 
     <style name="BlueButton" parent="TextAppearance.AppCompat.Button">
@@ -164,7 +162,7 @@
     <style name="buttonBarButtonStyle" parent="Widget.AppCompat.Button.Borderless.Colored"></style>
 
     <style name="buttonBarButtonStyle.Negative">
-        <item name="android:textColor">@color/gray04</item>
+        <item name="android:textColor">@color/tempgray04</item>
     </style>
 
     <style name="buttonBarButtonStyle.Positive">
@@ -173,7 +171,7 @@
 
     <style name="ExitAlertDialog" parent="Base.Theme.AppCompat.Light.Dialog">
         <item name="fontFamily">@font/noto_sans_kr_regular</item>
-        <item name="android:textColor">@color/systemGray01</item>
+        <item name="android:textColor">@color/ggray01</item>
         <item name="buttonBarNegativeButtonStyle">@style/buttonBarButtonStyle.Negative</item>
         <item name="buttonBarPositiveButtonStyle">@style/buttonBarButtonStyle.Positive</item>
     </style>
@@ -188,7 +186,7 @@
     <style name="MypageLabel" parent="NotoRegular12">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/lightGray</item>
+        <item name="android:textColor">@color/text03</item>
     </style>
 
     <style name="MypageItemLayout" parent="NotoRegular16">
@@ -200,23 +198,23 @@
     <style name="MypageItem" parent="NotoRegular16">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/gray06</item>
+        <item name="android:textColor">@color/text01</item>
     </style>
 
     <style name="MyDialog" parent="ThemeOverlay.AppCompat.Dialog.Alert">
         <item name="android:buttonBarNegativeButtonStyle">@style/DialogCancel</item>
-        <item name="android:textColor">@color/gray01</item>
+        <item name="android:textColor">@color/ggray01</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/font_16</item>
         <item name="android:buttonBarPositiveButtonStyle">@style/DialogConfirm</item>
     </style>
 
     <style name="DialogCancel" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
-        <item name="android:textColor">@color/gray03</item>
+        <item name="android:textColor">@color/tempgray04</item>
     </style>
 
     <style name="DialogConfirm" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
-        <item name="android:textColor">@color/red</item>
+        <item name="android:textColor">@color/systemRed</item>
     </style>
 
     <style name="CommentItem" />
@@ -233,7 +231,7 @@
 
     <style name="CommentItem.Bottoms">
         <item name="android:textSize">10dp</item>
-        <item name="android:textColor">@color/gray04</item>
+        <item name="android:textColor">@color/text04</item>
     </style>
 
     <style name="CommentItem.Bottoms.Button">
@@ -245,7 +243,7 @@
     </style>
 
     <style name="LoadingProgressBar">
-        <item name="android:indeterminateTint">@color/lightGray</item>
+        <item name="android:indeterminateTint">@color/tempgray04</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
     </style>
