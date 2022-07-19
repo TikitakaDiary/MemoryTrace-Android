@@ -16,13 +16,12 @@
         android:layout_marginBottom="@dimen/default_spacing_8">
 
         <TextView
-            style="@style/NotoRegular16"
+            style="@style/NotoBold16"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rect_gray_rounded"
             android:padding="@dimen/default_padding_24"
             android:text="@{item.nickname}"
-            android:textColor="@color/systemWhite"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="장혜연" />

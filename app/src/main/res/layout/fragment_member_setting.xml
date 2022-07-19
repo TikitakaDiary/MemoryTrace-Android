@@ -35,7 +35,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/title_for_book_setting"
+                android:text="@string/member_setting_section_title"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -45,8 +45,8 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            style="@style/NotoRegular14"
-            android:layout_width="wrap_content"
+            style="@style/NotoBold14"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginVertical="@dimen/default_padding_24"
@@ -56,7 +56,7 @@
             android:paddingHorizontal="@dimen/default_padding_24"
             android:paddingVertical="@dimen/item_spacing_12"
             android:text="@string/create_code_and_invite_friend"
-            android:textColor="@color/systemGray01" />
+            android:textColor="@color/text02" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/member_rv"
