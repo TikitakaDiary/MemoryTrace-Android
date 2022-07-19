@@ -4,8 +4,6 @@
     android:layout_height="match_parent">
 
     <ProgressBar
-        android:indeterminateTint="@color/gray01"
-        android:layout_width="70dp"
-        android:layout_height="70dp"/>
+        style="@style/LoadingProgressBar"/>
 
 </FrameLayout>
