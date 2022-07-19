@@ -11,7 +11,7 @@ class BackButton @JvmOverloads constructor(
 ) : AppCompatImageView(context, attrs) {
 
     init {
-        setImageResource(R.drawable.ic_back)
+        setImageResource(R.drawable.ic_arrow_back)
         setOnClickListener {
             findNavController().popBackStack()
         }

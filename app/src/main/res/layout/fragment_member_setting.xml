@@ -27,7 +27,7 @@
                 android:layout_height="match_parent"
                 android:onClick="@{()->viewModel.onClickBack()}"
                 android:paddingRight="24dp"
-                android:src="@drawable/ic_back"
+                android:src="@drawable/ic_arrow_back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
