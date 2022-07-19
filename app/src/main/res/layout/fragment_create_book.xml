@@ -63,7 +63,7 @@
                 android:id="@+id/item_book"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/book_height"
-                android:backgroundTint="@color/systemGray02"
+                android:backgroundTint="@color/bg05"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="0dp"
                 app:layout_constraintDimensionRatio="1:1"
@@ -89,7 +89,7 @@
                         android:paddingStart="@dimen/default_padding_24"
                         android:text="@={viewModel.title}"
                         android:textColor="@color/systemWhite"
-                        android:textColorHint="@color/systemWhite" />
+                        android:textColorHint="@color/ggray04" />
 
 
                     <LinearLayout
@@ -138,7 +138,7 @@
             android:id="@+id/menu_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/systemGray02"
+            android:background="@color/bg05"
             android:padding="12dp"
             android:paddingHorizontal="@dimen/default_padding_24"
             android:paddingVertical="@dimen/default_spacing_8"
