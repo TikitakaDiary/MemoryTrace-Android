@@ -83,8 +83,8 @@ class DiaryWriteViewModel(
     }
 
     fun dismissSelectColorLayout() {
-        _selectColorUiModel.update { DiaryWriteSelectColorUiModel(isShowing = false) }
         _contentUiModel.update { it.copy(image = selectColorUiModel.value.previousImageType) }
+        _selectColorUiModel.update { DiaryWriteSelectColorUiModel(isShowing = false) }
     }
 
     fun onClickSelectCameraType() {
@@ -127,8 +127,8 @@ class DiaryWriteViewModel(
             val previousSelectedColor = previousImageType.color
             _selectColorUiModel.setSelectedColorAndShow(previousSelectedColor)
         } else {
-            _contentUiModel.setColorToDefault()
             _selectColorUiModel.setSelectedColorAndShow(DEFAULT_SELECTED_COLOR)
+            _contentUiModel.setColorToDefault()
         }
     }
 
@@ -191,6 +191,10 @@ class DiaryWriteViewModel(
     fun saveCameraTempFileUri(uri: Uri) {
         clearCameraTempFileUri()
         currentCameraImageFileUri = uri
+    }
+
+    fun isShowingSelectColor(): Boolean {
+        return selectColorUiModel.value.isShowing
     }
 
     // 호출되어야 하는 상황

@@ -205,6 +205,14 @@ class DiaryWriteActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        if (viewModel.isShowingSelectColor()) {
+            viewModel.dismissSelectColorLayout()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
     private fun showSelectImageTypeDialogFragment() {
         showAllowingStateLoss("selectImageType") {
             SelectImageTypeDialogFragment()
