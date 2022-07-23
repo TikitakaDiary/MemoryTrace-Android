@@ -17,5 +17,5 @@ interface DiaryRepository {
         title: String,
         content: String,
         imageFile: File
-    ): ApiResponse<Int>
+    ): ApiResponse<Unit>
 }

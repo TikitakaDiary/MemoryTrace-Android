@@ -18,5 +18,5 @@ interface MemoryTraceNetworkDataSource {
         title: String,
         content: String,
         imageFile: File
-    ): Call<PostDiaryResponse>
+    ): Call<Unit>
 }

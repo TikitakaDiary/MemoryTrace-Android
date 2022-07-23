@@ -35,14 +35,14 @@ class DiaryRepositoryImpl(
         title: String,
         content: String,
         imageFile: File
-    ): ApiResponse<Int> {
+    ): ApiResponse<Unit> {
         return withContext(ioDispatcher) {
             network.editDiary(
                 diaryId = diaryId,
                 title = title,
                 content = content,
                 imageFile = imageFile
-            ).toApiResponse().map { it.diaryId }
+            ).toApiResponse()
         }
     }
 }

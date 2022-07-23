@@ -32,7 +32,7 @@ class MemoryTraceNetworkDataSourceImpl(
         title: String,
         content: String,
         imageFile: File
-    ): Call<PostDiaryResponse> {
+    ): Call<Unit> {
         return service.editDiary(
             diaryId = diaryId,
             title = title,

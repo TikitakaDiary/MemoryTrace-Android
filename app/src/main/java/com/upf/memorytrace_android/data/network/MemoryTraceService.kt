@@ -26,5 +26,5 @@ interface MemoryTraceService {
         @Query("title") title: String,
         @Query("content") content: String,
         @Part imagePart: MultipartBody.Part
-    ): Call<PostDiaryResponse>
+    ): Call<Unit>
 }
