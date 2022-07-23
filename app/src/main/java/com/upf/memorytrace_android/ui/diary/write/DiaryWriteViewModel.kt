@@ -43,6 +43,7 @@ class DiaryWriteViewModel(
         get() = _errorEvent
 
     private var diaryId: Int? = null
+    private var originalDiary: DiaryWriteContentUiModel = DiaryWriteContentUiModel()
     var isNewDiary: Boolean = true
         private set
 
@@ -52,6 +53,7 @@ class DiaryWriteViewModel(
     fun loadDiary(diaryId: Int?, originalDiary: DiaryWriteContentUiModel?) {
         if (diaryId != null && originalDiary != null) {
             this.diaryId = diaryId
+            this.originalDiary = originalDiary
             isNewDiary = false
             _contentUiModel.update { originalDiary }
             _toolbarState.push { DiaryWriteToolbarState.EDIT }
@@ -64,16 +66,13 @@ class DiaryWriteViewModel(
                     date = TimeUtil.getTodayDate(TimeUtil.YYYY_M_D_KR)
                 )
             }
+            this.originalDiary = contentUiModel.value
             _toolbarState.push { DiaryWriteToolbarState.WRITE }
         }
     }
 
     fun restorePreviousToolbarState() {
         _toolbarState.pop()
-    }
-
-    fun showCancelConfirmDialogIfNeed() {
-        // Todo: 변경사항 있는지 보고 이벤트에 반영
     }
 
     fun onSaveSelectColorClick() {
@@ -209,6 +208,24 @@ class DiaryWriteViewModel(
             }
             currentCameraImageFileUri = null
         }
+    }
+
+    fun onBackPressed() {
+        val isShowingSelectColorLayout = selectColorUiModel.value.isShowing
+        if (isShowingSelectColorLayout) {
+            dismissSelectColorLayout()
+        } else {
+            if (contentUiModel.value == originalDiary) {
+                clearBackUpData()
+                _event.event = DiaryWriteEvent.FinishWriteActivity
+            } else {
+                _event.event = DiaryWriteEvent.ShowFinishConfirmDialog
+            }
+        }
+    }
+
+    fun clearBackUpData() {
+        // Todo
     }
 
     companion object {

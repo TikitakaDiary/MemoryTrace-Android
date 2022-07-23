@@ -164,6 +164,21 @@ class DiaryWriteActivity : AppCompatActivity() {
                 is DiaryWriteEvent.StartGalleryActivity -> {
                     startGalleryActivityForResult()
                 }
+                is DiaryWriteEvent.FinishWriteActivity -> {
+                    finish()
+                }
+                DiaryWriteEvent.ShowFinishConfirmDialog -> {
+                    showDialog(
+                        context = this,
+                        title = R.string.write_exit_title,
+                        message = R.string.write_exit_content,
+                        confirm = R.string.write_exit_exit,
+                        positive = {
+                            viewModel.clearBackUpData()
+                            finish()
+                        }
+                    )
+                }
             }
         }
 
@@ -206,11 +221,7 @@ class DiaryWriteActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (viewModel.isShowingSelectColor()) {
-            viewModel.dismissSelectColorLayout()
-        } else {
-            super.onBackPressed()
-        }
+        viewModel.onBackPressed()
     }
 
     private fun showSelectImageTypeDialogFragment() {
@@ -281,7 +292,7 @@ class DiaryWriteActivity : AppCompatActivity() {
         useImageBackButton {
             it.setImageResource(R.drawable.ic_back)
             it.setOnDebounceClickListener {
-                viewModel.showCancelConfirmDialogIfNeed()
+                viewModel.onBackPressed()
             }
         }
     }
@@ -300,7 +311,7 @@ class DiaryWriteActivity : AppCompatActivity() {
         useTextBackButton {
             it.text = getString(R.string.write_exit_cancel)
             it.setOnDebounceClickListener {
-                viewModel.showCancelConfirmDialogIfNeed()
+                viewModel.onBackPressed()
             }
         }
     }

@@ -48,4 +48,6 @@ sealed class DiaryWriteEvent {
     data class ShowEditConfirmDialog(val nextImageType: SelectImageType): DiaryWriteEvent()
     object StartGalleryActivity: DiaryWriteEvent()
     object StartCameraActivity: DiaryWriteEvent()
+    object FinishWriteActivity: DiaryWriteEvent()
+    object ShowFinishConfirmDialog: DiaryWriteEvent()
 }
