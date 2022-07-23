@@ -1,9 +1,6 @@
 package com.upf.memorytrace_android.ui.diary.data
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.upf.memorytrace_android.api.ApiResponse
-import com.upf.memorytrace_android.api.map
-import com.upf.memorytrace_android.api.toApiResponse
 import com.upf.memorytrace_android.api.util.MemoryTraceUtils
 import com.upf.memorytrace_android.api.util.NetworkState
 import com.upf.memorytrace_android.api.util.StatusError
@@ -11,21 +8,22 @@ import com.upf.memorytrace_android.ui.diary.data.remote.DiaryService
 import com.upf.memorytrace_android.ui.diary.data.remote.toEntity
 import com.upf.memorytrace_android.ui.diary.data.remote.toEntry
 import com.upf.memorytrace_android.ui.diary.detail.domain.DiaryDetail
-import com.upf.memorytrace_android.ui.diary.domain.DiaryRepository
+import com.upf.memorytrace_android.ui.diary.domain.DiaryRepositoryOld
 import com.upf.memorytrace_android.ui.diary.list.domain.DiaryList
 import com.upf.memorytrace_android.ui.diary.list.domain.PinchInfo
 import com.upf.memorytrace_android.util.MemoryTraceConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
-import java.io.File
 import javax.inject.Inject
 
-class DiaryRepositoryImpl @Inject constructor(
+@Deprecated(
+    "새로운 Retrofit 으로 주입받기 위해 해당 클래스는 deprecated 합니다.\n" +
+            "DiaryRepository 로 남은 함수를 이동시켜주세요.",
+    ReplaceWith("DiaryRepository", "com.upf.memorytrace_android.data.network")
+)
+class DiaryRepositoryOldImpl @Inject constructor(
     private val diaryService: DiaryService
-) : DiaryRepository {
+) : DiaryRepositoryOld {
 
     override suspend fun fetchDiary(diaryId: Int): DiaryDetail {
         return withContext(Dispatchers.IO) {
@@ -78,45 +76,5 @@ class DiaryRepositoryImpl @Inject constructor(
                 NetworkState.Failure(e.message ?: "")
             }
         }
-    }
-
-    override suspend fun postDiary(
-        bookId: Int,
-        title: String,
-        content: String,
-        image: File
-    ): ApiResponse<Int> {
-        return withContext(Dispatchers.IO) {
-            diaryService.postDiary(
-                bookId = bookId,
-                title = title,
-                content = content,
-                imagePart = image.toDiaryImageMultiPart()
-            ).toApiResponse().map { it.diaryId }
-        }
-    }
-
-    override suspend fun editDiary(
-        diaryId: Int,
-        title: String,
-        content: String,
-        image: File
-    ): ApiResponse<Int> {
-        return withContext(Dispatchers.IO) {
-            diaryService.editDiary(
-                diaryId = diaryId,
-                title = title,
-                content = content,
-                imagePart = image.toDiaryImageMultiPart()
-            ).toApiResponse().map { it.diaryId }
-        }
-    }
-
-    private fun File.toDiaryImageMultiPart(): MultipartBody.Part {
-        return MultipartBody.Part.createFormData(
-            "img",
-            name,
-            asRequestBody("image/*".toMediaType())
-        )
     }
 }

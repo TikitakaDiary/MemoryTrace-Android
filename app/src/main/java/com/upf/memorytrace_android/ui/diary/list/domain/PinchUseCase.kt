@@ -2,11 +2,11 @@ package com.upf.memorytrace_android.ui.diary.list.domain
 
 import com.upf.memorytrace_android.api.util.NetworkState
 import com.upf.memorytrace_android.api.util.onSuccess
-import com.upf.memorytrace_android.ui.diary.domain.DiaryRepository
+import com.upf.memorytrace_android.ui.diary.domain.DiaryRepositoryOld
 import javax.inject.Inject
 
 class PinchUseCase @Inject constructor(
-    private val diaryRepository: DiaryRepository,
+    private val diaryRepository: DiaryRepositoryOld,
     private val fetchPinchInfoUseCase: FetchPinchInfoUseCase
 ) {
 

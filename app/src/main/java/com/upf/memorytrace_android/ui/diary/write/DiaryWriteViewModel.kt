@@ -10,9 +10,9 @@ import com.upf.memorytrace_android.api.onFailure
 import com.upf.memorytrace_android.api.onSuccess
 import com.upf.memorytrace_android.color.UserColor
 import com.upf.memorytrace_android.common.MutableStateStackFlow
+import com.upf.memorytrace_android.data.repository.DiaryRepository
 import com.upf.memorytrace_android.databinding.EventLiveData
 import com.upf.memorytrace_android.databinding.MutableEventLiveData
-import com.upf.memorytrace_android.ui.diary.domain.DiaryRepository
 import com.upf.memorytrace_android.ui.diary.write.color.ColorItemUiModel
 import com.upf.memorytrace_android.util.MemoryTraceConfig
 import com.upf.memorytrace_android.util.TimeUtil

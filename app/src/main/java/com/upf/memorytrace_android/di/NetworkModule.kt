@@ -2,7 +2,7 @@ package com.upf.memorytrace_android.di
 
 import android.util.Log
 import com.upf.memorytrace_android.BuildConfig
-import com.upf.memorytrace_android.api.MemoryTraceService
+import com.upf.memorytrace_android.api.MemoryTraceServiceOld
 import com.upf.memorytrace_android.api.util.converter.MemoryTraceConverterFactory
 import com.upf.memorytrace_android.api.util.interceptor.AuthHeaderInterceptor
 import com.upf.memorytrace_android.api.util.interceptor.StatusInterceptor
@@ -59,8 +59,8 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideMemoryTraceApi(@Named("MemoryTrace") retrofit: Retrofit): MemoryTraceService =
-        retrofit.create(MemoryTraceService::class.java)
+    fun provideMemoryTraceApi(@Named("MemoryTrace") retrofit: Retrofit): MemoryTraceServiceOld =
+        retrofit.create(MemoryTraceServiceOld::class.java)
 
 
     @Provides

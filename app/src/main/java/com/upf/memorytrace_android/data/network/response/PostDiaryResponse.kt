@@ -1,4 +1,4 @@
-package com.upf.memorytrace_android.ui.diary.data.remote
+package com.upf.memorytrace_android.data.network.response
 
 import com.google.gson.annotations.SerializedName
 

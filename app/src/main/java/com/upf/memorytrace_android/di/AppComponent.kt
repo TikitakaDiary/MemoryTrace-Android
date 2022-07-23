@@ -1,7 +1,7 @@
 package com.upf.memorytrace_android.di
 
 import android.content.Context
-import com.upf.memorytrace_android.api.MemoryTraceService
+import com.upf.memorytrace_android.api.MemoryTraceServiceOld
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -22,5 +22,5 @@ interface AppComponent {
     fun activityComponent(): ActivityComponent.Factory
     fun fragmentComponent(): FragmentComponent.Factory
 
-    fun getApi():MemoryTraceService
+    fun getApi():MemoryTraceServiceOld
 }

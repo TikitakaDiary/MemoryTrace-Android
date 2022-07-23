@@ -6,8 +6,12 @@ import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
 
-
-interface MemoryTraceService {
+@Deprecated(
+    "새로운 Retrofit 으로 생성하기 위해 해당 클래스는 deprecated 합니다.\n" +
+            "더 이상 추가하려면 MemoryTraceService 인터페이스에 추가하세요.",
+    ReplaceWith("MemoryTraceService", "com.upf.memorytrace_android.data.network")
+)
+interface MemoryTraceServiceOld {
 
     /**
      * 다이어리 생성
