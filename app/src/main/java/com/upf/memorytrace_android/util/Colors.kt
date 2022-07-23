@@ -6,6 +6,13 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import com.upf.memorytrace_android.R
 
+@Deprecated(
+    "더 이상 사용하지 않습니다.",
+    ReplaceWith(
+        "UserColor 를 사용하세요",
+        "com.upf.memorytrace_android.color.UserColor"
+    )
+)
 enum class Colors(val id: Int, val color: Long) {
 
     NONE(-1, 0x00FFFFFF),

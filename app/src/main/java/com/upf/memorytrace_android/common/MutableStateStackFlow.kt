@@ -5,6 +5,7 @@ import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import java.util.*
 
 class MutableStateStackFlow<T>(initialValue: T) : MutableStateFlow<T> {
@@ -61,8 +62,17 @@ class MutableStateStackFlow<T>(initialValue: T) : MutableStateFlow<T> {
     }
 
     fun pop(): T {
+        if (stateStack.size <= 1) {
+            throw IllegalStateException(
+                "MutableStateStackFlow must have at least 1 element. Current stack : $stateStack"
+            )
+        }
         val prevValue = stateStack.pop()
-        push { prevValue }
+        replace { stateStack.peek() }
         return prevValue
+    }
+
+    fun replace(function: (T) -> T) {
+        update(function)
     }
 }

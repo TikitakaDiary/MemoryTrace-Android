@@ -2,7 +2,7 @@ package com.upf.memorytrace_android.ui.diary.detail.domain
 
 import android.net.Uri
 import com.upf.memorytrace_android.ui.diary.write.DiaryWriteActivity
-import com.upf.memorytrace_android.ui.diary.write.DiaryWriteUiModel
+import com.upf.memorytrace_android.ui.diary.write.DiaryWriteContentUiModel
 import com.upf.memorytrace_android.ui.diary.write.WriteImageType
 
 data class DiaryDetail(
@@ -20,7 +20,7 @@ data class DiaryDetail(
 fun DiaryDetail.toDiaryWriteInput(): DiaryWriteActivity.Input {
     return DiaryWriteActivity.Input.Edit(
         diaryId = diaryId,
-        originalDiary = DiaryWriteUiModel(
+        originalDiary = DiaryWriteContentUiModel(
             title = title,
             content = content,
             date = date,

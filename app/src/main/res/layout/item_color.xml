@@ -1,45 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="32dp"
+    android:layout_height="32dp"
+    android:layout_marginHorizontal="@dimen/default_spacing_8"
+    android:layout_marginVertical="@dimen/item_spacing_12">
 
-    <data>
-
-        <variable
-            name="viewModel"
-            type="com.upf.memorytrace_android.ui.diary.write.WriteViewModel" />
-
-        <variable
-            name="item"
-            type="com.upf.memorytrace_android.ui.diary.write.color.ColorItem" />
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/item_color"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="@drawable/ic_circle" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginHorizontal="@dimen/default_spacing_8"
-            android:layout_marginVertical="@dimen/item_spacing_12"
-            android:onClick="@{()->viewModel.changeColor(item.color)}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/item_color_selected_border"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ic_circle_border"
+        android:visibility="gone" />
 
-            <ImageView
-                android:id="@+id/circle_color"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/ic_circle" />
-
-            <ImageView
-                android:id="@+id/selected"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/ic_circle_border"
-                android:visibility="@{viewModel.color.id == item.color.id}" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+</FrameLayout>

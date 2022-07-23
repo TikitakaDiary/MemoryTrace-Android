@@ -2,11 +2,13 @@ package com.upf.memorytrace_android.ui.diary.write
 
 import android.net.Uri
 import android.os.Parcelable
+import com.upf.memorytrace_android.color.UserColor
+import com.upf.memorytrace_android.ui.diary.write.color.ColorItemUiModel
 import com.upf.memorytrace_android.util.Colors
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class DiaryWriteUiModel(
+data class DiaryWriteContentUiModel(
     val title: String = "",
     val date: String = "",
     val writerName: String = "",
@@ -22,7 +24,7 @@ sealed class WriteImageType: Parcelable {
 
     @Parcelize
     data class Color(
-        val color: Colors = Colors.NONE
+        val color: UserColor = UserColor.NONE
     ): WriteImageType()
 
     @Parcelize
@@ -32,3 +34,9 @@ sealed class WriteImageType: Parcelable {
 enum class DiaryWriteToolbarState {
     EDIT, WRITE, SELECT_COLOR, ATTACH_STICKER
 }
+
+data class DiaryWriteSelectColorUiModel(
+    val colorList: List<ColorItemUiModel> = emptyList(),
+    val isShowing: Boolean = false,
+    val previousImageType: WriteImageType = WriteImageType.None
+)
