@@ -40,7 +40,7 @@ enum class SelectImageType {
 }
 
 enum class DiaryWriteToolbarState {
-    EDIT, WRITE, SELECT_COLOR, ATTACH_STICKER
+    EDIT, WRITE
 }
 
 data class DiaryWriteSelectColorUiModel(

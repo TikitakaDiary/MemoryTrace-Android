@@ -1,7 +1,6 @@
 package com.upf.memorytrace_android.ui.diary.write
 
 import android.net.Uri
-import android.util.Log
 import androidx.core.net.toFile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -30,8 +29,8 @@ class DiaryWriteViewModel @Inject constructor(
     private val repository: DiaryRepository,
 ) : ViewModel() {
 
-    private val _toolbarState: MutableStateStackFlow<DiaryWriteToolbarState> =
-        MutableStateStackFlow(DiaryWriteToolbarState.WRITE)
+    private val _toolbarState: MutableStateFlow<DiaryWriteToolbarState> =
+        MutableStateFlow(DiaryWriteToolbarState.WRITE)
     val toolbarState: StateFlow<DiaryWriteToolbarState>
         get() = _toolbarState
 
@@ -73,7 +72,7 @@ class DiaryWriteViewModel @Inject constructor(
             )
         }
         this.originalDiary = contentUiModel.value
-        _toolbarState.push { DiaryWriteToolbarState.WRITE }
+        _toolbarState.update { DiaryWriteToolbarState.WRITE }
     }
 
     fun loadOriginalDiary(diaryId: Int, originalDiary: DiaryWriteContentUiModel) {
@@ -81,16 +80,11 @@ class DiaryWriteViewModel @Inject constructor(
         this.originalDiary = originalDiary
         isNewDiary = false
         _contentUiModel.update { originalDiary }
-        _toolbarState.push { DiaryWriteToolbarState.EDIT }
-    }
-
-    fun restorePreviousToolbarState() {
-        _toolbarState.pop()
+        _toolbarState.update { DiaryWriteToolbarState.EDIT }
     }
 
     fun onSaveSelectColorClick() {
         clearCameraTempFileUri()
-        restorePreviousToolbarState()
         _selectColorUiModel.update { DiaryWriteSelectColorUiModel(isShowing = false) }
     }
 
@@ -132,7 +126,6 @@ class DiaryWriteViewModel @Inject constructor(
     }
 
     private fun showSelectColorLayout() {
-        _toolbarState.push { DiaryWriteToolbarState.SELECT_COLOR }
         val previousImageType = contentUiModel.value.image
 
         if (previousImageType is WriteImageType.Color) {

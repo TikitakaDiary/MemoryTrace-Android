@@ -105,25 +105,12 @@ class DiaryWriteActivity : AppCompatActivity() {
                             }
                         }
                         DiaryWriteToolbarState.EDIT -> {
+                            binding.writeToolbarTitle.text = ""
                             binding.setBackButtonCancel()
                             binding.setToolbarButton(R.string.write_save) {
                                 val file = binding.writePolaroidImage.toDiaryImageFile()
                                 viewModel.editedDiary(file)
                             }
-                        }
-                        DiaryWriteToolbarState.SELECT_COLOR -> {
-                            binding.writeToolbarTitle.text =
-                                getString(R.string.write_select_color_title)
-                            binding.setToolbarButton(R.string.write_save) {
-                                viewModel.onSaveSelectColorClick()
-                            }
-                            binding.setBackButtonClose {
-                                viewModel.dismissSelectColorLayout()
-                            }
-                        }
-                        DiaryWriteToolbarState.ATTACH_STICKER -> {
-                            binding.setBackButtonClose { }
-                            // Todo
                         }
                     }
                 }
@@ -337,16 +324,6 @@ class DiaryWriteActivity : AppCompatActivity() {
         }
     }
 
-    private fun ActivityDiaryWriteBinding.setBackButtonClose(closeAction: () -> Unit) {
-        useImageBackButton {
-            it.setImageResource(R.drawable.ic_x)
-            it.setOnDebounceClickListener {
-                viewModel.restorePreviousToolbarState()
-                closeAction.invoke()
-            }
-        }
-    }
-
     private fun ActivityDiaryWriteBinding.setBackButtonCancel() {
         useTextBackButton {
             it.text = getString(R.string.write_exit_cancel)
@@ -409,6 +386,12 @@ class DiaryWriteActivity : AppCompatActivity() {
                 LayoutDiaryWriteSelectColorContainerBinding.bind(view).apply {
                     recyclerviewSelectColor.itemAnimator = null
                     recyclerviewSelectColor.adapter = ColorAdapter()
+                    writeSelectColorToolbarCancel.setOnDebounceClickListener {
+                        viewModel.dismissSelectColorLayout()
+                    }
+                    writeSelectColorToolbarSave.setOnDebounceClickListener {
+                        viewModel.onSaveSelectColorClick()
+                    }
                 }
         }
         selectColorBinding?.apply(apply)
