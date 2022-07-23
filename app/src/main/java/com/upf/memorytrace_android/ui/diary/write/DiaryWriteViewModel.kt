@@ -8,11 +8,15 @@ import com.upf.memorytrace_android.common.MutableStateStackFlow
 import com.upf.memorytrace_android.databinding.EventLiveData
 import com.upf.memorytrace_android.databinding.MutableEventLiveData
 import com.upf.memorytrace_android.ui.diary.write.color.ColorItemUiModel
+import com.upf.memorytrace_android.util.MemoryTraceConfig
+import com.upf.memorytrace_android.util.TimeUtil
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 
-class DiaryWriteViewModel : ViewModel() {
+class DiaryWriteViewModel(
+    private val memoryTraceConfig: MemoryTraceConfig = MemoryTraceConfig
+) : ViewModel() {
 
     private val _toolbarState: MutableStateStackFlow<DiaryWriteToolbarState> =
         MutableStateStackFlow(DiaryWriteToolbarState.WRITE)
@@ -54,6 +58,12 @@ class DiaryWriteViewModel : ViewModel() {
         } else {
             this.diaryId = null
             isNewDiary = true
+            _contentUiModel.update {
+                it.copy(
+                    writerName = memoryTraceConfig.nickname.orEmpty(),
+                    date = TimeUtil.getTodayDate(TimeUtil.YYYY_M_D_KR)
+                )
+            }
             _toolbarState.push { DiaryWriteToolbarState.WRITE }
         }
     }

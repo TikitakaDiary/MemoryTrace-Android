@@ -178,9 +178,10 @@ class DiaryWriteActivity : AppCompatActivity() {
         }
 
         binding.writeSelectImageButton.setOnDebounceClickListener {
-            showAllowingStateLoss("selectImageType") {
-                SelectImageTypeDialogFragment()
-            }
+            showSelectImageTypeDialogFragment()
+        }
+        binding.writePolaroidImageContainer.setOnDebounceClickListener {
+            showSelectImageTypeDialogFragment()
         }
 
         viewModel.loadDiary(diaryId, originalDiary)
@@ -201,6 +202,12 @@ class DiaryWriteActivity : AppCompatActivity() {
             }
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        }
+    }
+
+    private fun showSelectImageTypeDialogFragment() {
+        showAllowingStateLoss("selectImageType") {
+            SelectImageTypeDialogFragment()
         }
     }
 
