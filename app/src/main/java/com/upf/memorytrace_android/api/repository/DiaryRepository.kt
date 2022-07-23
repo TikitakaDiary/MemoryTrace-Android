@@ -11,23 +11,6 @@ internal object DiaryRepository {
     private const val SUCCESS = "Success"
     private const val ERROR = "예상하지 못한 오류가 발생하였습니다. 잠시 후 다시 시도해 주세요."
 
-    suspend fun createDiary(
-        bid: Int,
-        title: String,
-        content: String,
-        img: MultipartBody.Part
-    ): NetworkState<String> {
-        return try {
-            MemoryTraceUtils.apiService().createDiary(bid, title, content, img)
-            NetworkState.Success(SUCCESS)
-        } catch (e: StatusError) {
-            NetworkState.Failure(e.responseMessage)
-        } catch (e: Exception) {
-            FirebaseCrashlytics.getInstance().recordException(e)
-            NetworkState.Failure(ERROR)
-        }
-    }
-
     suspend fun modifyDiary(
         did: Int,
         title: String,

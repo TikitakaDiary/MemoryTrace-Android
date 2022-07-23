@@ -154,7 +154,7 @@ class DiaryListViewModel @Inject constructor(
 
     fun writeDiary() {
         _uiEvent.event = Event.WriteDiary(
-            input = DiaryWriteActivity.Input.New
+            input = DiaryWriteActivity.Input.New(bookId = bookId)
         )
     }
 

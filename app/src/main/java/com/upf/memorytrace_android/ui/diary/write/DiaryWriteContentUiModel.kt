@@ -55,4 +55,5 @@ sealed class DiaryWriteEvent {
     object StartCameraActivity : DiaryWriteEvent()
     object FinishWriteActivity : DiaryWriteEvent()
     object ShowFinishConfirmDialog : DiaryWriteEvent()
+    data class PostDone(val diaryId: Int) : DiaryWriteEvent()
 }

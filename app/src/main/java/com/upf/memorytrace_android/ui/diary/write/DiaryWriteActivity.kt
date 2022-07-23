@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.os.Parcelable
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
@@ -31,6 +32,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import com.upf.memorytrace_android.util.showDialog
+import kotlinx.parcelize.Parcelize
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -72,10 +74,8 @@ class DiaryWriteActivity : AppCompatActivity() {
         val binding = ActivityDiaryWriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val diaryId: Int? =
-            intent.getIntExtra(EXTRA_INPUT_DIARY_ID, -1).takeIf { it != -1 }
-        val originalDiary: DiaryWriteContentUiModel? =
-            intent.getParcelableExtra(EXTRA_INPUT_ORIGINAL_DIARY)
+        val newInput: Input.New? = intent.getParcelableExtra(EXTRA_INPUT_NEW)
+        val editInput: Input.Edit? = intent.getParcelableExtra(EXTRA_INPUT_EDIT)
 
         repeatOnStart {
             launch {
@@ -100,7 +100,12 @@ class DiaryWriteActivity : AppCompatActivity() {
                             binding.writeToolbarTitle.text = getString(R.string.write_create_diary)
                             binding.setBackButtonArrow()
                             binding.setToolbarButton(R.string.write_delivery) {
-                                viewModel.postDiary()
+                                val file = binding.writePolaroidImage.toBitmap().toFile(
+                                    context = this@DiaryWriteActivity,
+                                    fileName = DIARY_IMAGE_FILE_NAME,
+                                    childDirectoryName = DIARY_IMAGE_DIRECTORY_NAME
+                                )
+                                viewModel.postDiary(file)
                             }
                         }
                         DiaryWriteToolbarState.EDIT -> {
@@ -170,7 +175,7 @@ class DiaryWriteActivity : AppCompatActivity() {
                 is DiaryWriteEvent.FinishWriteActivity -> {
                     finish()
                 }
-                DiaryWriteEvent.ShowFinishConfirmDialog -> {
+                is DiaryWriteEvent.ShowFinishConfirmDialog -> {
                     showDialog(
                         context = this,
                         title = R.string.write_exit_title,
@@ -182,15 +187,25 @@ class DiaryWriteActivity : AppCompatActivity() {
                         }
                     )
                 }
+                is DiaryWriteEvent.PostDone -> {
+                    val intent = Intent().apply {
+                        putExtra(EXTRA_OUTPUT_DIARY_ID, event.diaryId)
+                    }
+                    setResult(RESULT_OK, intent)
+                    finish()
+                }
             }
         }
 
         observeEvent(viewModel.errorEvent) { event ->
             when (event) {
                 is DiaryWriteErrorEvent.WrongAccess -> {
-                    toast("잘못된 접근입니다.")
+                    toast(R.string.wrong_access)
                     setResult(RESULT_CANCELED)
                     finish()
+                }
+                is DiaryWriteErrorEvent.FailPost -> {
+                    toast(event.message ?: getString(R.string.write_failure_post))
                 }
             }
         }
@@ -208,7 +223,19 @@ class DiaryWriteActivity : AppCompatActivity() {
             viewModel.onContentChanged(it?.toString().orEmpty())
         }
 
-        viewModel.loadDiary(diaryId, originalDiary)
+        when {
+            editInput != null -> {
+                viewModel.loadOriginalDiary(editInput.diaryId, editInput.originalDiary)
+            }
+            newInput != null -> {
+                viewModel.setBookId(newInput.bookId)
+            }
+            else -> {
+                toast(R.string.wrong_access)
+                setResult(RESULT_CANCELED)
+                finish()
+            }
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -391,8 +418,9 @@ class DiaryWriteActivity : AppCompatActivity() {
         override fun createIntent(context: Context, input: Input): Intent {
             return Intent(context, DiaryWriteActivity::class.java).apply {
                 if (input is Input.Edit) {
-                    putExtra(EXTRA_INPUT_DIARY_ID, input.diaryId)
-                    putExtra(EXTRA_INPUT_ORIGINAL_DIARY, input.originalDiary)
+                    putExtra(EXTRA_INPUT_EDIT, input)
+                } else if (input is Input.New) {
+                    putExtra(EXTRA_INPUT_NEW, input)
                 }
             }
         }
@@ -402,41 +430,49 @@ class DiaryWriteActivity : AppCompatActivity() {
                 null
             } else {
                 val isNewDiary = intent.getBooleanExtra(EXTRA_OUTPUT_IS_NEW_DIARY, true)
-                val diary: DiaryWriteContentUiModel? = intent.getParcelableExtra(EXTRA_OUTPUT_DIARY)
+                val diaryId: Int? =
+                    intent.getIntExtra(EXTRA_OUTPUT_DIARY_ID, -1).takeIf { it != -1 }
 
-                return if (diary == null) {
+                return if (diaryId == null) {
                     null
                 } else {
                     Output(
                         isNewDiary = isNewDiary,
-                        diary = diary
+                        diaryId = diaryId
                     )
                 }
             }
         }
     }
 
-    sealed class Input {
+    sealed class Input : Parcelable {
+        @Parcelize
         data class Edit(
             val diaryId: Int,
             val originalDiary: DiaryWriteContentUiModel,
         ) : Input()
 
-        object New : Input()
+        @Parcelize
+        data class New(
+            val bookId: Int
+        ) : Input()
     }
 
     data class Output(
         val isNewDiary: Boolean,
-        val diary: DiaryWriteContentUiModel
+        val diaryId: Int
     )
 
     companion object {
-        private const val EXTRA_INPUT_DIARY_ID = "diaryId"
-        private const val EXTRA_INPUT_ORIGINAL_DIARY = "originalDiary"
+        private const val EXTRA_INPUT_EDIT = "inputEdit"
+        private const val EXTRA_INPUT_NEW = "inputNew"
 
         private const val EXTRA_OUTPUT_IS_NEW_DIARY = "isNewDiary"
-        private const val EXTRA_OUTPUT_DIARY = "diary"
+        private const val EXTRA_OUTPUT_DIARY_ID = "diaryId"
 
         private const val REQUEST_CODE_CAMERA = 0
+
+        private const val DIARY_IMAGE_FILE_NAME = "diary-image"
+        private const val DIARY_IMAGE_DIRECTORY_NAME = "diary"
     }
 }

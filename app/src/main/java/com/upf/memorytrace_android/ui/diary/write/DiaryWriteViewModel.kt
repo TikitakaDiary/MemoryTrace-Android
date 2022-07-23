@@ -4,19 +4,30 @@ import android.net.Uri
 import android.util.Log
 import androidx.core.net.toFile
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.upf.memorytrace_android.api.onFailure
+import com.upf.memorytrace_android.api.onSuccess
 import com.upf.memorytrace_android.color.UserColor
 import com.upf.memorytrace_android.common.MutableStateStackFlow
 import com.upf.memorytrace_android.databinding.EventLiveData
 import com.upf.memorytrace_android.databinding.MutableEventLiveData
+import com.upf.memorytrace_android.ui.diary.domain.DiaryRepository
 import com.upf.memorytrace_android.ui.diary.write.color.ColorItemUiModel
 import com.upf.memorytrace_android.util.MemoryTraceConfig
 import com.upf.memorytrace_android.util.TimeUtil
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import java.io.File
+import javax.inject.Inject
 
-class DiaryWriteViewModel(
-    private val memoryTraceConfig: MemoryTraceConfig = MemoryTraceConfig
+@HiltViewModel
+class DiaryWriteViewModel @Inject constructor(
+    private val memoryTraceConfig: MemoryTraceConfig,
+    private val repository: DiaryRepository,
 ) : ViewModel() {
 
     private val _toolbarState: MutableStateStackFlow<DiaryWriteToolbarState> =
@@ -43,6 +54,7 @@ class DiaryWriteViewModel(
     val errorEvent: EventLiveData<DiaryWriteErrorEvent>
         get() = _errorEvent
 
+    private var bookId: Int? = null
     private var diaryId: Int? = null
     private var originalDiary: DiaryWriteContentUiModel = DiaryWriteContentUiModel()
     var isNewDiary: Boolean = true
@@ -51,25 +63,25 @@ class DiaryWriteViewModel(
     var currentCameraImageFileUri: Uri? = null
         private set
 
-    fun loadDiary(diaryId: Int?, originalDiary: DiaryWriteContentUiModel?) {
-        if (diaryId != null && originalDiary != null) {
-            this.diaryId = diaryId
-            this.originalDiary = originalDiary
-            isNewDiary = false
-            _contentUiModel.update { originalDiary }
-            _toolbarState.push { DiaryWriteToolbarState.EDIT }
-        } else {
-            this.diaryId = null
-            isNewDiary = true
-            _contentUiModel.update {
-                it.copy(
-                    writerName = memoryTraceConfig.nickname.orEmpty(),
-                    date = TimeUtil.getTodayDate(TimeUtil.YYYY_M_D_KR)
-                )
-            }
-            this.originalDiary = contentUiModel.value
-            _toolbarState.push { DiaryWriteToolbarState.WRITE }
+    fun setBookId(bookId: Int) {
+        isNewDiary = true
+        this.bookId = bookId
+        _contentUiModel.update {
+            it.copy(
+                writerName = memoryTraceConfig.nickname.orEmpty(),
+                date = TimeUtil.getTodayDate(TimeUtil.YYYY_M_D_KR)
+            )
         }
+        this.originalDiary = contentUiModel.value
+        _toolbarState.push { DiaryWriteToolbarState.WRITE }
+    }
+
+    fun loadOriginalDiary(diaryId: Int, originalDiary: DiaryWriteContentUiModel) {
+        this.diaryId = diaryId
+        this.originalDiary = originalDiary
+        isNewDiary = false
+        _contentUiModel.update { originalDiary }
+        _toolbarState.push { DiaryWriteToolbarState.EDIT }
     }
 
     fun restorePreviousToolbarState() {
@@ -241,8 +253,18 @@ class DiaryWriteViewModel(
         _contentUiModel.update { it.copy(content = content) }
     }
 
-    fun postDiary() {
-        Log.d("TESTT", "postDiary : ${contentUiModel.value}")
+    fun postDiary(imageFile: File) {
+        val bookId = bookId ?: return
+        viewModelScope.launch {
+            val model = contentUiModel.value
+            repository.postDiary(bookId, model.title, model.content, imageFile)
+                .onSuccess {
+                    _event.event = DiaryWriteEvent.PostDone(diaryId = it)
+                }.onFailure {
+                    FirebaseCrashlytics.getInstance().recordException(it)
+                    _errorEvent.event = DiaryWriteErrorEvent.FailPost(it.message)
+                }
+        }
     }
 
     fun postEditedDiary() {

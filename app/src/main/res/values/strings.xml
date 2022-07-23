@@ -27,6 +27,7 @@
     <string name="write_dialog_camera_deny_forever">사진 촬영을 위해 카메라 권한이 필요합니다.\n앱 설정 > 권한 탭에서 카메라 권한을 허용해주세요.</string>
     <string name="write_dialog_permission_confirm">허용하기</string>
     <string name="write_dialog_title_camera_deny_forever">권한 없음</string>
+    <string name="write_failure_post">일기 작성에 실패했습니다. 잠시 후 다시 시도해주세요</string>
 
     <string name="diary_your_turn">Your turn!</string>
     <string name="diary_empty">작성한 일기가 없습니다. 😥</string>

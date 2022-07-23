@@ -1,9 +1,9 @@
 package com.upf.memorytrace_android.ui.diary.data.remote
 
 import com.upf.memorytrace_android.api.model.BaseResponse
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import okhttp3.MultipartBody
+import retrofit2.Call
+import retrofit2.http.*
 
 interface DiaryService {
 
@@ -15,4 +15,13 @@ interface DiaryService {
 
     @POST("/pinch/{bookId}")
     suspend fun pinch(@Path("bookId") bookId: Int): BaseResponse<Unit?>
+
+    @Multipart
+    @POST("/diary")
+    fun postDiary(
+        @Query("bid") bid: Int,
+        @Query("title") title: String,
+        @Query("content") content: String,
+        @Part img: MultipartBody.Part
+    ): Call<PostDiaryResponse>
 }
