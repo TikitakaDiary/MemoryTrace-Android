@@ -1,4 +1,4 @@
-package com.upf.memorytrace_android.ui.diary.write
+package com.upf.memorytrace_android.ui.diary.write.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.upf.memorytrace_android.databinding.DialogSelectImageTypeBinding
 import com.upf.memorytrace_android.extension.setOnDebounceClickListener
+import com.upf.memorytrace_android.ui.diary.write.DiaryWriteViewModel
 
 class SelectImageTypeDialogFragment: BottomSheetDialogFragment() {
 

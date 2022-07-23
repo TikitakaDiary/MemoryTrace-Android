@@ -61,28 +61,4 @@ class NetworkModule {
     @Singleton
     fun provideMemoryTraceApi(@Named("MemoryTrace") retrofit: Retrofit): MemoryTraceServiceOld =
         retrofit.create(MemoryTraceServiceOld::class.java)
-
-
-    @Provides
-    @Singleton
-    @NewRetrofit
-    fun provideNewRetrofit(): Retrofit {
-        val okHttpClient = OkHttpClient.Builder()
-            .connectTimeout(connectTimeout, TimeUnit.SECONDS)
-            .readTimeout(readTimeout, TimeUnit.SECONDS)
-            .addNetworkInterceptor(
-                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-            )
-            .addInterceptor(AuthHeaderInterceptor())
-            .build()
-        return Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .client(okHttpClient)
-            .addConverterFactory(MemoryTraceConverterFactory.create())
-            .build()
-    }
 }
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class NewRetrofit

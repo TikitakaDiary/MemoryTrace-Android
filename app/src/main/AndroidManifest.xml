@@ -23,7 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.diary.write.image.ImageCropActivity"
+            android:name=".ui.diary.write.crop.ImageCropActivity"
             android:exported="false" />
         <!-- ====== File Provider ======= -->
         <provider

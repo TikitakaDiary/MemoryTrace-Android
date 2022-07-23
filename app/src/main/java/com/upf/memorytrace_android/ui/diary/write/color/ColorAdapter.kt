@@ -20,7 +20,6 @@ class ColorAdapter : ListAdapter<ColorItemUiModel, ColorAdapter.ColorViewHolder>
             parent,
             false
         )
-        UserColor.values()
         return ColorViewHolder(binding).apply {
             binding.root.setOnDebounceClickListener {
                 getItem(bindingAdapterPosition).onSelectColorItem.invoke()

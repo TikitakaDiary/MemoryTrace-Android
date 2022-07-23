@@ -105,23 +105,6 @@
         android:label="NameEditFragment" />
 
     <fragment
-        android:id="@+id/cropFragment"
-        android:name="com.upf.memorytrace_android.ui.diary.write.image.CropFragment"
-        android:label="CropFragment">
-
-        <argument
-            android:name="imageUri"
-            app:argType="android.net.Uri"
-            app:nullable="true" />
-
-        <argument
-            android:name="bitmap"
-            app:argType="android.graphics.Bitmap"
-            app:nullable="true" />
-
-    </fragment>
-
-    <fragment
         android:id="@+id/diaryFragment"
         android:name="com.upf.memorytrace_android.ui.diary.list.presentation.DiaryListFragment"
         android:label="DiaryFragment">

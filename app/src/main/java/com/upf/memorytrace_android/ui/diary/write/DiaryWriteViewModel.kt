@@ -9,7 +9,6 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.upf.memorytrace_android.api.onFailure
 import com.upf.memorytrace_android.api.onSuccess
 import com.upf.memorytrace_android.color.UserColor
-import com.upf.memorytrace_android.common.MutableStateStackFlow
 import com.upf.memorytrace_android.data.repository.DiaryRepository
 import com.upf.memorytrace_android.databinding.EventLiveData
 import com.upf.memorytrace_android.databinding.MutableEventLiveData
@@ -36,7 +35,7 @@ class DiaryWriteViewModel @Inject constructor(
         get() = _toolbarState
 
     private val _contentUiModel: MutableStateFlow<DiaryWriteContentUiModel> =
-        MutableStateStackFlow(DiaryWriteContentUiModel())
+        MutableStateFlow(DiaryWriteContentUiModel())
     val contentUiModel: StateFlow<DiaryWriteContentUiModel>
         get() = _contentUiModel
 
@@ -133,7 +132,7 @@ class DiaryWriteViewModel @Inject constructor(
             val previousSelectedColor = previousImageType.color
             _selectColorUiModel.setSelectedColorAndShow(previousSelectedColor)
         } else {
-            _selectColorUiModel.setSelectedColorAndShow(DEFAULT_SELECTED_COLOR)
+            _selectColorUiModel.setSelectedColorAndShow(UserColor.getDefaultColor())
             _contentUiModel.setColorToDefault()
         }
     }
@@ -148,7 +147,7 @@ class DiaryWriteViewModel @Inject constructor(
 
     private fun MutableStateFlow<DiaryWriteContentUiModel>.setColorToDefault() {
         update {
-            it.copy(image = WriteImageType.Color(DEFAULT_SELECTED_COLOR))
+            it.copy(image = WriteImageType.Color(UserColor.getDefaultColor()))
         }
     }
 
@@ -179,6 +178,7 @@ class DiaryWriteViewModel @Inject constructor(
     private fun fetchUserColors(): List<UserColor> {
         return UserColor.getAllColors()
     }
+
     private fun startCameraActivity() {
         _event.event = DiaryWriteEvent.StartCameraActivity
     }
@@ -274,9 +274,5 @@ class DiaryWriteViewModel @Inject constructor(
     fun onStickerItemSelected(drawable: Drawable) {
         _contentUiModel.update { it.copy(stickerEdited = true) }
         _event.event = DiaryWriteEvent.AddSticker(drawable)
-    }
-
-    companion object {
-        private val DEFAULT_SELECTED_COLOR = UserColor.SYSTEM_GRAY
     }
 }

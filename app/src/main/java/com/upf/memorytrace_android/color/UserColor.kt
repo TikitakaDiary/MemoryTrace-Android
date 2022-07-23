@@ -6,7 +6,6 @@ import androidx.annotation.ColorInt
 enum class UserColor(
     val hexCode: String
 ) {
-    NONE("#00FFFFFF"),
     RED("#ffD54E4E"),
     ORANGE("#ffF59728"),
     YELLOW("#ffFFD84C"),
@@ -22,7 +21,11 @@ enum class UserColor(
 
     companion object {
         fun getAllColors(): List<UserColor> {
-            return values().filter { it != NONE }
+            return values().asList()
+        }
+
+        fun getDefaultColor(): UserColor {
+            return SYSTEM_GRAY
         }
     }
 }

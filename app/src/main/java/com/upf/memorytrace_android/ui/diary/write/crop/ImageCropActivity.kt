@@ -1,4 +1,4 @@
-package com.upf.memorytrace_android.ui.diary.write.image
+package com.upf.memorytrace_android.ui.diary.write.crop
 
 import android.content.Context
 import android.content.Intent

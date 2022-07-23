@@ -29,7 +29,8 @@ import com.upf.memorytrace_android.databinding.LayoutDiaryWriteSelectColorContai
 import com.upf.memorytrace_android.extension.*
 import com.upf.memorytrace_android.sticker.SelectStickerDialogFragment
 import com.upf.memorytrace_android.ui.diary.write.color.ColorAdapter
-import com.upf.memorytrace_android.ui.diary.write.image.ImageCropActivity
+import com.upf.memorytrace_android.ui.diary.write.crop.ImageCropActivity
+import com.upf.memorytrace_android.ui.diary.write.fragment.SelectImageTypeDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
