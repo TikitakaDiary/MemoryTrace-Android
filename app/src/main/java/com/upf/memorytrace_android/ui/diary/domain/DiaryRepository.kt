@@ -22,4 +22,11 @@ interface DiaryRepository {
         content: String,
         image: File
     ): ApiResponse<Int>
+
+    suspend fun editDiary(
+        diaryId: Int,
+        title: String,
+        content: String,
+        image: File
+    ): ApiResponse<Int>
 }

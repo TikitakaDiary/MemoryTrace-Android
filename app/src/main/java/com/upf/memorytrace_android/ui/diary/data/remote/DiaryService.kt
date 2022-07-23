@@ -19,9 +19,18 @@ interface DiaryService {
     @Multipart
     @POST("/diary")
     fun postDiary(
-        @Query("bid") bid: Int,
+        @Query("bid") bookId: Int,
         @Query("title") title: String,
         @Query("content") content: String,
-        @Part img: MultipartBody.Part
+        @Part imagePart: MultipartBody.Part
+    ): Call<PostDiaryResponse>
+
+    @Multipart
+    @POST("/diary/update")
+    fun editDiary(
+        @Query("did") diaryId: Int,
+        @Query("title") title: String,
+        @Query("content") content: String,
+        @Part imagePart: MultipartBody.Part
     ): Call<PostDiaryResponse>
 }

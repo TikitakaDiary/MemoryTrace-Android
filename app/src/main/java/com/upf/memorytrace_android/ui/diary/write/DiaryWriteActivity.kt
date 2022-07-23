@@ -100,18 +100,15 @@ class DiaryWriteActivity : AppCompatActivity() {
                             binding.writeToolbarTitle.text = getString(R.string.write_create_diary)
                             binding.setBackButtonArrow()
                             binding.setToolbarButton(R.string.write_delivery) {
-                                val file = binding.writePolaroidImage.toBitmap().toFile(
-                                    context = this@DiaryWriteActivity,
-                                    fileName = DIARY_IMAGE_FILE_NAME,
-                                    childDirectoryName = DIARY_IMAGE_DIRECTORY_NAME
-                                )
+                                val file = binding.writePolaroidImage.toDiaryImageFile()
                                 viewModel.postDiary(file)
                             }
                         }
                         DiaryWriteToolbarState.EDIT -> {
                             binding.setBackButtonCancel()
                             binding.setToolbarButton(R.string.write_save) {
-                                // Todo
+                                val file = binding.writePolaroidImage.toDiaryImageFile()
+                                viewModel.editedDiary(file)
                             }
                         }
                         DiaryWriteToolbarState.SELECT_COLOR -> {
@@ -189,7 +186,14 @@ class DiaryWriteActivity : AppCompatActivity() {
                 }
                 is DiaryWriteEvent.PostDone -> {
                     val intent = Intent().apply {
-                        putExtra(EXTRA_OUTPUT_DIARY_ID, event.diaryId)
+                        putExtra(EXTRA_OUTPUT_IS_NEW_DIARY, true)
+                    }
+                    setResult(RESULT_OK, intent)
+                    finish()
+                }
+                is DiaryWriteEvent.EditDone -> {
+                    val intent = Intent().apply {
+                        putExtra(EXTRA_OUTPUT_IS_NEW_DIARY, false)
                     }
                     setResult(RESULT_OK, intent)
                     finish()
@@ -412,6 +416,14 @@ class DiaryWriteActivity : AppCompatActivity() {
 
     private fun Uri.cropImage() {
         imageCropActivityResultLauncher.launch(this)
+    }
+
+    private fun ImageView.toDiaryImageFile(): File {
+        return toBitmap().toFile(
+            context = this@DiaryWriteActivity,
+            fileName = DIARY_IMAGE_FILE_NAME,
+            childDirectoryName = DIARY_IMAGE_DIRECTORY_NAME
+        )
     }
 
     class DiaryWriteContract : ActivityResultContract<Input, Output?>() {

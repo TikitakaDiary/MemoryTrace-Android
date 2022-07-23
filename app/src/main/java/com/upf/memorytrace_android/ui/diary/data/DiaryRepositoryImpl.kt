@@ -87,12 +87,36 @@ class DiaryRepositoryImpl @Inject constructor(
         image: File
     ): ApiResponse<Int> {
         return withContext(Dispatchers.IO) {
-            val imagePart = MultipartBody.Part.createFormData(
-                "img",
-                image.name,
-                image.asRequestBody("image/*".toMediaType())
-            )
-            diaryService.postDiary(bookId, title, content, imagePart).toApiResponse().map { it.diaryId }
+            diaryService.postDiary(
+                bookId = bookId,
+                title = title,
+                content = content,
+                imagePart = image.toDiaryImageMultiPart()
+            ).toApiResponse().map { it.diaryId }
         }
+    }
+
+    override suspend fun editDiary(
+        diaryId: Int,
+        title: String,
+        content: String,
+        image: File
+    ): ApiResponse<Int> {
+        return withContext(Dispatchers.IO) {
+            diaryService.editDiary(
+                diaryId = diaryId,
+                title = title,
+                content = content,
+                imagePart = image.toDiaryImageMultiPart()
+            ).toApiResponse().map { it.diaryId }
+        }
+    }
+
+    private fun File.toDiaryImageMultiPart(): MultipartBody.Part {
+        return MultipartBody.Part.createFormData(
+            "img",
+            name,
+            asRequestBody("image/*".toMediaType())
+        )
     }
 }

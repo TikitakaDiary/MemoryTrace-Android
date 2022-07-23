@@ -205,10 +205,6 @@ class DiaryWriteViewModel @Inject constructor(
         currentCameraImageFileUri = uri
     }
 
-    fun isShowingSelectColor(): Boolean {
-        return selectColorUiModel.value.isShowing
-    }
-
     // 호출되어야 하는 상황
     // 1. 카메라 촬영에 실패했을 때
     // 2. 최종적으로 이미지가 적용되었을 때 (크롭되어 새로운 파일이 적용됨)
@@ -259,7 +255,7 @@ class DiaryWriteViewModel @Inject constructor(
             val model = contentUiModel.value
             repository.postDiary(bookId, model.title, model.content, imageFile)
                 .onSuccess {
-                    _event.event = DiaryWriteEvent.PostDone(diaryId = it)
+                    _event.event = DiaryWriteEvent.PostDone
                 }.onFailure {
                     FirebaseCrashlytics.getInstance().recordException(it)
                     _errorEvent.event = DiaryWriteErrorEvent.FailPost(it.message)
@@ -267,8 +263,18 @@ class DiaryWriteViewModel @Inject constructor(
         }
     }
 
-    fun postEditedDiary() {
-        Log.d("TESTT", "postEditedDiary : ${contentUiModel.value}")
+    fun editedDiary(imageFile: File) {
+        val diaryId = diaryId ?: return
+        viewModelScope.launch {
+            val model = contentUiModel.value
+            repository.editDiary(diaryId, model.title, model.content, imageFile)
+                .onSuccess {
+                    _event.event = DiaryWriteEvent.EditDone
+                }.onFailure {
+                    FirebaseCrashlytics.getInstance().recordException(it)
+                    _errorEvent.event = DiaryWriteErrorEvent.FailPost(it.message)
+                }
+        }
     }
 
     companion object {
