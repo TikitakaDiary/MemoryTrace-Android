@@ -113,7 +113,6 @@
                         android:id="@+id/write_sticker_contents_image"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:visibility="gone"
                         app:borderColor="@android:color/white"
                         app:showBorder="true"
                         app:showIcons="true">

@@ -1,5 +1,6 @@
 package com.upf.memorytrace_android.ui.diary.write
 
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Parcelable
 import com.upf.memorytrace_android.color.UserColor
@@ -13,6 +14,7 @@ data class DiaryWriteContentUiModel(
     val writerName: String = "",
     val content: String = "",
     val image: WriteImageType = WriteImageType.None,
+    val stickerEdited: Boolean = false,
 ) : Parcelable {
     val canPost: Boolean
         get() = title.isNotEmpty()
@@ -57,4 +59,5 @@ sealed class DiaryWriteEvent {
     object ShowFinishConfirmDialog : DiaryWriteEvent()
     object PostDone : DiaryWriteEvent()
     object EditDone : DiaryWriteEvent()
+    data class AddSticker(val stickerDrawable: Drawable): DiaryWriteEvent()
 }

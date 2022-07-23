@@ -1,4 +1,4 @@
-package com.upf.memorytrace_android.util
+package com.upf.memorytrace_android.sticker
 
 import androidx.annotation.DrawableRes
 import androidx.collection.arrayMapOf
@@ -134,6 +134,15 @@ internal object StickerPackage {
     )
 
     val packageMap = arrayMapOf(
+        Pair(R.drawable.ic_alphabet_0, package02),
+        Pair(R.drawable.ic_alphabet_capital, package03),
+        Pair(R.drawable.ic_ta_da_preview, package04),
+        Pair(R.drawable.ic_line_0, package05),
+        Pair(R.drawable.ic_round_0, package06),
+        Pair(R.drawable.ic_music_preview, package07)
+    )
+
+    val packages = arrayOf(
         Pair(R.drawable.ic_alphabet_0, package02),
         Pair(R.drawable.ic_alphabet_capital, package03),
         Pair(R.drawable.ic_ta_da_preview, package04),

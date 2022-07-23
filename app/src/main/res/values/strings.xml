@@ -28,6 +28,7 @@
     <string name="write_dialog_permission_confirm">허용하기</string>
     <string name="write_dialog_title_camera_deny_forever">권한 없음</string>
     <string name="write_failure_post">일기 작성에 실패했습니다. 잠시 후 다시 시도해주세요</string>
+    <string name="write_sticker_alert_no_content">사진이나 단색을 먼저 입력해주세요</string>
 
     <string name="diary_your_turn">Your turn!</string>
     <string name="diary_empty">작성한 일기가 없습니다. 😥</string>

@@ -7,7 +7,7 @@ import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.ui.base.BaseBottomSheetFragment
 import com.upf.memorytrace_android.databinding.FragmentBottomSheetBookStickerBinding
 import com.upf.memorytrace_android.ui.book.create.CreateBookViewModel
-import com.upf.memorytrace_android.util.StickerPackage
+import com.upf.memorytrace_android.sticker.StickerPackage
 
 internal class BookStickerBottomSheetFragment(
     override val viewModel: CreateBookViewModel

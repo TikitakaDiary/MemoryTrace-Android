@@ -18,6 +18,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import com.bumptech.glide.Glide
@@ -26,12 +27,15 @@ import com.upf.memorytrace_android.color.toColorInt
 import com.upf.memorytrace_android.databinding.ActivityDiaryWriteBinding
 import com.upf.memorytrace_android.databinding.LayoutDiaryWriteSelectColorContainerBinding
 import com.upf.memorytrace_android.extension.*
+import com.upf.memorytrace_android.sticker.SelectStickerDialogFragment
 import com.upf.memorytrace_android.ui.diary.write.color.ColorAdapter
 import com.upf.memorytrace_android.ui.diary.write.image.ImageCropActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import com.upf.memorytrace_android.util.showDialog
+import com.xiaopo.flying.sticker.DrawableSticker
+import com.xiaopo.flying.sticker.StickerView
 import kotlinx.parcelize.Parcelize
 import java.io.File
 import java.io.IOException
@@ -86,7 +90,8 @@ class DiaryWriteActivity : AppCompatActivity() {
                     binding.writeDate.text = it.date
                     binding.setPolaroidImage(it.image)
 
-                    binding.writeToolbarButton.isEnabled = viewModel.hasDiaryDiff() && it.canPost
+                    val hasDiff = it.stickerEdited || viewModel.hasDiaryDiff()
+                    binding.writeToolbarButton.isEnabled = hasDiff && it.canPost
                 }
             }
 
@@ -100,7 +105,8 @@ class DiaryWriteActivity : AppCompatActivity() {
                             binding.writeToolbarTitle.text = getString(R.string.write_create_diary)
                             binding.setBackButtonArrow()
                             binding.setToolbarButton(R.string.write_delivery) {
-                                val file = binding.writePolaroidImage.toDiaryImageFile()
+                                binding.writeStickerContentsImage.removeStickerHandler()
+                                val file = binding.writeStickerContentsImage.toDiaryImageFile()
                                 viewModel.postDiary(file)
                             }
                         }
@@ -108,7 +114,8 @@ class DiaryWriteActivity : AppCompatActivity() {
                             binding.writeToolbarTitle.text = ""
                             binding.setBackButtonCancel()
                             binding.setToolbarButton(R.string.write_save) {
-                                val file = binding.writePolaroidImage.toDiaryImageFile()
+                                binding.writeStickerContentsImage.removeStickerHandler()
+                                val file = binding.writeStickerContentsImage.toDiaryImageFile()
                                 viewModel.editedDiary(file)
                             }
                         }
@@ -185,6 +192,10 @@ class DiaryWriteActivity : AppCompatActivity() {
                     setResult(RESULT_OK, intent)
                     finish()
                 }
+                is DiaryWriteEvent.AddSticker -> {
+                    val drawableSticker = DrawableSticker(event.stickerDrawable)
+                    binding.writeStickerContentsImage.addSticker(drawableSticker)
+                }
             }
         }
 
@@ -200,12 +211,25 @@ class DiaryWriteActivity : AppCompatActivity() {
                 }
             }
         }
-
         binding.writeSelectImageButton.setOnDebounceClickListener {
             showSelectImageTypeDialogFragment()
         }
-        binding.writePolaroidImageContainer.setOnDebounceClickListener {
+        binding.writeNoContentsImage.setOnDebounceClickListener {
             showSelectImageTypeDialogFragment()
+        }
+        binding.writeSelectStickerButton.setOnDebounceClickListener {
+            if (binding.writeNoContentsImage.isVisible) {
+                toast(R.string.write_sticker_alert_no_content)
+            } else {
+                showSelectStickerDialogFragment(
+                    onStickerClick = { imageRes ->
+                        val drawable = ContextCompat.getDrawable(this, imageRes)
+                        if (drawable != null) {
+                            viewModel.onStickerItemSelected(drawable)
+                        }
+                    }
+                )
+            }
         }
         binding.writeTitle.doAfterTextChanged {
             viewModel.onTitleChanged(it?.toString().orEmpty())
@@ -249,6 +273,14 @@ class DiaryWriteActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         viewModel.onBackPressed()
+    }
+
+    private fun showSelectStickerDialogFragment(onStickerClick: (Int) -> Unit) {
+        showAllowingStateLoss("selectSticker") {
+            SelectStickerDialogFragment().apply {
+                setOnStickClick(onStickerClick)
+            }
+        }
     }
 
     private fun showSelectImageTypeDialogFragment() {
@@ -401,7 +433,7 @@ class DiaryWriteActivity : AppCompatActivity() {
         imageCropActivityResultLauncher.launch(this)
     }
 
-    private fun ImageView.toDiaryImageFile(): File {
+    private fun StickerView.toDiaryImageFile(): File {
         return toBitmap().toFile(
             context = this@DiaryWriteActivity,
             fileName = DIARY_IMAGE_FILE_NAME,

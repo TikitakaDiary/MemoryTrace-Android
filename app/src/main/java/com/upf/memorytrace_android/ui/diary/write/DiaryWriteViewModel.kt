@@ -1,5 +1,6 @@
 package com.upf.memorytrace_android.ui.diary.write
 
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import androidx.core.net.toFile
 import androidx.lifecycle.ViewModel
@@ -268,6 +269,11 @@ class DiaryWriteViewModel @Inject constructor(
                     _errorEvent.event = DiaryWriteErrorEvent.FailPost(it.message)
                 }
         }
+    }
+
+    fun onStickerItemSelected(drawable: Drawable) {
+        _contentUiModel.update { it.copy(stickerEdited = true) }
+        _event.event = DiaryWriteEvent.AddSticker(drawable)
     }
 
     companion object {
