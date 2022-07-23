@@ -13,9 +13,14 @@ data class DiaryWriteContentUiModel(
     val writerName: String = "",
     val content: String = "",
     val image: WriteImageType = WriteImageType.None,
-) : Parcelable
+) : Parcelable {
+    val canPost: Boolean
+        get() = title.isNotEmpty()
+                && content.isNotEmpty()
+                && image !is WriteImageType.None
+}
 
-sealed class WriteImageType: Parcelable {
+sealed class WriteImageType : Parcelable {
     @Parcelize
     data class Image(
         val uri: Uri = Uri.EMPTY
@@ -24,7 +29,7 @@ sealed class WriteImageType: Parcelable {
     @Parcelize
     data class Color(
         val color: UserColor = UserColor.NONE
-    ): WriteImageType()
+    ) : WriteImageType()
 
     @Parcelize
     object None : WriteImageType()
@@ -45,9 +50,9 @@ data class DiaryWriteSelectColorUiModel(
 )
 
 sealed class DiaryWriteEvent {
-    data class ShowEditConfirmDialog(val nextImageType: SelectImageType): DiaryWriteEvent()
-    object StartGalleryActivity: DiaryWriteEvent()
-    object StartCameraActivity: DiaryWriteEvent()
-    object FinishWriteActivity: DiaryWriteEvent()
-    object ShowFinishConfirmDialog: DiaryWriteEvent()
+    data class ShowEditConfirmDialog(val nextImageType: SelectImageType) : DiaryWriteEvent()
+    object StartGalleryActivity : DiaryWriteEvent()
+    object StartCameraActivity : DiaryWriteEvent()
+    object FinishWriteActivity : DiaryWriteEvent()
+    object ShowFinishConfirmDialog : DiaryWriteEvent()
 }

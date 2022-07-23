@@ -1,6 +1,7 @@
 package com.upf.memorytrace_android.ui.diary.write
 
 import android.net.Uri
+import android.util.Log
 import androidx.core.net.toFile
 import androidx.lifecycle.ViewModel
 import com.upf.memorytrace_android.color.UserColor
@@ -210,22 +211,42 @@ class DiaryWriteViewModel(
         }
     }
 
+    fun hasDiaryDiff(): Boolean {
+        return contentUiModel.value != originalDiary
+    }
+
     fun onBackPressed() {
         val isShowingSelectColorLayout = selectColorUiModel.value.isShowing
         if (isShowingSelectColorLayout) {
             dismissSelectColorLayout()
         } else {
-            if (contentUiModel.value == originalDiary) {
+            if (hasDiaryDiff()) {
+                _event.event = DiaryWriteEvent.ShowFinishConfirmDialog
+            } else {
                 clearBackUpData()
                 _event.event = DiaryWriteEvent.FinishWriteActivity
-            } else {
-                _event.event = DiaryWriteEvent.ShowFinishConfirmDialog
             }
         }
     }
 
     fun clearBackUpData() {
         // Todo
+    }
+
+    fun onTitleChanged(title: String) {
+        _contentUiModel.update { it.copy(title = title) }
+    }
+
+    fun onContentChanged(content: String) {
+        _contentUiModel.update { it.copy(content = content) }
+    }
+
+    fun postDiary() {
+        Log.d("TESTT", "postDiary : ${contentUiModel.value}")
+    }
+
+    fun postEditedDiary() {
+        Log.d("TESTT", "postEditedDiary : ${contentUiModel.value}")
     }
 
     companion object {

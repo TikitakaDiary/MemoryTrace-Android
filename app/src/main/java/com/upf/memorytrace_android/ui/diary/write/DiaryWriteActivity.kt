@@ -18,6 +18,7 @@ import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import com.bumptech.glide.Glide
 import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.color.toColorInt
@@ -84,6 +85,8 @@ class DiaryWriteActivity : AppCompatActivity() {
                     binding.writeWriter.text = it.writerName
                     binding.writeDate.text = it.date
                     binding.setPolaroidImage(it.image)
+
+                    binding.writeToolbarButton.isEnabled = viewModel.hasDiaryDiff() && it.canPost
                 }
             }
 
@@ -97,7 +100,7 @@ class DiaryWriteActivity : AppCompatActivity() {
                             binding.writeToolbarTitle.text = getString(R.string.write_create_diary)
                             binding.setBackButtonArrow()
                             binding.setToolbarButton(R.string.write_delivery) {
-                                // Todo
+                                viewModel.postDiary()
                             }
                         }
                         DiaryWriteToolbarState.EDIT -> {
@@ -197,6 +200,12 @@ class DiaryWriteActivity : AppCompatActivity() {
         }
         binding.writePolaroidImageContainer.setOnDebounceClickListener {
             showSelectImageTypeDialogFragment()
+        }
+        binding.writeTitle.doAfterTextChanged {
+            viewModel.onTitleChanged(it?.toString().orEmpty())
+        }
+        binding.writeContents.doAfterTextChanged {
+            viewModel.onContentChanged(it?.toString().orEmpty())
         }
 
         viewModel.loadDiary(diaryId, originalDiary)
