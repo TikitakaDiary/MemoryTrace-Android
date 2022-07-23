@@ -66,6 +66,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:fillViewport="true"
         android:overScrollMode="never"
         android:scrollbars="none"
         app:layout_constraintBottom_toTopOf="@id/write_menu_container"
@@ -180,10 +181,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/default_padding_24"
                 android:layout_marginTop="@dimen/title_spacing_16"
-                android:layout_marginBottom="@dimen/section_spacing_40"
+                android:paddingBottom="@dimen/section_spacing_40"
+                android:gravity="top"
                 android:hint="@string/write_hint_content"
+                android:minHeight="150dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/write_polaroid_container" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/write_polaroid_container"
+                app:layout_constraintVertical_bias="0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
