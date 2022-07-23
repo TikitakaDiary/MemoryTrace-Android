@@ -71,7 +71,7 @@
         </activity>
 
         <activity
-            android:name=".ui.diary.write.WriteActivity"
+            android:name=".ui.diary.write.DiaryWriteActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 

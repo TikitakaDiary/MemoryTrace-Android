@@ -10,6 +10,7 @@ import com.upf.memorytrace_android.ui.diary.list.domain.FetchDiariesUseCase
 import com.upf.memorytrace_android.ui.diary.list.domain.FetchPinchInfoUseCase
 import com.upf.memorytrace_android.ui.diary.list.domain.PinchInfo
 import com.upf.memorytrace_android.ui.diary.list.domain.PinchUseCase
+import com.upf.memorytrace_android.ui.diary.write.DiaryWriteActivity
 import com.upf.memorytrace_android.util.MemoryTraceConfig
 import com.upf.memorytrace_android.util.TimeUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,7 +28,7 @@ class DiaryListViewModel @Inject constructor(
 ) : ViewModel() {
 
     sealed class Event {
-        data class WriteDiary(val bookId: Int) : Event()
+        data class WriteDiary(val input: DiaryWriteActivity.Input) : Event()
         data class DiaryDetail(val diaryId: Int) : Event()
         data class Setting(val bookId: Int) : Event()
         data class Error(val errorMessage: String) : Event()
@@ -59,9 +60,9 @@ class DiaryListViewModel @Inject constructor(
     private var lastScrollPositionOfLinearList = 0
     private var lastScrollPositionOfGridList = 0
 
-    fun initializeDiaryList(bookId: Int, force: Boolean) {
+    fun initializeDiaryList(bookId: Int) {
         this.bookId = bookId
-        loadDiaryList(force)
+        loadDiaryList(true)
     }
 
     fun loadDiaryList(force: Boolean = false) {
@@ -152,7 +153,9 @@ class DiaryListViewModel @Inject constructor(
     }
 
     fun writeDiary() {
-        _uiEvent.event = Event.WriteDiary(bookId)
+        _uiEvent.event = Event.WriteDiary(
+            input = DiaryWriteActivity.Input.New
+        )
     }
 
     fun onClickSetting() {

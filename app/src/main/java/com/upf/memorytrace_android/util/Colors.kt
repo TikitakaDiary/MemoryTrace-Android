@@ -8,6 +8,7 @@ import com.upf.memorytrace_android.R
 
 enum class Colors(val id: Int, val color: Long) {
 
+    NONE(-1, 0x00FFFFFF),
     RED(0, 0xffD54E4E),
     ORANGE(1, 0xffF59728),
     YELLOW(2, 0xffFFD84C),

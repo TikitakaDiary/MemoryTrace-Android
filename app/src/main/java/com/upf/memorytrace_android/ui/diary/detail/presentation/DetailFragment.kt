@@ -1,6 +1,5 @@
 package com.upf.memorytrace_android.ui.diary.detail.presentation
 
-import android.animation.AnimatorInflater
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -16,6 +15,7 @@ import com.upf.memorytrace_android.extension.repeatOnStart
 import com.upf.memorytrace_android.ui.UiState
 import com.upf.memorytrace_android.ui.base.BindingFragment
 import com.upf.memorytrace_android.ui.diary.detail.domain.DiaryDetail
+import com.upf.memorytrace_android.ui.diary.write.DiaryWriteActivity
 import com.upf.memorytrace_android.util.setAnimationListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -77,10 +77,7 @@ class DetailFragment : BindingFragment<FragmentDetailBinding>(R.layout.fragment_
                             }
                     }
                     is DetailViewModel.Event.EditDiary -> {
-                        DetailFragmentDirections.actionDetailFragmentToWriteFragment(-1, event.diaryDetailDTO)
-                            .run {
-                                findNavController().navigate(this)
-                            }
+                        diaryWriteLauncher.launch(event.input)
                     }
                     is DetailViewModel.Event.EditNotAvailable -> {
                         Toast.makeText(this@DetailFragment.context, getString(R.string.diary_detail_edit_not_available), Toast.LENGTH_SHORT).show()
@@ -96,5 +93,12 @@ class DetailFragment : BindingFragment<FragmentDetailBinding>(R.layout.fragment_
                 )
             }
         }
+    }
+
+    private val diaryWriteLauncher =
+        registerForActivityResult(DiaryWriteActivity.DiaryWriteContract()) { output ->
+            if (output != null) {
+                detailViewModel.fetchDiaryDetail(args.diaryId)
+            }
     }
 }

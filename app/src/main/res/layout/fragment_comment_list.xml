@@ -151,7 +151,7 @@
                 android:paddingHorizontal="24dp"
                 android:paddingVertical="14dp"
                 android:text="@string/comment_send"
-                android:textColor="@color/selector_button"
+                android:textColor="@color/selector_blue_button"
                 android:textSize="14dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"

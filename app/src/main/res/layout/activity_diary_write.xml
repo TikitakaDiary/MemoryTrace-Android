@@ -11,18 +11,36 @@
         android:layout_height="52dp"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/write_top_back_button"
+        <FrameLayout
+            android:id="@+id/write_toolbar_left_button_container"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingHorizontal="24dp"
-            android:src="@drawable/ic_back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/write_toolbar_back_button_image"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="24dp"
+                android:visibility="gone"
+                tools:src="@drawable/ic_back"
+                tools:visibility="visible" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/write_toolbar_back_button_text"
+                style="@style/WhiteTextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="24dp"
+                android:visibility="gone"
+                tools:text="@string/write_exit_cancel" />
+
+        </FrameLayout>
 
         <TextView
-            android:id="@+id/write_top_title"
+            android:id="@+id/write_toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/write_create_diary"
@@ -32,14 +50,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/write_top_button"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/write_toolbar_button"
+            style="@style/WhiteTextButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:paddingHorizontal="24dp"
             android:text="@string/write_delivery"
-            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -93,7 +110,7 @@
                         android:src="@drawable/ic_plus" />
 
                     <com.xiaopo.flying.sticker.StickerView
-                        android:id="@+id/sticker_view"
+                        android:id="@+id/write_sticker_contents_image"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:visibility="gone"
@@ -106,10 +123,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
 
-                        <View
-                            android:id="@+id/write_polaroid_color"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
+<!--                        <View-->
+<!--                            android:id="@+id/write_polaroid_color"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent" />-->
 
                     </com.xiaopo.flying.sticker.StickerView>
 
@@ -163,6 +180,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/write_contents"
                 style="@style/WriteContentEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
