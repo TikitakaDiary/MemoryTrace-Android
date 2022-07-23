@@ -31,7 +31,7 @@
     <string name="crop_finish">완료</string>
 
     <string name="by">by&#160;</string>
-    
+
     <string name="write_unmodifiable_image_dialog_message">수정시, 부착한 스티커와 사진 모두\n리셋 됩니다. 그래도 편집하시겠습니까?</string>
     <string name="modify_image">편집하기</string>
 

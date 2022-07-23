@@ -20,6 +20,7 @@ import com.upf.memorytrace_android.ui.diary.list.presentation.adapter.DiaryAdapt
 import com.upf.memorytrace_android.ui.diary.list.presentation.adapter.DiaryGridAdapter
 import com.upf.memorytrace_android.ui.diary.list.presentation.adapter.DiaryHeaderAdapter
 import com.upf.memorytrace_android.ui.diary.list.presentation.adapter.DiaryLinearAdapter
+import com.upf.memorytrace_android.ui.diary.write.WriteActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -138,11 +139,7 @@ class DiaryListFragment : BindingFragment<FragmentDiaryBinding>(R.layout.fragmen
                                 }
                         }
                         is DiaryListViewModel.Event.WriteDiary -> {
-                            DiaryListFragmentDirections
-                                .actionDiaryFragmentToWriteFragment(event.bookId, null)
-                                .run {
-                                    findNavController().navigate(this)
-                                }
+                            WriteActivity.startWriteActivity(requireContext())
                         }
                         is DiaryListViewModel.Event.SuccessPinch -> {
                             toast(getString(R.string.pinch_success_toast, event.turnUserName))
