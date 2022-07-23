@@ -10,7 +10,6 @@ import com.upf.memorytrace_android.ui.diary.list.domain.FetchDiariesUseCase
 import com.upf.memorytrace_android.ui.diary.list.domain.FetchPinchInfoUseCase
 import com.upf.memorytrace_android.ui.diary.list.domain.PinchInfo
 import com.upf.memorytrace_android.ui.diary.list.domain.PinchUseCase
-import com.upf.memorytrace_android.ui.diary.write.DiaryWriteActivity
 import com.upf.memorytrace_android.util.MemoryTraceConfig
 import com.upf.memorytrace_android.util.TimeUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,7 +27,7 @@ class DiaryListViewModel @Inject constructor(
 ) : ViewModel() {
 
     sealed class Event {
-        data class WriteDiary(val input: DiaryWriteActivity.Input) : Event()
+        data class WriteDiary(val bookId: Int) : Event()
         data class DiaryDetail(val diaryId: Int) : Event()
         data class Setting(val bookId: Int) : Event()
         data class Error(val errorMessage: String) : Event()
@@ -153,9 +152,7 @@ class DiaryListViewModel @Inject constructor(
     }
 
     fun writeDiary() {
-        _uiEvent.event = Event.WriteDiary(
-            input = DiaryWriteActivity.Input.New(bookId = bookId)
-        )
+        _uiEvent.event = Event.WriteDiary(bookId = bookId)
     }
 
     fun onClickSetting() {

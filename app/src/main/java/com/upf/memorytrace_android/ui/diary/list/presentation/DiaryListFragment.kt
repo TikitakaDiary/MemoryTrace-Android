@@ -134,7 +134,7 @@ class DiaryListFragment : BindingFragment<FragmentDiaryBinding>(R.layout.fragmen
                                 }
                         }
                         is DiaryListViewModel.Event.WriteDiary -> {
-                            diaryWriteLauncher.launch(event.input)
+                            diaryWriteLauncher.launch(DiaryWriteActivity.Input.New(event.bookId))
                         }
                         is DiaryListViewModel.Event.SuccessPinch -> {
                             toast(getString(R.string.pinch_success_toast, event.turnUserName))
@@ -162,10 +162,8 @@ class DiaryListFragment : BindingFragment<FragmentDiaryBinding>(R.layout.fragmen
 
     private val diaryWriteLauncher =
         registerForActivityResult(DiaryWriteActivity.DiaryWriteContract()) { output ->
-            if (output != null) {
-                if (output.isNewDiary) {
-                    diaryListViewModel.loadDiaryList(true)
-                }
+            if (output?.hasChange == true) {
+                diaryListViewModel.loadDiaryList(true)
             }
         }
 

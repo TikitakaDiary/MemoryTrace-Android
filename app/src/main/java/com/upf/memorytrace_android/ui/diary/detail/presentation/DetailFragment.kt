@@ -97,7 +97,7 @@ class DetailFragment : BindingFragment<FragmentDetailBinding>(R.layout.fragment_
 
     private val diaryWriteLauncher =
         registerForActivityResult(DiaryWriteActivity.DiaryWriteContract()) { output ->
-            if (output != null && output.isNewDiary) {
+            if (output?.hasChange == true) {
                 detailViewModel.fetchDiaryDetail(args.diaryId)
             }
     }

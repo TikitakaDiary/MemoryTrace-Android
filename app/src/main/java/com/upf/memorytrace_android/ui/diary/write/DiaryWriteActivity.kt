@@ -164,6 +164,7 @@ class DiaryWriteActivity : AppCompatActivity() {
                     startGalleryActivityForResult()
                 }
                 is DiaryWriteEvent.FinishWriteActivity -> {
+                    setResult(RESULT_CANCELED)
                     finish()
                 }
                 is DiaryWriteEvent.ShowFinishConfirmDialog -> {
@@ -174,22 +175,17 @@ class DiaryWriteActivity : AppCompatActivity() {
                         confirm = R.string.write_exit_exit,
                         positive = {
                             viewModel.clearBackUpData()
+                            setResult(RESULT_CANCELED)
                             finish()
                         }
                     )
                 }
                 is DiaryWriteEvent.PostDone -> {
-                    val intent = Intent().apply {
-                        putExtra(EXTRA_OUTPUT_IS_NEW_DIARY, true)
-                    }
-                    setResult(RESULT_OK, intent)
+                    setResult(RESULT_OK)
                     finish()
                 }
                 is DiaryWriteEvent.EditDone -> {
-                    val intent = Intent().apply {
-                        putExtra(EXTRA_OUTPUT_IS_NEW_DIARY, false)
-                    }
-                    setResult(RESULT_OK, intent)
+                    setResult(RESULT_OK)
                     finish()
                 }
                 is DiaryWriteEvent.AddSticker -> {
@@ -452,23 +448,8 @@ class DiaryWriteActivity : AppCompatActivity() {
             }
         }
 
-        override fun parseResult(resultCode: Int, intent: Intent?): Output? {
-            return if (intent == null || resultCode != RESULT_OK) {
-                null
-            } else {
-                val isNewDiary = intent.getBooleanExtra(EXTRA_OUTPUT_IS_NEW_DIARY, true)
-                val diaryId: Int? =
-                    intent.getIntExtra(EXTRA_OUTPUT_DIARY_ID, -1).takeIf { it != -1 }
-
-                return if (diaryId == null) {
-                    null
-                } else {
-                    Output(
-                        isNewDiary = isNewDiary,
-                        diaryId = diaryId
-                    )
-                }
-            }
+        override fun parseResult(resultCode: Int, intent: Intent?): Output {
+            return Output(hasChange = resultCode == RESULT_OK)
         }
     }
 
@@ -486,16 +467,12 @@ class DiaryWriteActivity : AppCompatActivity() {
     }
 
     data class Output(
-        val isNewDiary: Boolean,
-        val diaryId: Int
+        val hasChange: Boolean
     )
 
     companion object {
         private const val EXTRA_INPUT_EDIT = "inputEdit"
         private const val EXTRA_INPUT_NEW = "inputNew"
-
-        private const val EXTRA_OUTPUT_IS_NEW_DIARY = "isNewDiary"
-        private const val EXTRA_OUTPUT_DIARY_ID = "diaryId"
 
         private const val REQUEST_CODE_CAMERA = 0
 
