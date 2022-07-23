@@ -23,12 +23,19 @@
     <string name="write_exit_cancel">취소</string>
     <string name="write_exit_exit">나가기</string>
     <string name="write_load_image_fail">이미지를 불러오는데 실패하였습니다.</string>
+    <string name="write_toast_camera_deny">사진 촬영을 위해 카메라 권한이 필요합니다</string>
+    <string name="write_dialog_camera_deny_forever">사진 촬영을 위해 카메라 권한이 필요합니다.\n앱 설정 > 권한 탭에서 카메라 권한을 허용해주세요.</string>
+    <string name="write_dialog_permission_confirm">허용하기</string>
+    <string name="write_dialog_title_camera_deny_forever">권한 없음</string>
 
     <string name="diary_your_turn">Your turn!</string>
     <string name="diary_empty">작성한 일기가 없습니다. 😥</string>
 
     <string name="crop_title">수정</string>
     <string name="crop_finish">완료</string>
+    <string name="crop_image_cancel_dialog_title">편집 취소</string>
+    <string name="crop_image_cancel_dialog_content">편집한 내용을 적용하지 않고 나가시겠습니까?</string>
+    <string name="crop_image_cancel_dialog_ok">확인</string>
 
     <string name="by">by&#160;</string>
 
@@ -131,4 +138,5 @@
     <string name="sponsor_error_no_sku">후원 목록을 불러오는데 실패하였습니다.</string>
     <string name="sponsor_error_disconnect">구글 결제 시스템에 연결하지 못했습니다.\n잠시 후 다시 시도해주세요.</string>
     <string name="sponsor_error_fail_consume">일부 구매는 실패하였습니다.\n실패한 구매는 구글 정책에 따라 환불됩니다.</string>
+
 </resources>

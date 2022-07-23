@@ -1,12 +1,19 @@
 package com.upf.memorytrace_android.ui.diary.write
 
+import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
@@ -18,9 +25,15 @@ import com.upf.memorytrace_android.databinding.ActivityDiaryWriteBinding
 import com.upf.memorytrace_android.databinding.LayoutDiaryWriteSelectColorContainerBinding
 import com.upf.memorytrace_android.extension.*
 import com.upf.memorytrace_android.ui.diary.write.color.ColorAdapter
+import com.upf.memorytrace_android.ui.diary.write.image.ImageCropActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import com.upf.memorytrace_android.util.showDialog
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 @AndroidEntryPoint
 class DiaryWriteActivity : AppCompatActivity() {
@@ -28,6 +41,30 @@ class DiaryWriteActivity : AppCompatActivity() {
     private val viewModel: DiaryWriteViewModel by viewModels()
 
     private var selectColorBinding: LayoutDiaryWriteSelectColorContainerBinding? = null
+
+    private val cameraActivityResultLauncher =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+            if (success) {
+                viewModel.currentCameraImageFileUri?.cropImage()
+            } else {
+                viewModel.clearCameraTempFileUri()
+            }
+        }
+
+    private val galleryActivityResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            with(result) {
+                val selectedImageUri: Uri? = data?.data
+                if (resultCode == Activity.RESULT_OK) {
+                    selectedImageUri?.cropImage()
+                }
+            }
+        }
+
+    private val imageCropActivityResultLauncher =
+        registerForActivityResult(ImageCropActivity.ImageCropContract()) { croppedImageUri ->
+            croppedImageUri?.let { viewModel.applyContentImage(it) }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,6 +141,32 @@ class DiaryWriteActivity : AppCompatActivity() {
             }
         }
 
+        observeEvent(viewModel.event) { event ->
+            when (event) {
+                is DiaryWriteEvent.ShowEditConfirmDialog -> {
+                    showDialog(
+                        context = this,
+                        title = R.string.crop_title,
+                        message = R.string.write_unmodifiable_image_dialog_message,
+                        confirm = R.string.modify_image,
+                        positive = {
+                            viewModel.onClickEditConfirmYes(event.nextImageType)
+                        }
+                    )
+                }
+                is DiaryWriteEvent.StartCameraActivity -> {
+                    if (isGrantedPermission(Manifest.permission.CAMERA)) {
+                        takePhoto()
+                    } else {
+                        requestPermission(Manifest.permission.CAMERA, REQUEST_CODE_CAMERA)
+                    }
+                }
+                is DiaryWriteEvent.StartGalleryActivity -> {
+                    startGalleryActivityForResult()
+                }
+            }
+        }
+
         observeEvent(viewModel.errorEvent) { event ->
             when (event) {
                 is DiaryWriteErrorEvent.WrongAccess -> {
@@ -115,10 +178,78 @@ class DiaryWriteActivity : AppCompatActivity() {
         }
 
         binding.writeSelectImageButton.setOnDebounceClickListener {
-            viewModel.onClickSelectColorButton()
+            showAllowingStateLoss("selectImageType") {
+                SelectImageTypeDialogFragment()
+            }
         }
 
         viewModel.loadDiary(diaryId, originalDiary)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == REQUEST_CODE_CAMERA) {
+            val isGranted = grantResults.firstOrNull() == PackageManager.PERMISSION_GRANTED
+            val isDenied = shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)
+            when {
+                isGranted -> takePhoto()
+                isDenied -> toast(getString(R.string.write_toast_camera_deny))
+                else -> showCameraPermissionDenyForeverInfoDialog()
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        }
+    }
+
+    private fun showCameraPermissionDenyForeverInfoDialog() {
+        showDialog(
+            context = this,
+            title = R.string.write_dialog_title_camera_deny_forever,
+            message = R.string.write_dialog_camera_deny_forever,
+            confirm = R.string.write_dialog_permission_confirm,
+            positive = {
+                startAppSettingActivity()
+            }
+        )
+    }
+
+    private fun startAppSettingActivity() {
+        val intent = Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            data = Uri.fromParts("package", packageName, null)
+        }
+        startActivity(intent)
+    }
+
+    private fun startGalleryActivityForResult() {
+        galleryActivityResultLauncher.launch(Intent().apply {
+            type = "image/*"
+            action = Intent.ACTION_GET_CONTENT
+        })
+    }
+
+    private fun takePhoto() {
+        kotlin.runCatching {
+            createCameraTempFile().toContentUri(this)
+        }.onSuccess {
+            cameraActivityResultLauncher.launch(it)
+        }.onFailure {
+            Log.e(javaClass.simpleName, it.stackTraceToString())
+            toast(R.string.write_load_image_fail)
+        }
+    }
+
+    @Throws(IOException::class)
+    fun createCameraTempFile(): File {
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.KOREA).format(Date())
+        val imageDirectory: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+            ?: throw IOException("Cannot get externalFileDir (${Environment.DIRECTORY_PICTURES}")
+        return File.createTempFile(timeStamp, ".jpg", imageDirectory).also {
+            viewModel.saveCameraTempFileUri(Uri.fromFile(it))
+        }
     }
 
     private fun ActivityDiaryWriteBinding.setToolbarButton(
@@ -196,7 +327,9 @@ class DiaryWriteActivity : AppCompatActivity() {
             is WriteImageType.Color -> {
                 writePolaroidImage.setImageDrawable(ColorDrawable(writeImage.color.toColorInt()))
             }
-            else -> { /* Nothing to do */ }
+            else -> {
+                /* Nothing to do */
+            }
         }
     }
 
@@ -213,6 +346,10 @@ class DiaryWriteActivity : AppCompatActivity() {
                 }
         }
         selectColorBinding?.apply(apply)
+    }
+
+    private fun Uri.cropImage() {
+        imageCropActivityResultLauncher.launch(this)
     }
 
     class DiaryWriteContract : ActivityResultContract<Input, Output?>() {
@@ -264,5 +401,7 @@ class DiaryWriteActivity : AppCompatActivity() {
 
         private const val EXTRA_OUTPUT_IS_NEW_DIARY = "isNewDiary"
         private const val EXTRA_OUTPUT_DIARY = "diary"
+
+        private const val REQUEST_CODE_CAMERA = 0
     }
 }

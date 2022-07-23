@@ -4,7 +4,6 @@ import android.net.Uri
 import android.os.Parcelable
 import com.upf.memorytrace_android.color.UserColor
 import com.upf.memorytrace_android.ui.diary.write.color.ColorItemUiModel
-import com.upf.memorytrace_android.util.Colors
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -31,6 +30,10 @@ sealed class WriteImageType: Parcelable {
     object None : WriteImageType()
 }
 
+enum class SelectImageType {
+    CAMERA, ALBUM, COLOR
+}
+
 enum class DiaryWriteToolbarState {
     EDIT, WRITE, SELECT_COLOR, ATTACH_STICKER
 }
@@ -40,3 +43,9 @@ data class DiaryWriteSelectColorUiModel(
     val isShowing: Boolean = false,
     val previousImageType: WriteImageType = WriteImageType.None
 )
+
+sealed class DiaryWriteEvent {
+    data class ShowEditConfirmDialog(val nextImageType: SelectImageType): DiaryWriteEvent()
+    object StartGalleryActivity: DiaryWriteEvent()
+    object StartCameraActivity: DiaryWriteEvent()
+}

@@ -1,5 +1,7 @@
 package com.upf.memorytrace_android.ui.diary.write
 
+import android.net.Uri
+import androidx.core.net.toFile
 import androidx.lifecycle.ViewModel
 import com.upf.memorytrace_android.color.UserColor
 import com.upf.memorytrace_android.common.MutableStateStackFlow
@@ -17,7 +19,7 @@ class DiaryWriteViewModel : ViewModel() {
     val toolbarState: StateFlow<DiaryWriteToolbarState>
         get() = _toolbarState
 
-    private val _contentUiModel: MutableStateStackFlow<DiaryWriteContentUiModel> =
+    private val _contentUiModel: MutableStateFlow<DiaryWriteContentUiModel> =
         MutableStateStackFlow(DiaryWriteContentUiModel())
     val contentUiModel: StateFlow<DiaryWriteContentUiModel>
         get() = _contentUiModel
@@ -27,6 +29,10 @@ class DiaryWriteViewModel : ViewModel() {
     val selectColorUiModel: StateFlow<DiaryWriteSelectColorUiModel>
         get() = _selectColorUiModel
 
+    private val _event = MutableEventLiveData<DiaryWriteEvent>()
+    val event: EventLiveData<DiaryWriteEvent>
+        get() = _event
+
     private val _errorEvent: MutableEventLiveData<DiaryWriteErrorEvent> =
         MutableEventLiveData()
     val errorEvent: EventLiveData<DiaryWriteErrorEvent>
@@ -34,6 +40,9 @@ class DiaryWriteViewModel : ViewModel() {
 
     private var diaryId: Int? = null
     var isNewDiary: Boolean = true
+        private set
+
+    var currentCameraImageFileUri: Uri? = null
         private set
 
     fun loadDiary(diaryId: Int?, originalDiary: DiaryWriteContentUiModel?) {
@@ -57,15 +66,8 @@ class DiaryWriteViewModel : ViewModel() {
         // Todo: 변경사항 있는지 보고 이벤트에 반영
     }
 
-    fun onClickSelectColorButton() {
-        if (contentUiModel.value.image is WriteImageType.Image) {
-            // Todo : 이미지 날아가는데 괜찮냐고 묻기
-        } else {
-            showSelectColorLayout()
-        }
-    }
-
     fun onSaveSelectColorClick() {
+        clearCameraTempFileUri()
         restorePreviousToolbarState()
         _selectColorUiModel.update { DiaryWriteSelectColorUiModel(isShowing = false) }
     }
@@ -73,6 +75,38 @@ class DiaryWriteViewModel : ViewModel() {
     fun dismissSelectColorLayout() {
         _selectColorUiModel.update { DiaryWriteSelectColorUiModel(isShowing = false) }
         _contentUiModel.update { it.copy(image = selectColorUiModel.value.previousImageType) }
+    }
+
+    fun onClickSelectCameraType() {
+        if (contentUiModel.value.image is WriteImageType.Color) {
+            _event.event = DiaryWriteEvent.ShowEditConfirmDialog(SelectImageType.CAMERA)
+        } else {
+            startCameraActivity()
+        }
+    }
+
+    fun onClickSelectAlbumType() {
+        if (contentUiModel.value.image is WriteImageType.Color) {
+            _event.event = DiaryWriteEvent.ShowEditConfirmDialog(SelectImageType.ALBUM)
+        } else {
+            startGalleryActivity()
+        }
+    }
+
+    fun onClickSelectColorType() {
+        if (contentUiModel.value.image is WriteImageType.Image) {
+            _event.event = DiaryWriteEvent.ShowEditConfirmDialog(SelectImageType.COLOR)
+        } else {
+            showSelectColorLayout()
+        }
+    }
+
+    fun onClickEditConfirmYes(nextImageType: SelectImageType) {
+        when (nextImageType) {
+            SelectImageType.CAMERA -> startCameraActivity()
+            SelectImageType.ALBUM -> startGalleryActivity()
+            SelectImageType.COLOR -> showSelectColorLayout()
+        }
     }
 
     private fun showSelectColorLayout() {
@@ -128,6 +162,39 @@ class DiaryWriteViewModel : ViewModel() {
 
     private fun fetchUserColors(): List<UserColor> {
         return UserColor.getAllColors()
+    }
+    private fun startCameraActivity() {
+        _event.event = DiaryWriteEvent.StartCameraActivity
+    }
+
+    private fun startGalleryActivity() {
+        _event.event = DiaryWriteEvent.StartGalleryActivity
+    }
+
+    fun applyContentImage(imageUri: Uri) {
+        clearCameraTempFileUri()
+        _contentUiModel.update {
+            it.copy(image = WriteImageType.Image(imageUri))
+        }
+    }
+
+    fun saveCameraTempFileUri(uri: Uri) {
+        clearCameraTempFileUri()
+        currentCameraImageFileUri = uri
+    }
+
+    // 호출되어야 하는 상황
+    // 1. 카메라 촬영에 실패했을 때
+    // 2. 최종적으로 이미지가 적용되었을 때 (크롭되어 새로운 파일이 적용됨)
+    // 3. 새로운 임시 파일을 생성하기 전에
+    fun clearCameraTempFileUri() {
+        currentCameraImageFileUri?.let {
+            val file = it.toFile()
+            if (file.exists()) {
+                file.delete()
+            }
+            currentCameraImageFileUri = null
+        }
     }
 
     companion object {

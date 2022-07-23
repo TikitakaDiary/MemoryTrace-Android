@@ -22,7 +22,9 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity
+            android:name=".ui.diary.write.image.ImageCropActivity"
+            android:exported="false" />
         <!-- ====== File Provider ======= -->
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -33,7 +35,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider> <!-- for fcm -->
-
         <service
             android:name=".fcm.MyFirebaseMessagingService"
             android:exported="false">
@@ -41,7 +42,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service> <!-- for kakao login -->
-
         <meta-data
             android:name="kakaoAppKey"
             android:value="@string/kakao_app_key" />
@@ -59,7 +59,6 @@
                     android:scheme="kakaoff1dcb2582530e46c8cb8cd7256f5418" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.main.MainActivity"
             android:windowSoftInputMode="adjustResize">
@@ -69,20 +68,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.diary.write.DiaryWriteActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
-
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
-
     </application>
 
 </manifest>
