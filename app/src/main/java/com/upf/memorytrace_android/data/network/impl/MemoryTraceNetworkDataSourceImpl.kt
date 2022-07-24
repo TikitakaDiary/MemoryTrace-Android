@@ -4,8 +4,11 @@ import com.upf.memorytrace_android.data.network.MemoryTraceNetworkDataSource
 import com.upf.memorytrace_android.data.network.MemoryTraceService
 import com.upf.memorytrace_android.data.network.response.PostDiaryResponse
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import java.io.File
 
@@ -20,9 +23,9 @@ class MemoryTraceNetworkDataSourceImpl(
         imageFile: File
     ): Call<PostDiaryResponse> {
         return service.postDiary(
-            bookId = bookId,
-            title = title,
-            content = content,
+            bookId = bookId.toString().toPlainTextRequestBody(),
+            title = title.toPlainTextRequestBody(),
+            content = content.toPlainTextRequestBody(),
             imagePart = imageFile.toDiaryImageMultiPart()
         )
     }
@@ -34,11 +37,15 @@ class MemoryTraceNetworkDataSourceImpl(
         imageFile: File
     ): Call<Unit> {
         return service.editDiary(
-            diaryId = diaryId,
-            title = title,
-            content = content,
+            diaryId = diaryId.toString().toPlainTextRequestBody(),
+            title = title.toPlainTextRequestBody(),
+            content = content.toPlainTextRequestBody(),
             imagePart = imageFile.toDiaryImageMultiPart()
         )
+    }
+
+    private fun String.toPlainTextRequestBody(): RequestBody {
+        return toRequestBody("text/plain".toMediaTypeOrNull())
     }
 
     private fun File.toDiaryImageMultiPart(): MultipartBody.Part {
