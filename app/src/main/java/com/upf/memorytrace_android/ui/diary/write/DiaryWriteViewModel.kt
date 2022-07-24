@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.upf.memorytrace_android.api.onFailure
 import com.upf.memorytrace_android.api.onSuccess
+import com.upf.memorytrace_android.api.util.apiErrorMessage
 import com.upf.memorytrace_android.color.UserColor
 import com.upf.memorytrace_android.data.repository.DiaryRepository
 import com.upf.memorytrace_android.databinding.EventLiveData
@@ -252,7 +253,7 @@ class DiaryWriteViewModel @Inject constructor(
                     _event.event = DiaryWriteEvent.PostDone
                 }.onFailure {
                     FirebaseCrashlytics.getInstance().recordException(it)
-                    _errorEvent.event = DiaryWriteErrorEvent.FailPost(it.message)
+                    _errorEvent.event = DiaryWriteErrorEvent.FailPost(it.apiErrorMessage())
                 }
         }
     }
@@ -266,7 +267,7 @@ class DiaryWriteViewModel @Inject constructor(
                     _event.event = DiaryWriteEvent.EditDone
                 }.onFailure {
                     FirebaseCrashlytics.getInstance().recordException(it)
-                    _errorEvent.event = DiaryWriteErrorEvent.FailPost(it.message)
+                    _errorEvent.event = DiaryWriteErrorEvent.FailPost(it.apiErrorMessage())
                 }
         }
     }
