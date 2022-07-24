@@ -20,6 +20,7 @@ import com.upf.memorytrace_android.ui.diary.list.presentation.adapter.DiaryAdapt
 import com.upf.memorytrace_android.ui.diary.list.presentation.adapter.DiaryGridAdapter
 import com.upf.memorytrace_android.ui.diary.list.presentation.adapter.DiaryHeaderAdapter
 import com.upf.memorytrace_android.ui.diary.list.presentation.adapter.DiaryLinearAdapter
+import com.upf.memorytrace_android.ui.diary.write.DiaryWriteActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -39,12 +40,7 @@ class DiaryListFragment : BindingFragment<FragmentDiaryBinding>(R.layout.fragmen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val forceInitialize = findNavController()
-            .currentBackStackEntry?.savedStateHandle?.get<Boolean>(KEY_FORCE_INITIALIZE) ?: false
-        // consume
-        findNavController().currentBackStackEntry?.savedStateHandle?.set(KEY_FORCE_INITIALIZE, false)
-
-        diaryListViewModel.initializeDiaryList(navArgs.bid, forceInitialize)
+        diaryListViewModel.initializeDiaryList(navArgs.bid)
 
         binding.viewModel = diaryListViewModel
 
@@ -138,11 +134,7 @@ class DiaryListFragment : BindingFragment<FragmentDiaryBinding>(R.layout.fragmen
                                 }
                         }
                         is DiaryListViewModel.Event.WriteDiary -> {
-                            DiaryListFragmentDirections
-                                .actionDiaryFragmentToWriteFragment(event.bookId, null)
-                                .run {
-                                    findNavController().navigate(this)
-                                }
+                            diaryWriteLauncher.launch(DiaryWriteActivity.Input.New(event.bookId))
                         }
                         is DiaryListViewModel.Event.SuccessPinch -> {
                             toast(getString(R.string.pinch_success_toast, event.turnUserName))
@@ -167,6 +159,13 @@ class DiaryListFragment : BindingFragment<FragmentDiaryBinding>(R.layout.fragmen
         diaryLinearAdapter.submitList(diaries)
         diaryGridAdapter.submitList(diaries)
     }
+
+    private val diaryWriteLauncher =
+        registerForActivityResult(DiaryWriteActivity.DiaryWriteContract()) { output ->
+            if (output?.hasChange == true) {
+                diaryListViewModel.loadDiaryList(true)
+            }
+        }
 
     companion object {
         private const val GRID_SPAN_COUNT = 4

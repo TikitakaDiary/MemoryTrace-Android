@@ -2,7 +2,7 @@ package com.upf.memorytrace_android.di
 
 import android.util.Log
 import com.upf.memorytrace_android.BuildConfig
-import com.upf.memorytrace_android.api.MemoryTraceService
+import com.upf.memorytrace_android.api.MemoryTraceServiceOld
 import com.upf.memorytrace_android.api.util.converter.MemoryTraceConverterFactory
 import com.upf.memorytrace_android.api.util.interceptor.AuthHeaderInterceptor
 import com.upf.memorytrace_android.api.util.interceptor.StatusInterceptor
@@ -59,30 +59,6 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideMemoryTraceApi(@Named("MemoryTrace") retrofit: Retrofit): MemoryTraceService =
-        retrofit.create(MemoryTraceService::class.java)
-
-
-    @Provides
-    @Singleton
-    @NewRetrofit
-    fun provideNewRetrofit(): Retrofit {
-        val okHttpClient = OkHttpClient.Builder()
-            .connectTimeout(connectTimeout, TimeUnit.SECONDS)
-            .readTimeout(readTimeout, TimeUnit.SECONDS)
-            .addNetworkInterceptor(
-                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-            )
-            .addInterceptor(AuthHeaderInterceptor())
-            .build()
-        return Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .client(okHttpClient)
-            .addConverterFactory(MemoryTraceConverterFactory.create())
-            .build()
-    }
+    fun provideMemoryTraceApi(@Named("MemoryTrace") retrofit: Retrofit): MemoryTraceServiceOld =
+        retrofit.create(MemoryTraceServiceOld::class.java)
 }
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class NewRetrofit

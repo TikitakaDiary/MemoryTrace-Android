@@ -5,7 +5,7 @@
 
         <variable
             name="item"
-            type="com.upf.memorytrace_android.ui.diary.write.sticker.StickerItem" />
+            type="com.upf.memorytrace_android.sticker.StickerItem" />
 
         <variable
             name="viewModel"

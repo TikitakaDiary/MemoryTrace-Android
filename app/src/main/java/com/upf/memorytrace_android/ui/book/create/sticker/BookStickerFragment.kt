@@ -6,9 +6,17 @@ import androidx.annotation.DrawableRes
 import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.ui.base.BaseViewPagerFragment
 import com.upf.memorytrace_android.databinding.FragmentBookStickerBinding
+import com.upf.memorytrace_android.sticker.SelectStickerDialogFragment
 import com.upf.memorytrace_android.ui.book.create.CreateBookViewModel
-import com.upf.memorytrace_android.ui.diary.write.sticker.StickerItem
+import com.upf.memorytrace_android.sticker.StickerItem
 
+@Deprecated(
+    "SelectStickerDialogFragment 를 사용하세요.",
+    ReplaceWith(
+        "SelectStickerDialogFragment",
+        "com.upf.memorytrace_android.sticker.SelectStickerDialogFragment"
+    )
+)
 internal class BookStickerFragment(
     override val viewModel: CreateBookViewModel,
     @DrawableRes private val stickerList: List<Int>

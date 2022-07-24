@@ -59,9 +59,9 @@ class DiaryListViewModel @Inject constructor(
     private var lastScrollPositionOfLinearList = 0
     private var lastScrollPositionOfGridList = 0
 
-    fun initializeDiaryList(bookId: Int, force: Boolean) {
+    fun initializeDiaryList(bookId: Int) {
         this.bookId = bookId
-        loadDiaryList(force)
+        loadDiaryList(true)
     }
 
     fun loadDiaryList(force: Boolean = false) {
@@ -152,7 +152,7 @@ class DiaryListViewModel @Inject constructor(
     }
 
     fun writeDiary() {
-        _uiEvent.event = Event.WriteDiary(bookId)
+        _uiEvent.event = Event.WriteDiary(bookId = bookId)
     }
 
     fun onClickSetting() {

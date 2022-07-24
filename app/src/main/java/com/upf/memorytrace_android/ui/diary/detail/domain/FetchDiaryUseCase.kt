@@ -2,11 +2,11 @@ package com.upf.memorytrace_android.ui.diary.detail.domain
 
 import com.upf.memorytrace_android.log.ExceptionLogger
 import com.upf.memorytrace_android.ui.UiState
-import com.upf.memorytrace_android.ui.diary.domain.DiaryRepository
+import com.upf.memorytrace_android.ui.diary.domain.DiaryRepositoryOld
 import javax.inject.Inject
 
 class FetchDiaryUseCase @Inject constructor(
-    private val diaryRepository: DiaryRepository,
+    private val diaryRepository: DiaryRepositoryOld,
     private val exceptionLogger: ExceptionLogger
 ) {
 

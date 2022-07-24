@@ -1,6 +1,7 @@
 package com.upf.memorytrace_android.extension
 
 import android.content.Context
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
@@ -50,4 +51,13 @@ fun FragmentManager?.showAllowingStateLoss(
     val transaction = beginTransaction()
     transaction.add(dialogFragmentFactory(), tag)
     transaction.commitAllowingStateLoss()
+}
+
+fun Fragment.isGrantedPermission(permissions: List<String>): Boolean {
+    val parentActivity = activity
+    if (parentActivity == null) {
+        Log.e(javaClass.simpleName, "parent activity is null")
+        return false
+    }
+    return parentActivity.isGrantedPermission(permissions)
 }

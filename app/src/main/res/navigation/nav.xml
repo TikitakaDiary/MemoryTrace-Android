@@ -35,33 +35,8 @@
             app:popUpToInclusive="true" />
 
         <action
-            android:id="@+id/action_loginFragment_to_writeFragment"
-            app:destination="@id/writeFragment" />
-
-        <action
             android:id="@+id/action_loginFragment_to_termsFragment"
             app:destination="@+id/termsFragment" />
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/writeFragment"
-        android:name="com.upf.memorytrace_android.ui.diary.write.WriteFragment"
-        android:label="WriteFragment">
-
-        <action
-            android:id="@+id/action_writeFragment_to_cropFragment"
-            app:destination="@id/cropFragment" />
-
-        <argument
-            android:name="bid"
-            android:defaultValue="-1"
-            app:argType="integer" />
-
-        <argument
-            android:name="diary"
-            app:argType="com.upf.memorytrace_android.ui.diary.write.DiaryDetailDTO"
-            app:nullable="true" />
 
     </fragment>
 
@@ -130,30 +105,9 @@
         android:label="NameEditFragment" />
 
     <fragment
-        android:id="@+id/cropFragment"
-        android:name="com.upf.memorytrace_android.ui.diary.write.image.CropFragment"
-        android:label="CropFragment">
-
-        <argument
-            android:name="imageUri"
-            app:argType="android.net.Uri"
-            app:nullable="true" />
-
-        <argument
-            android:name="bitmap"
-            app:argType="android.graphics.Bitmap"
-            app:nullable="true" />
-
-    </fragment>
-
-    <fragment
         android:id="@+id/diaryFragment"
         android:name="com.upf.memorytrace_android.ui.diary.list.presentation.DiaryListFragment"
         android:label="DiaryFragment">
-
-        <action
-            android:id="@+id/action_diaryFragment_to_writeFragment"
-            app:destination="@id/writeFragment" />
 
         <argument
             android:name="bid"
@@ -179,10 +133,6 @@
             android:name="diaryId"
             android:defaultValue="-1"
             app:argType="integer" />
-
-        <action
-            android:id="@+id/action_detailFragment_to_writeFragment"
-            app:destination="@id/writeFragment" />
 
         <action
             android:id="@+id/action_detailFragment_to_commentListFragment"

@@ -1,10 +1,14 @@
 package com.upf.memorytrace_android.ui.diary.data.remote
 
 import com.upf.memorytrace_android.api.model.BaseResponse
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import okhttp3.MultipartBody
+import retrofit2.Call
+import retrofit2.http.*
 
+@Deprecated(
+    "API 함수는 MemoryTraceService 에 모두 모을 예정입니다.",
+    ReplaceWith("MemoryTraceService", "com.upf.memorytrace_android.data.network")
+)
 interface DiaryService {
 
     @GET("/diary/{did}")

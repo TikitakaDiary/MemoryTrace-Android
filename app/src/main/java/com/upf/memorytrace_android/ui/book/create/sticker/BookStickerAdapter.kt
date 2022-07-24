@@ -2,7 +2,7 @@ package com.upf.memorytrace_android.ui.book.create.sticker
 
 import com.upf.memorytrace_android.R
 import com.upf.memorytrace_android.ui.base.BaseListAdapter
-import com.upf.memorytrace_android.ui.diary.write.sticker.StickerItem
+import com.upf.memorytrace_android.sticker.StickerItem
 
 
 internal class BookStickerAdapter : BaseListAdapter<StickerItem>() {

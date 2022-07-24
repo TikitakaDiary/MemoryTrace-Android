@@ -3,7 +3,7 @@ package com.upf.memorytrace_android.ui.book.create.sticker
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.upf.memorytrace_android.ui.book.create.CreateBookViewModel
-import com.upf.memorytrace_android.util.StickerPackage
+import com.upf.memorytrace_android.sticker.StickerPackage
 
 internal class BookStickerSlidePagerAdapter(
     fa: FragmentActivity,

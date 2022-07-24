@@ -7,7 +7,8 @@ import com.upf.memorytrace_android.databinding.MutableEventLiveData
 import com.upf.memorytrace_android.ui.UiState
 import com.upf.memorytrace_android.ui.diary.detail.domain.DiaryDetail
 import com.upf.memorytrace_android.ui.diary.detail.domain.FetchDiaryUseCase
-import com.upf.memorytrace_android.ui.diary.write.DiaryDetailDTO
+import com.upf.memorytrace_android.ui.diary.detail.domain.toDiaryWriteInput
+import com.upf.memorytrace_android.ui.diary.write.DiaryWriteActivity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,7 +22,7 @@ class DetailViewModel @Inject constructor(
 
     sealed class Event {
         object CommentList: Event()
-        data class EditDiary(val diaryDetailDTO: DiaryDetailDTO): Event()
+        data class EditDiary(val input: DiaryWriteActivity.Input): Event()
         object EditNotAvailable: Event()
     }
 
@@ -55,7 +56,7 @@ class DetailViewModel @Inject constructor(
         if (uiState is UiState.Success) {
             val diaryDetail = uiState.data
             if (diaryDetail.isModifiable) {
-                _uiEvent.event = Event.EditDiary(DiaryDetailDTO.from(diaryDetail))
+                _uiEvent.event = Event.EditDiary(diaryDetail.toDiaryWriteInput())
             } else {
                 _uiEvent.event = Event.EditNotAvailable
             }
